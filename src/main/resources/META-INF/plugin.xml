@@ -13,6 +13,8 @@
                   fieldName="INSTANCE" language="Sentinel" extensions="Sentinel"/>
         <lang.parserDefinition language="Sentinel"
                                implementationClass="com.github.tylersmith34.intellijhashicorpsentinel.SentinelParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Sentinel"
+                                       implementationClass="com.github.tylersmith34.intellijhashicorpsentinel.colorscheme.SentinelSyntaxHighlighterFactory"/>
     </extensions>
 
     <projectListeners>

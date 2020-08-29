@@ -23,7 +23,7 @@ test {
   // on your local machine.
   // Use variants described in https://docs.gradle.org/current/userguide/build_environment.html
   // for real world projects.
-//  systemProperty "idea.home.path", "/Users/tyler/Documents/source/comm"
+  systemProperty "idea.home.path", "D:\\Workspace\\intellij-hashicorp-sentinel\\src\\test"
 }
 
 // Include the generated files in the source set
@@ -47,4 +47,23 @@ patchPluginXml {
   version = project.version
   sinceBuild = '202'
   untilBuild = '202.*'
+}
+
+sourceSets {
+  main {
+    java {
+      srcDirs 'src/java', 'gen'
+    }
+    resources {
+      srcDir 'res'
+    }
+  }
+  test {
+    java {
+      srcDir 'test'
+    }
+    resources {
+      srcDir 'test/test-data'
+    }
+  }
 }
