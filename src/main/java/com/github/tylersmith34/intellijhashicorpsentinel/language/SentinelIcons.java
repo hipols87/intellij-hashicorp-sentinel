@@ -1,4 +1,4 @@
-package com.github.tylersmith34.intellijhashicorpsentinel.Sentinel;
+package com.github.tylersmith34.intellijhashicorpsentinel.language;
 
 import com.intellij.openapi.util.IconLoader;
 

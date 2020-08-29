@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.github.tylersmith34.intellijhashicorpsentinel</id>
-    <name>intellij-hashicorp-sentinel</name>
+    <name>IntelliJ-HashiCorp-Sentinel</name>
     <vendor>tylersmith34</vendor>
 
     <!-- Product and plugin compatibility requirements -->
@@ -8,12 +8,13 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="HashiCorp Sentinel"
-                  implementationClass="com.github.tylersmith34.intellijhashicorpsentinel.Sentinel.SentinelFileType"
+        <fileType name="Sentinel"
+                  implementationClass="com.github.tylersmith34.intellijhashicorpsentinel.language.SentinelFileType"
                   fieldName="INSTANCE" language="Sentinel" extensions="Sentinel"/>
+        <lang.parserDefinition language="Sentinel"
+                               implementationClass="com.github.tylersmith34.intellijhashicorpsentinel.SentinelParserDefinition"/>
     </extensions>
 
     <projectListeners>
-
     </projectListeners>
 </idea-plugin>

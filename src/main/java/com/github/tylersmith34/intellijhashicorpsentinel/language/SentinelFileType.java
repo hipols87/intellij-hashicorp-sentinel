@@ -1,6 +1,5 @@
-package com.github.tylersmith34.intellijhashicorpsentinel.Sentinel;
+package com.github.tylersmith34.intellijhashicorpsentinel.language;
 
-import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,10 +7,10 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 public class SentinelFileType extends LanguageFileType {
-    public static final SentinelFileType INSTANCE = new SentinelFileType(new Sentinel());
+    public static final SentinelFileType INSTANCE = new SentinelFileType();
 
-    protected SentinelFileType(@NotNull Language language) {
-        super(language);
+    protected SentinelFileType() {
+        super(Sentinel.INSTANCE);
     }
 
     @NotNull
@@ -22,7 +21,7 @@ public class SentinelFileType extends LanguageFileType {
 
     @java.lang.Override
     public String getDescription() {
-        return "HashiCorp Sentinel";
+        return "Sentinel";
     }
 
     @java.lang.Override
