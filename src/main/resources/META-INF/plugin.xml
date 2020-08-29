@@ -8,12 +8,12 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.tylersmith34.intellijhashicorpsentinel.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.tylersmith34.intellijhashicorpsentinel.services.MyProjectService"/>
+        <fileType name="HashiCorp Sentinel"
+                  implementationClass="com.github.tylersmith34.intellijhashicorpsentinel.Sentinel.SentinelFileType"
+                  fieldName="INSTANCE" language="Sentinel" extensions="Sentinel"/>
     </extensions>
 
     <projectListeners>
-        <listener class="com.github.tylersmith34.intellijhashicorpsentinel.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
+
     </projectListeners>
 </idea-plugin>
