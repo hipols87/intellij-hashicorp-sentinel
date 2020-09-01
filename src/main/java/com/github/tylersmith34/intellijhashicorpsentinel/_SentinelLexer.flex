@@ -16,7 +16,7 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 %}
 
 %public
-%class _SentinelLexer
+%class SentinelLexer
 %implements FlexLexer
 %function advance
 %type IElementType

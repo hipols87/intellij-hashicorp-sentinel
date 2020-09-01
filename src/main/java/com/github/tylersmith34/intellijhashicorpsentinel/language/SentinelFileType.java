@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 public class SentinelFileType extends LanguageFileType {
+    public static final String DEFAULT_EXTENSION = "sentinel";
     public static final SentinelFileType INSTANCE = new SentinelFileType();
 
     protected SentinelFileType() {
@@ -26,7 +27,7 @@ public class SentinelFileType extends LanguageFileType {
 
     @java.lang.Override
     public String getDefaultExtension() {
-        return ".sentinel";
+        return DEFAULT_EXTENSION;
     }
 
     @Nullable

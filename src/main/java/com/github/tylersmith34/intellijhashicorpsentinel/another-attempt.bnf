@@ -39,7 +39,7 @@
 
 SimpleFile ::= Definition*
 
-Definition ::= (ImportStatement)+  <<eof>> //| ExternalParameter | FunctionDeclaration | MainFunction
+Definition ::= FunctionDeclaration | MainFunction | ImportStatement | ExternalParameter
 
 //Functions
 FunctionDeclaration ::=  IDENTIFIER EQUALS func L_PAREN (FunctionInput) R_PAREN L_CURLY FunctionBody R_CURLY {
@@ -59,12 +59,20 @@ ReturnStatement ::= return ( IDENTIFIER | Type | Literal | value) {
     recoverWhile = not_EOL
 }
 
+
+//ExpressionStmt ::= Expression
+//Assignment ::= AssignExpr assign_op Expression
+//AssignExpr ::= identifier
+//assign_op ::= ( add_op | mul_op ) "="
+////AssignmentStatement ::= IDENTIFIER EQUALS FunctionInvocation?
+//FunctionInvocation ::= IDENTIFIER '(' (FunctionInput)* ')'
+
 //main
 MainFunction ::= main EQUALS rule '{' FunctionBody '}'
 
 //rule
-
-
+//RuleDefinition ::= IDENTIFIER EQUALS rule '{' RuleExpression '}'
+//RuleDefinition
 //import
 ImportStatement ::= import StringLiteral (as IDENTIFIER )?
 
@@ -73,15 +81,43 @@ ExternalParameter ::= param (IDENTIFIER | IDENTIFIER default StringLiteral )
 
 //Object types
 Type ::= int | string | map | list | Literal
-Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
-StringLiteral::= DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
-NumberLiteral::= NUMBER
-BooleanLiteral::= true | false
-NullLiteral::= NULL
-UndefinedLiteral::= UNDEFINED
+Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral {
+  methods = [
+    isQuotedString
+  ]
+}
+StringLiteral::= DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING {
+  name = "string literal"
+  methods=[
+    getTextFragments
+    getValue
+    getQuoteSymbol
+    SINGLE_QUOTED_STRING=""
+    DOUBLE_QUOTED_STRING=""
+  ]
+}
+NumberLiteral::= NUMBER {
+  name="number"
+  methods=[
+    getValue
+    NUMBER=""
+  ]
+}
+BooleanLiteral::= true | false {
+  name="boolean"
+  methods=[
+    getValue
+  ]
+}
+NullLiteral::= NULL {
+  name="null"
+}
+UndefinedLiteral::= UNDEFINED {
+  name="undefined"
+}
 
 private EOL ::= CRLF
 private not_EOL ::= !CRLF
 private not_brace_or_next_value ::= !('}'|value)
 private not_paren_or_next_value ::= !(')'|value)
-private not_bracket_or_next_value ::= !(']'|(Literal | array | object))
+private not_bracket_or_next_value ::= !(']'|(literal | array | object))
