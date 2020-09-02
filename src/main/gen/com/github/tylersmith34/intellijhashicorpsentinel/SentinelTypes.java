@@ -84,20 +84,28 @@ public interface SentinelTypes {
   IElementType UNDEFINED_LITERAL = new SentinelElementType("UNDEFINED_LITERAL");
   IElementType UNICODE_VALUE = new SentinelElementType("UNICODE_VALUE");
 
+  IElementType ALL = new SentinelTokenType("all");
+  IElementType ANY = new SentinelTokenType("any");
   IElementType ARRAY = new SentinelTokenType("array");
   IElementType AS = new SentinelTokenType("as");
   IElementType BLOCK = new SentinelTokenType("Block");
   IElementType BLOCK_COMMENT = new SentinelTokenType("BLOCK_COMMENT");
+  IElementType BREAK = new SentinelTokenType("break");
+  IElementType CASE = new SentinelTokenType("case");
   IElementType COMMA = new SentinelTokenType(",");
   IElementType COMMENT = new SentinelTokenType("COMMENT");
+  IElementType CONTINUE = new SentinelTokenType("continue");
   IElementType CRLF = new SentinelTokenType("CRLF");
   IElementType DEFAULT = new SentinelTokenType("default");
   IElementType DOUBLE_QUOTED_STRING = new SentinelTokenType("DOUBLE_QUOTED_STRING");
+  IElementType ELSE = new SentinelTokenType("else");
   IElementType EQUALS = new SentinelTokenType("=");
   IElementType EXPRESSIONS = new SentinelTokenType("Expressions");
   IElementType FALSE = new SentinelTokenType("false");
+  IElementType FOR = new SentinelTokenType("for");
   IElementType FUNC = new SentinelTokenType("func");
   IElementType IDENTIFIER = new SentinelTokenType("identifier");
+  IElementType IF = new SentinelTokenType("if");
   IElementType IMPORT = new SentinelTokenType("import");
   IElementType L_BRACKET = new SentinelTokenType("[");
   IElementType L_CURLY = new SentinelTokenType("{");
@@ -106,6 +114,7 @@ public interface SentinelTypes {
   IElementType NULL = new SentinelTokenType("null");
   IElementType OBJECT = new SentinelTokenType("object");
   IElementType PARAM = new SentinelTokenType("param");
+  IElementType RETURN = new SentinelTokenType("return");
   IElementType RULE = new SentinelTokenType("rule");
   IElementType R_BRACKET = new SentinelTokenType("]");
   IElementType R_CURLY = new SentinelTokenType("}");
@@ -115,6 +124,7 @@ public interface SentinelTypes {
   IElementType TRUE = new SentinelTokenType("true");
   IElementType UNDEFINED = new SentinelTokenType("undefined");
   IElementType VALUE = new SentinelTokenType("value");
+  IElementType WHEN = new SentinelTokenType("when");
   IElementType _DIGIT_ = new SentinelTokenType("<digit>");
   IElementType _EXPRESSION_ = new SentinelTokenType("<expression>");
   IElementType _NUMBER_ = new SentinelTokenType("<number>");

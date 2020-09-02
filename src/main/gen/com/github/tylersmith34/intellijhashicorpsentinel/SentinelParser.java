@@ -167,10 +167,11 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // "break"
   public static boolean BreakStmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BreakStmt")) return false;
+    if (!nextTokenIs(b, BREAK)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BREAK_STMT, "<break stmt>");
-    r = consumeToken(b, "break");
-    exit_section_(b, l, m, r, false, null);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, BREAK);
+    exit_section_(b, m, BREAK_STMT, r);
     return r;
   }
 
@@ -178,14 +179,15 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // "case" [ <expression> ] "{" ( CaseWhenClause ) R_CURLY
   public static boolean CaseStmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CaseStmt")) return false;
+    if (!nextTokenIs(b, CASE)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CASE_STMT, "<case stmt>");
-    r = consumeToken(b, "case");
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CASE);
     r = r && CaseStmt_1(b, l + 1);
     r = r && consumeToken(b, L_CURLY);
     r = r && CaseStmt_3(b, l + 1);
     r = r && consumeToken(b, R_CURLY);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, CASE_STMT, r);
     return r;
   }
 
@@ -210,10 +212,11 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // "when" <expression> ( "," <expression> ) | "else"
   public static boolean CaseWhenCase(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CaseWhenCase")) return false;
+    if (!nextTokenIs(b, "<case when case>", ELSE, WHEN)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CASE_WHEN_CASE, "<case when case>");
     r = CaseWhenCase_0(b, l + 1);
-    if (!r) r = consumeToken(b, "else");
+    if (!r) r = consumeToken(b, ELSE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -223,8 +226,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "CaseWhenCase_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, "when");
-    r = r && expression(b, l + 1);
+    r = consumeTokens(b, 0, WHEN, _EXPRESSION_);
     r = r && CaseWhenCase_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -244,6 +246,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // CaseWhenCase ":" StatementList
   public static boolean CaseWhenClause(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CaseWhenClause")) return false;
+    if (!nextTokenIs(b, "<case when clause>", ELSE, WHEN)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CASE_WHEN_CLAUSE, "<case when clause>");
     r = CaseWhenCase(b, l + 1);
@@ -257,10 +260,11 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // "continue"
   public static boolean ContinueStmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ContinueStmt")) return false;
+    if (!nextTokenIs(b, CONTINUE)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CONTINUE_STMT, "<continue stmt>");
-    r = consumeToken(b, "continue");
-    exit_section_(b, l, m, r, false, null);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CONTINUE);
+    exit_section_(b, m, CONTINUE_STMT, r);
     return r;
   }
 
@@ -366,14 +370,13 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // "for" Expressions "as" ( IDENTIFIER "," ) IDENTIFIER Block
   public static boolean ForStmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ForStmt")) return false;
+    if (!nextTokenIs(b, FOR)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FOR_STMT, "<for stmt>");
-    r = consumeToken(b, "for");
-    r = r && consumeToken(b, EXPRESSIONS);
-    r = r && consumeToken(b, "as");
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, FOR, EXPRESSIONS, AS);
     r = r && ForStmt_3(b, l + 1);
     r = r && consumeTokens(b, 0, IDENTIFIER, BLOCK);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, FOR_STMT, r);
     return r;
   }
 
@@ -465,13 +468,12 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // "if" <expression> Block [ "else" ( IfStmt | Block ) ]
   public static boolean IfStmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IfStmt")) return false;
+    if (!nextTokenIs(b, IF)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, IF_STMT, "<if stmt>");
-    r = consumeToken(b, "if");
-    r = r && expression(b, l + 1);
-    r = r && consumeToken(b, BLOCK);
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, IF, _EXPRESSION_, BLOCK);
     r = r && IfStmt_3(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, IF_STMT, r);
     return r;
   }
 
@@ -487,7 +489,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "IfStmt_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, "else");
+    r = consumeToken(b, ELSE);
     r = r && IfStmt_3_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -775,7 +777,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, QUANT_EXPR, "<quant expr>");
     r = QuantOp(b, l + 1);
     r = r && expression(b, l + 1);
-    r = r && consumeToken(b, "as");
+    r = r && consumeToken(b, AS);
     r = r && QuantExpr_3(b, l + 1);
     r = r && consumeTokens(b, 0, IDENTIFIER, L_CURLY, _EXPRESSION_, R_CURLY);
     exit_section_(b, l, m, r, false, null);
@@ -795,8 +797,8 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "QuantOp")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, QUANT_OP, "<quant op>");
-    r = consumeToken(b, "all");
-    if (!r) r = consumeToken(b, "any");
+    r = consumeToken(b, ALL);
+    if (!r) r = consumeToken(b, ANY);
     if (!r) r = consumeToken(b, "filter");
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -819,19 +821,8 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // [ "when" <expression> ]
   private static boolean RuleBase_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "RuleBase_1")) return false;
-    RuleBase_1_0(b, l + 1);
+    parseTokens(b, 0, WHEN, _EXPRESSION_);
     return true;
-  }
-
-  // "when" <expression>
-  private static boolean RuleBase_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "RuleBase_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, "when");
-    r = r && expression(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   /* ********************************************************** */
@@ -1066,10 +1057,11 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   // "else"
   public static boolean else_op(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "else_op")) return false;
+    if (!nextTokenIs(b, ELSE)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ELSE_OP, "<else op>");
-    r = consumeToken(b, "else");
-    exit_section_(b, l, m, r, false, null);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    exit_section_(b, m, ELSE_OP, r);
     return r;
   }
 
@@ -1140,15 +1132,22 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // unary_expr | {<expression>} binary_op {<expression>}
+  // unary_expr? | {<expression>} binary_op {<expression>}
   public static boolean expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION, "<expression>");
-    r = unary_expr(b, l + 1);
+    r = expression_0(b, l + 1);
     if (!r) r = expression_1(b, l + 1);
-    exit_section_(b, l, m, r, false, not_EOL_parser_);
+    exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  // unary_expr?
+  private static boolean expression_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "expression_0")) return false;
+    unary_expr(b, l + 1);
+    return true;
   }
 
   // {<expression>} binary_op {<expression>}
@@ -1827,9 +1826,4 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  static final Parser not_EOL_parser_ = new Parser() {
-    public boolean parse(PsiBuilder b, int l) {
-      return not_EOL(b, l + 1);
-    }
-  };
 }

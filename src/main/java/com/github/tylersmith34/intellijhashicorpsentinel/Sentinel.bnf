@@ -33,6 +33,19 @@
         FALSE='false'
         NULL='null'
         UNDEFINED='undefined'
+        ALL='all'
+        ANY='any'
+        AS='as'
+        BREAK='break'
+        CASE='case'
+        CONTINUE='continue'
+        DEFAULT='default'
+        ELSE='else'
+        FOR='for'
+        FUNC='func'
+        IF='if'
+        RETURN='return'
+        WHEN='when'
    ]
 }
 
@@ -84,11 +97,14 @@ escaped_char  ::= '\' ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | '\' | '"' )
 <digit>       ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 
-<expression> ::= unary_expr | {<expression>} binary_op {<expression>} {
-recoverWhile=not_EOL
-pin=1
-}
+<expression> ::= unary_expr? | {<expression>} binary_op {<expression>}
 unary_expr  ::= <primary_expr> | unary_op {unary_expr}
+<primary_expr> ::=
+    Operand |
+    {<primary_expr>} Selector |
+    {<primary_expr>} Index |
+    {<primary_expr>} Slice |
+    {<primary_expr>} Arguments
 binary_op  ::= logical_op | set_op | rel_op | add_op | mul_op | else_op
 logical_op ::= "and" | "or" | "xor"
 set_op     ::= ["not"] ( "contains" | "in" )
@@ -99,12 +115,6 @@ else_op    ::= "else"
 unary_op   ::= "+" | "-" | "!" | "not"
 Operand    ::= Literal | IDENTIFIER | "(" <expression> ")"
 BasicLit    ::= int_lit | float_lit | string_lit
-<primary_expr> ::=
-    Operand |
-    {<primary_expr>} Selector |
-    {<primary_expr>} Index |
-    {<primary_expr>} Slice |
-    {<primary_expr>} Arguments
 Selector  ::= "." IDENTIFIER
 Index     ::= "[" <expression> "]"
 Slice     ::= "[" ( <expression> ) ":" ( <expression> ) "]" | "[" ( <expression> ) ":" <expression> ":" <expression> "]"
