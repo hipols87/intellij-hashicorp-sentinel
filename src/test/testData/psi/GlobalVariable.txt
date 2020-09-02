@@ -1,0 +1,8 @@
+Sentinel File
+  SentinelDefinitionImpl(DEFINITION)
+    SentinelGlobalVariableDefinitionImpl(GLOBAL_VARIABLE_DEFINITION)
+      PsiElement(SentinelTokenType.identifier)('globalValue')
+      PsiElement(SentinelTokenType.=)('=')
+      SentinelLiteralImpl(LITERAL)
+        SentinelStringLiteralImpl(STRING_LITERAL)
+          PsiElement(SentinelTokenType.DOUBLE_QUOTED_STRING)('"to infinity and beyond"')

@@ -1,0 +1,6 @@
+Sentinel File
+  SentinelDefinitionImpl(DEFINITION)
+    SentinelExternalParametersImpl(EXTERNAL_PARAMETERS)
+      PsiElement(SentinelTokenType.param)('param')
+      PsiWhiteSpace(' ')
+      PsiElement(SentinelTokenType.identifier)('token')

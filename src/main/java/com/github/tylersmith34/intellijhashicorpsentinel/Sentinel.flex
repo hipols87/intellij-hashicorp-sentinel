@@ -10,13 +10,13 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 %%
 
 %{
-  public _SentinelLexer() {
+  public SentinelLexer() {
     this((java.io.Reader)null);
   }
 %}
 
 %public
-%class _SentinelLexer
+%class SentinelLexer
 %implements FlexLexer
 %function advance
 %type IElementType
@@ -29,7 +29,6 @@ IDENTIFIER=[a-zA-Z_][a-zA-Z0-9_]*
 WHITE_SPACE=[ \t\n\x0B\f\r]+
 DOUBLE_QUOTED_STRING=\"([^\\\"\r\n]|\\[^\r\n])*\"?
 SINGLE_QUOTED_STRING='([^\\'\r\n]|\\[^\r\n])*'?
-NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
 COMMENT=("//".*)|(#.*)
 BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
 
@@ -49,20 +48,22 @@ BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
   "false"                     { return FALSE; }
   "null"                      { return NULL; }
   "undefined"                 { return UNDEFINED; }
-  "func"                      { return FUNC; }
-  "return"                    { return RETURN; }
-  "value"                     { return VALUE; }
-  "main"                      { return MAIN; }
-  "rule"                      { return RULE; }
   "import"                    { return IMPORT; }
   "as"                        { return AS; }
   "param"                     { return PARAM; }
   "default"                   { return DEFAULT; }
-  "int"                       { return INT; }
-  "string"                    { return STRING; }
-  "map"                       { return MAP; }
-  "list"                      { return LIST; }
+  "main"                      { return MAIN; }
+  "rule"                      { return RULE; }
+  "<expression>"              { return EXPRESSION; }
+  "<digit>"                   { return DIGIT; }
+  "<number>"                  { return NUMBER; }
+  "<primary_expr>"            { return PRIMARY_EXPR; }
+  "func"                      { return FUNC; }
+  "Block"                     { return BLOCK; }
+  "StatementList"             { return STATEMENTLIST; }
+  "Expressions"               { return EXPRESSIONS; }
   "CRLF"                      { return CRLF; }
+  "value"                     { return VALUE; }
   "array"                     { return ARRAY; }
   "object"                    { return OBJECT; }
 
@@ -70,7 +71,6 @@ BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
   {WHITE_SPACE}               { return WHITE_SPACE; }
   {DOUBLE_QUOTED_STRING}      { return DOUBLE_QUOTED_STRING; }
   {SINGLE_QUOTED_STRING}      { return SINGLE_QUOTED_STRING; }
-  {NUMBER}                    { return NUMBER; }
   {COMMENT}                   { return COMMENT; }
   {BLOCK_COMMENT}             { return BLOCK_COMMENT; }
 

@@ -1,0 +1,11 @@
+Sentinel File
+  SentinelDefinitionImpl(DEFINITION)
+    SentinelExternalParametersImpl(EXTERNAL_PARAMETERS)
+      PsiElement(SentinelTokenType.param)('param')
+      PsiWhiteSpace(' ')
+      PsiElement(SentinelTokenType.identifier)('pword')
+      PsiWhiteSpace(' ')
+      PsiElement(SentinelTokenType.default)('default')
+      PsiWhiteSpace(' ')
+      SentinelStringLiteralImpl(STRING_LITERAL)
+        PsiElement(SentinelTokenType.DOUBLE_QUOTED_STRING)('"missing"')

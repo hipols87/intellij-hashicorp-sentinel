@@ -19,10 +19,22 @@ public class SentinelParserTest extends ParsingTestCase {
         doTest(true);
     }
 
-//    public void testArrayTailComment() throws Exception {
+    //    public void testArrayTailComment() throws Exception {
 //        doTest();
 //    }
-public void testImport() throws Exception {
-    doTest();
-}
+    public void testImport() throws Exception {
+        doTest();
+    }
+
+    public void testParam() throws Exception {
+        doTest();
+    }
+
+    public void testParamWithDefault() throws Exception {
+        doTest();
+    }
+
+    public void testGlobalVariable() throws Exception {
+        doTest();
+    }
 }

@@ -19,7 +19,6 @@
         WHITE_SPACE = 'regexp:\s+'
         DOUBLE_QUOTED_STRING="regexp:\"([^\\\"\r\n]|\\[^\r\n])*\"?"
         SINGLE_QUOTED_STRING="regexp:'([^\\\'\r\n]|\\[^\r\n])*'?"
-        NUMBER='regexp:-?(0x)?(0|[1-9])\d*(\.\d+)?([eE][-+]?\d+)?'
         COMMENT = "regexp:(//.*)|(#.*)"
         BLOCK_COMMENT = "regexp:/\*([^*]|\*[^/])*\*?(\*/)?"
         L_BRACKET='['
@@ -38,61 +37,138 @@
 }
 
 SimpleFile ::= Definition*
-
-Definition ::= ( ImportStatement | ExternalParameters | GlobalVariableDefinition | MainRule )+
+Definition ::= { ImportStatement | ExternalParameters | GlobalVariableDefinition | MainRule }
 
 //import
 ImportStatement ::= import StringLiteral (as IDENTIFIER )?
 
 //External param
-ExternalParameters ::= param IDENTIFIER ( default StringLiteral )?
+ExternalParameters       ::= param IDENTIFIER ( default StringLiteral )?
+GlobalVariableDefinition ::= (IDENTIFIER EQUALS Literal)
 
-GlobalVariableDefinition ::= (IDENTIFIER EQUALS Literal) {
-    recoverWhile = not_rule
-}
-
-//main
-MainRule ::= main EQUALS rule '{' FunctionBody '}' {
- recoverWhile = not_brace_or_next_value
- pin=5
-}
+//Rules
+MainRule       ::= main EQUALS RuleBase
+//RuleDefinition ::= IDENTIFIER EQUALS RuleBase
+RuleBase       ::= rule [ "when" <expression> ] L_CURLY <expression> R_CURLY
 
 //Functions
-FunctionDeclaration ::=  IDENTIFIER EQUALS func L_PAREN (FunctionInput) R_PAREN L_CURLY FunctionBody R_CURLY {
-  recoverWhile = not_brace_or_next_value
-}
-FunctionInput ::= (IDENTIFIER | Literal | COMMA)* {
-  recoverWhile = not_paren_or_next_value
-}
-FunctionBody ::= Statement* {
-    recoverWhile = not_brace_or_next_value
-}
-Statement ::= VariableDefinition | ReturnStatement
-VariableDefinition ::= (IDENTIFIER EQUALS Literal) {
-    recoverWhile = not_EOL
-}
-ReturnStatement ::= return ( IDENTIFIER | Literal ) {
-    recoverWhile = not_EOL
-}
+//FunctionDeclaration ::=  IDENTIFIER EQUALS func L_PAREN (FunctionInput) R_PAREN L_CURLY FunctionBody? R_CURLY {
+//  recoverWhile = not_brace_or_next_value
+//  pin=8
+//}
+//FunctionInput ::= (IDENTIFIER | Literal | COMMA)* {
+//  recoverWhile = not_paren_or_next_value
+//}
+//FunctionBody ::= <statement>* {
+//    recoverWhile = not_terminator_or_next_value
+//    pin=1
+//}
+//<statement> ::= VariableDefinition  | <expression> | <statement> {
+//    recoverWhile = not_EOL
+//    pin=3
+//}
+//VariableDefinition ::= (IDENTIFIER EQUALS Literal) {
+//    recoverWhile = not_EOL
+//}
+//ReturnStatement ::= return ( IDENTIFIER | Literal ) {
+//    recoverWhile = not_EOL
+//}
 
 
-//rule
+//primitives
+octal_digit   ::= 1|2|3|4|5|6|7
+hex_digit     ::= 1|2|3|4|5|6|7 | "A" | "F" | "a" | "f"
+letter        ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+escaped_char  ::= '\' ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | '\' | '"' )
+<number>      ::= <digit> | <number> <digit>
+<digit>       ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 
+<expression> ::= unary_expr | {<expression>} binary_op {<expression>} {
+recoverWhile=not_EOL
+pin=1
+}
+unary_expr  ::= <primary_expr> | unary_op {unary_expr}
+binary_op  ::= logical_op | set_op | rel_op | add_op | mul_op | else_op
+logical_op ::= "and" | "or" | "xor"
+set_op     ::= ["not"] ( "contains" | "in" )
+rel_op     ::= "==" | "!=" | "<" | "<=" | ">" | ">=" | "is" | "is not" | "matches" | "not matches"
+add_op     ::= "+" | "-"
+mul_op     ::= "*" | "/" | "%"
+else_op    ::= "else"
+unary_op   ::= "+" | "-" | "!" | "not"
+Operand    ::= Literal | IDENTIFIER | "(" <expression> ")"
+BasicLit    ::= int_lit | float_lit | string_lit
+<primary_expr> ::=
+    Operand |
+    {<primary_expr>} Selector |
+    {<primary_expr>} Index |
+    {<primary_expr>} Slice |
+    {<primary_expr>} Arguments
+Selector  ::= "." IDENTIFIER
+Index     ::= "[" <expression> "]"
+Slice     ::= "[" ( <expression> ) ":" ( <expression> ) "]" | "[" ( <expression> ) ":" <expression> ":" <expression> "]"
+Arguments ::= "(" [ ( <expression> | Literal [ "," <expression> ] ) [ "..." ] [ "," ] ] ")"
 
+int_lit     ::= decimal_lit | octal_lit | hex_lit
+decimal_lit ::= "1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|"0"|<digit>
+octal_lit   ::= "0" ( octal_digit )
+hex_lit     ::= "0" ( "x" | "X" ) hex_digit { hex_digit }
+
+float_lit ::= decimals "." ( decimals )* ( exponent )? | decimals exponent | "." decimals ( exponent )?
+decimals  ::= <digit>*
+exponent  ::= ( "e" | "E" ) [ "+" | "-" ] decimals
+
+string_lit       ::= '"' ( letter | escaped_char)* '"'
+unicode_value    ::= little_u_value | big_u_value | escaped_char
+byte_value       ::= octal_byte_value | hex_byte_value
+octal_byte_value ::= '\' octal_digit octal_digit octal_digit
+hex_byte_value   ::= '\' "x" hex_digit hex_digit
+little_u_value   ::= '\' "u" hex_digit hex_digit hex_digit hex_digit
+big_u_value      ::= '\' "U" hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit
+
+FunctionLit    ::= func Function
+Function       ::= Parameters FunctionBody
+FunctionBody   ::= Block
+Parameters     ::= "(" [ IdentifierList [ "," ] ] ")"
+IdentifierList ::= identifier { "," identifier }
+
+ListLit     ::= "[" [ ElementList [ "," ] ] "]"
+ElementList ::= Element ( "," Element )
+Element     ::= <expression> | Literal
+MapLit           ::= "{" [ KeyedElementList [ "," ] ] R_CURLY
+KeyedElementList ::= KeyedElement ( "," KeyedElement )
+KeyedElement     ::= Element ":" Element
+QuantExpr ::= QuantOp <expression> "as" [ IDENTIFIER "," ] IDENTIFIER "{" <expression> R_CURLY
+QuantOp   ::= "all" | "any" | "filter"
+ExpressionStmt ::= <expression>
+Assignment ::= AssignExpr assign_op <expression>
+AssignExpr ::= IDENTIFIER
+assign_op ::= ( add_op | mul_op ) EQUALS
+IfStmt ::= "if" <expression> Block [ "else" ( IfStmt | Block ) ]
+CaseStmt ::= "case" [ <expression> ] "{" ( CaseWhenClause ) R_CURLY
+CaseWhenClause ::= CaseWhenCase ":" StatementList
+CaseWhenCase ::= "when" <expression> ( "," <expression> ) | "else"
+ForStmt ::= "for" Expressions "as" ( IDENTIFIER "," ) IDENTIFIER Block
+BreakStmt ::= "break"
+ContinueStmt ::= "continue"
 
 //Object types
 //Type ::= int | string | map | list | Literal
-Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
+Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral | BasicLit | FunctionLit | ListLit | MapLit
 StringLiteral::= DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
-NumberLiteral::= NUMBER
+NumberLiteral::= <number>
 BooleanLiteral::= true | false
 NullLiteral::= NULL
 UndefinedLiteral::= UNDEFINED
 
+
+
+
 private EOL ::= CRLF
 private not_EOL ::= !CRLF
-private not_EOL ::= !(rule | func)
-private not_brace_or_next_value ::= !('}'|value)
+private not_EOL ::= !(func)
+private not_terminator_or_next_value ::= !(R_CURLY|')'|']'|value)
+private not_brace_or_next_value ::= !(R_CURLY|value)
 private not_paren_or_next_value ::= !(')'|value)
 private not_bracket_or_next_value ::= !(']'|(Literal | array | object))
