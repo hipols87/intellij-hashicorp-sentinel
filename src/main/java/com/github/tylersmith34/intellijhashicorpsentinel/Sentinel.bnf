@@ -29,8 +29,6 @@
         R_PAREN=')'
         COMMA=','
         EQUALS='='
-        TRUE='true'
-        FALSE='false'
         NULL='null'
         UNDEFINED='undefined'
         ALL='all'
@@ -43,7 +41,6 @@
         ELSE='else'
         FOR='for'
         IF='if'
-        RETURN='return'
         WHEN='when'
    ]
 }
@@ -66,12 +63,12 @@ RuleBase       ::= rule [ "when" <expression> ] L_CURLY <expression> R_CURLY
 //Functions
 FunctionDeclaration ::= func Function
 Function            ::= Parameters FunctionBody
-FunctionBody        ::= Block
+FunctionBody        ::= L_CURLY Statement R_CURLY
 Parameters          ::= L_PAREN ( IdentifierList )? R_PAREN
 IdentifierList      ::= IDENTIFIER+ ( "," IDENTIFIER+ )?
-Block               ::= L_CURLY [ <statement> ] R_CURLY
-<statement>         ::= { VariableDefinition  | <expression> | <statement> | ReturnStatement }+
-VariableDefinition  ::= {IDENTIFIER EQUALS Literal}*
+Block               ::= L_CURLY [ Statement ] R_CURLY
+Statement           ::= { VariableDefinition  | <expression> | ReturnStatement }+
+VariableDefinition  ::= IDENTIFIER EQUALS ( Literal )
 ReturnStatement     ::= return ( IDENTIFIER | Literal )
 
 //primitives
