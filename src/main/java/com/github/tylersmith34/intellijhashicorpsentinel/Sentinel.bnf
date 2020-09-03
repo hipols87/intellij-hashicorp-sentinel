@@ -22,6 +22,7 @@
         SINGLE_QUOTED_STRING="regexp:'([^\\\'\r\n]|\\[^\r\n])*'?"
         COMMENT = "regexp:(//.*)|(#.*)"
         BLOCK_COMMENT = "regexp:/\*([^*]|\*[^/])*\*?(\*/)?"
+        NUMBER='regexp:-?(0x)?(0|[1-9])\d*(\.\d+)?([eE][-+]?\d+)?'
         L_BRACKET='['
         R_BRACKET=']'
         L_CURLY='{'
@@ -30,8 +31,6 @@
         R_PAREN=')'
         COMMA=','
         EQUALS='='
-        NULL='null'
-        UNDEFINED='undefined'
         ALL='all'
         ANY='any'
         AS='as'
@@ -72,9 +71,12 @@ Statement           ::= { VariableDefinition  }*
 
 //Variables
 VariableDefinition  ::= IDENTIFIER EQUALS ( Literal | ListDefinition  )
+//TODO use this instead of equals
+AssignmentOperators ::= ( AddSubtractOperator | MultipleDivideOperator ) EQUALS
+
 
 ListDefinition     ::= L_BRACKET ( ElementList )? R_BRACKET
-ElementList ::= Element
+ElementList ::= Element+ ( COMMA Element)*
 Element     ::= Literal
 
 //primitives
@@ -82,8 +84,6 @@ octal_digit   ::= 1|2|3|4|5|6|7
 hex_digit     ::= 1|2|3|4|5|6|7 | "A" | "F" | "a" | "f"
 letter        ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
 escaped_char  ::= '\' ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | '\' | '"' )
-<number>      ::= <digit> | <number> <digit>
-<digit>       ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 
 <expression> ::= unary_expr? | {<expression>} binary_op {<expression>}
@@ -94,28 +94,27 @@ unary_expr  ::= <primary_expr> | unary_op {unary_expr}
     {<primary_expr>} Index |
     {<primary_expr>} Slice |
     {<primary_expr>} Arguments
-binary_op  ::= logical_op | set_op | rel_op | add_op | mul_op | else_op
+binary_op  ::= logical_op | set_op | rel_op | AddSubtractOperator | MultipleDivideOperator | else_op
 logical_op ::= "and" | "or" | "xor"
 set_op     ::= ["not"] ( "contains" | "in" )
 rel_op     ::= "==" | "!=" | "<" | "<=" | ">" | ">=" | "is" | "is not" | "matches" | "not matches"
-add_op     ::= "+" | "-"
-mul_op     ::= "*" | "/" | "%"
+AddSubtractOperator     ::= "+" | "-"
+MultipleDivideOperator  ::= "*" | "/" | "%"
 else_op    ::= "else"
 unary_op   ::= "+" | "-" | "!" | "not"
 Operand    ::= Literal | IDENTIFIER | "(" <expression> ")"
-BasicLit    ::= int_lit | float_lit | StringLiteral
 Selector  ::= "." IDENTIFIER
 Index     ::= "[" <expression> "]"
 Slice     ::= "[" ( <expression> ) ":" ( <expression> ) "]" | "[" ( <expression> ) ":" <expression> ":" <expression> "]"
 Arguments ::= "(" [ ( <expression> | Literal [ "," <expression> ] ) [ "..." ] [ "," ] ] ")"
 
-int_lit     ::= decimal_lit | octal_lit | hex_lit
-decimal_lit ::= "1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|"0"|<digit>
-octal_lit   ::= "0" ( octal_digit )
-hex_lit     ::= "0" ( "x" | "X" ) hex_digit { hex_digit }
-
-float_lit ::= decimals "." ( decimals )* ( exponent )? | decimals exponent | "." decimals ( exponent )?
-decimals  ::= <digit>*
+NumberLiteral ::= Decimal | octal_lit | hex_lit
+Decimal      ::= '-'? DecimalDigit+ ('.' DecimalDigit+)?
+DecimalDigit ::= 1|2|3|4|5|6|7|8|9|0
+octal_lit    ::= "0" ( octal_digit )
+hex_lit      ::= "0" ( "x" | "X" ) hex_digit { hex_digit }
+Float ::= decimals "." ( decimals )* ( exponent )? | decimals exponent | "." decimals ( exponent )?
+decimals  ::= Decimal*
 exponent  ::= ( "e" | "E" ) [ "+" | "-" ] decimals
 
 StringLiteral       ::= ('"' ( letter | escaped_char)* '"') | DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
@@ -133,9 +132,8 @@ KeyedElement     ::= Element ":" Element
 QuantExpr ::= QuantOp <expression> "as" [ IDENTIFIER "," ] IDENTIFIER "{" <expression> R_CURLY
 QuantOp   ::= "all" | "any" | "filter"
 ExpressionStmt ::= <expression>
-Assignment ::= AssignExpr assign_op <expression>
+Assignment ::= AssignExpr AssignmentOperators <expression>
 AssignExpr ::= IDENTIFIER
-assign_op ::= ( add_op | mul_op ) EQUALS
 IfStmt ::= "if" <expression> Block [ "else" ( IfStmt | Block ) ]
 CaseStmt ::= "case" [ <expression> ] "{" ( CaseWhenClause ) R_CURLY
 CaseWhenClause ::= CaseWhenCase ":" StatementList
@@ -146,10 +144,10 @@ ContinueStmt ::= "continue"
 
 //Object types
 //Type ::= int | string | map | list | Literal
-Literal ::= int_lit | float_lit | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
+Literal ::= Number | NumberLiteral | Decimal | octal_lit | hex_lit | Float | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
 BooleanLiteral::= true | false
-NullLiteral::= NULL
-UndefinedLiteral::= UNDEFINED
+NullLiteral::= null
+UndefinedLiteral::= undefined
 
 
 

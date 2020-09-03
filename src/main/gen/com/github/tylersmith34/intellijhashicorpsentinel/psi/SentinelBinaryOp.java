@@ -8,16 +8,16 @@ import com.intellij.psi.PsiElement;
 public interface SentinelBinaryOp extends PsiElement {
 
   @Nullable
-  SentinelAddOp getAddOp();
+  SentinelAddSubtractOperator getAddSubtractOperator();
+
+  @Nullable
+  SentinelMultipleDivideOperator getMultipleDivideOperator();
 
   @Nullable
   SentinelElseOp getElseOp();
 
   @Nullable
   SentinelLogicalOp getLogicalOp();
-
-  @Nullable
-  SentinelMulOp getMulOp();
 
   @Nullable
   SentinelRelOp getRelOp();

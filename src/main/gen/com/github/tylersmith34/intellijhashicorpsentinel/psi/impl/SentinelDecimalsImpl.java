@@ -28,8 +28,8 @@ public class SentinelDecimalsImpl extends ASTWrapperPsiElement implements Sentin
 
   @Override
   @NotNull
-  public List<SentinelDigit> getDigitList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelDigit.class);
+  public List<SentinelDecimal> getDecimalList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelDecimal.class);
   }
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelFloatLit extends PsiElement {
+public interface SentinelFloat extends PsiElement {
 
   @NotNull
   List<SentinelDecimals> getDecimalsList();

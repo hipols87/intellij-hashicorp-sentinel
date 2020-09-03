@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class SentinelVisitor extends PsiElementVisitor {
 
+  public void visitAddSubtractOperator(@NotNull SentinelAddSubtractOperator o) {
+    visitPsiElement(o);
+  }
+
   public void visitArguments(@NotNull SentinelArguments o) {
     visitPsiElement(o);
   }
@@ -19,7 +23,7 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBasicLit(@NotNull SentinelBasicLit o) {
+  public void visitAssignmentOperators(@NotNull SentinelAssignmentOperators o) {
     visitPsiElement(o);
   }
 
@@ -47,6 +51,14 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDecimal(@NotNull SentinelDecimal o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDecimalDigit(@NotNull SentinelDecimalDigit o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefinition(@NotNull SentinelDefinition o) {
     visitPsiElement(o);
   }
@@ -64,6 +76,10 @@ public class SentinelVisitor extends PsiElementVisitor {
   }
 
   public void visitExternalParameters(@NotNull SentinelExternalParameters o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFloat(@NotNull SentinelFloat o) {
     visitPsiElement(o);
   }
 
@@ -127,7 +143,15 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMultipleDivideOperator(@NotNull SentinelMultipleDivideOperator o) {
+    visitPsiElement(o);
+  }
+
   public void visitNullLiteral(@NotNull SentinelNullLiteral o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNumberLiteral(@NotNull SentinelNumberLiteral o) {
     visitPsiElement(o);
   }
 
@@ -179,14 +203,6 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitAddOp(@NotNull SentinelAddOp o) {
-    visitPsiElement(o);
-  }
-
-  public void visitAssignOp(@NotNull SentinelAssignOp o) {
-    visitPsiElement(o);
-  }
-
   public void visitBigUValue(@NotNull SentinelBigUValue o) {
     visitPsiElement(o);
   }
@@ -199,15 +215,7 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitDecimalLit(@NotNull SentinelDecimalLit o) {
-    visitPsiElement(o);
-  }
-
   public void visitDecimals(@NotNull SentinelDecimals o) {
-    visitPsiElement(o);
-  }
-
-  public void visitDigit(@NotNull SentinelDigit o) {
     visitPsiElement(o);
   }
 
@@ -227,10 +235,6 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitFloatLit(@NotNull SentinelFloatLit o) {
-    visitPsiElement(o);
-  }
-
   public void visitHexByteValue(@NotNull SentinelHexByteValue o) {
     visitPsiElement(o);
   }
@@ -243,10 +247,6 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitIntLit(@NotNull SentinelIntLit o) {
-    visitPsiElement(o);
-  }
-
   public void visitLetter(@NotNull SentinelLetter o) {
     visitPsiElement(o);
   }
@@ -256,14 +256,6 @@ public class SentinelVisitor extends PsiElementVisitor {
   }
 
   public void visitLogicalOp(@NotNull SentinelLogicalOp o) {
-    visitPsiElement(o);
-  }
-
-  public void visitMulOp(@NotNull SentinelMulOp o) {
-    visitPsiElement(o);
-  }
-
-  public void visitNumber(@NotNull SentinelNumber o) {
     visitPsiElement(o);
   }
 

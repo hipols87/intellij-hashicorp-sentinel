@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SentinelElementList extends PsiElement {
 
   @NotNull
-  SentinelElement getElement();
+  List<SentinelElement> getElementList();
 
 }

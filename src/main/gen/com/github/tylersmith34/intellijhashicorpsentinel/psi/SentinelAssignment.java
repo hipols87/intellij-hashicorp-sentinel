@@ -11,7 +11,7 @@ public interface SentinelAssignment extends PsiElement {
   SentinelAssignExpr getAssignExpr();
 
   @NotNull
-  SentinelAssignOp getAssignOp();
+  SentinelAssignmentOperators getAssignmentOperators();
 
   @NotNull
   SentinelExpression getExpression();

@@ -34,8 +34,26 @@ public class SentinelLiteralImpl extends ASTWrapperPsiElement implements Sentine
 
   @Override
   @Nullable
+  public SentinelDecimal getDecimal() {
+    return findChildByClass(SentinelDecimal.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelFloat getFloat() {
+    return findChildByClass(SentinelFloat.class);
+  }
+
+  @Override
+  @Nullable
   public SentinelNullLiteral getNullLiteral() {
     return findChildByClass(SentinelNullLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelNumberLiteral getNumberLiteral() {
+    return findChildByClass(SentinelNumberLiteral.class);
   }
 
   @Override
@@ -52,14 +70,14 @@ public class SentinelLiteralImpl extends ASTWrapperPsiElement implements Sentine
 
   @Override
   @Nullable
-  public SentinelFloatLit getFloatLit() {
-    return findChildByClass(SentinelFloatLit.class);
+  public SentinelHexLit getHexLit() {
+    return findChildByClass(SentinelHexLit.class);
   }
 
   @Override
   @Nullable
-  public SentinelIntLit getIntLit() {
-    return findChildByClass(SentinelIntLit.class);
+  public SentinelOctalLit getOctalLit() {
+    return findChildByClass(SentinelOctalLit.class);
   }
 
 }

@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelIntLit extends PsiElement {
+public interface SentinelAssignmentOperators extends PsiElement {
 
   @Nullable
-  SentinelDecimalLit getDecimalLit();
+  SentinelAddSubtractOperator getAddSubtractOperator();
 
   @Nullable
-  SentinelHexLit getHexLit();
-
-  @Nullable
-  SentinelOctalLit getOctalLit();
+  SentinelMultipleDivideOperator getMultipleDivideOperator();
 
 }

@@ -11,14 +11,14 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelDecimalLitImpl extends ASTWrapperPsiElement implements SentinelDecimalLit {
+public class SentinelAssignmentOperatorsImpl extends ASTWrapperPsiElement implements SentinelAssignmentOperators {
 
-  public SentinelDecimalLitImpl(@NotNull ASTNode node) {
+  public SentinelAssignmentOperatorsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitDecimalLit(this);
+    visitor.visitAssignmentOperators(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,8 +28,14 @@ public class SentinelDecimalLitImpl extends ASTWrapperPsiElement implements Sent
 
   @Override
   @Nullable
-  public SentinelDigit getDigit() {
-    return findChildByClass(SentinelDigit.class);
+  public SentinelAddSubtractOperator getAddSubtractOperator() {
+    return findChildByClass(SentinelAddSubtractOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelMultipleDivideOperator getMultipleDivideOperator() {
+    return findChildByClass(SentinelMultipleDivideOperator.class);
   }
 
 }

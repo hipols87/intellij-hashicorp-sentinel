@@ -31,6 +31,7 @@ DOUBLE_QUOTED_STRING=\"([^\\\"\r\n]|\\[^\r\n])*\"?
 SINGLE_QUOTED_STRING='([^\\'\r\n]|\\[^\r\n])*'?
 COMMENT=("//".*)|(#.*)
 BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
+NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
 
 %%
 <YYINITIAL> {
@@ -44,8 +45,6 @@ BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
   ")"                         { return R_PAREN; }
   ","                         { return COMMA; }
   "="                         { return EQUALS; }
-  "null"                      { return NULL; }
-  "undefined"                 { return UNDEFINED; }
   "all"                       { return ALL; }
   "any"                       { return ANY; }
   "as"                        { return AS; }
@@ -64,14 +63,14 @@ BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
   "<expression>"              { return EXPRESSION; }
   "func"                      { return FUNC; }
   "return"                    { return RETURN; }
-  "<digit>"                   { return DIGIT; }
-  "<number>"                  { return NUMBER; }
   "<primary_expr>"            { return PRIMARY_EXPR; }
   "Block"                     { return BLOCK; }
   "StatementList"             { return STATEMENTLIST; }
   "Expressions"               { return EXPRESSIONS; }
   "true"                      { return TRUE; }
   "false"                     { return FALSE; }
+  "null"                      { return NULL; }
+  "undefined"                 { return UNDEFINED; }
   "CRLF"                      { return CRLF; }
   "value"                     { return VALUE; }
   "array"                     { return ARRAY; }
@@ -83,6 +82,7 @@ BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
   {SINGLE_QUOTED_STRING}      { return SINGLE_QUOTED_STRING; }
   {COMMENT}                   { return COMMENT; }
   {BLOCK_COMMENT}             { return BLOCK_COMMENT; }
+  {NUMBER}                    { return NUMBER; }
 
 }
 

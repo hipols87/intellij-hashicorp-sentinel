@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SentinelDecimals extends PsiElement {
 
   @NotNull
-  List<SentinelDigit> getDigitList();
+  List<SentinelDecimal> getDecimalList();
 
 }

@@ -11,19 +11,25 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelDigitImpl extends ASTWrapperPsiElement implements SentinelDigit {
+public class SentinelDecimalImpl extends ASTWrapperPsiElement implements SentinelDecimal {
 
-  public SentinelDigitImpl(@NotNull ASTNode node) {
+  public SentinelDecimalImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitDigit(this);
+    visitor.visitDecimal(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof SentinelVisitor) accept((SentinelVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<SentinelDecimalDigit> getDecimalDigitList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelDecimalDigit.class);
   }
 
 }

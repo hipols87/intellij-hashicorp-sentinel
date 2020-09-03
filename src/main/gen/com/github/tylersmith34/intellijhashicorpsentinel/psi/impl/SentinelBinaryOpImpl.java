@@ -28,8 +28,14 @@ public class SentinelBinaryOpImpl extends ASTWrapperPsiElement implements Sentin
 
   @Override
   @Nullable
-  public SentinelAddOp getAddOp() {
-    return findChildByClass(SentinelAddOp.class);
+  public SentinelAddSubtractOperator getAddSubtractOperator() {
+    return findChildByClass(SentinelAddSubtractOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelMultipleDivideOperator getMultipleDivideOperator() {
+    return findChildByClass(SentinelMultipleDivideOperator.class);
   }
 
   @Override
@@ -42,12 +48,6 @@ public class SentinelBinaryOpImpl extends ASTWrapperPsiElement implements Sentin
   @Nullable
   public SentinelLogicalOp getLogicalOp() {
     return findChildByClass(SentinelLogicalOp.class);
-  }
-
-  @Override
-  @Nullable
-  public SentinelMulOp getMulOp() {
-    return findChildByClass(SentinelMulOp.class);
   }
 
   @Override

@@ -11,7 +11,16 @@ public interface SentinelLiteral extends PsiElement {
   SentinelBooleanLiteral getBooleanLiteral();
 
   @Nullable
+  SentinelDecimal getDecimal();
+
+  @Nullable
+  SentinelFloat getFloat();
+
+  @Nullable
   SentinelNullLiteral getNullLiteral();
+
+  @Nullable
+  SentinelNumberLiteral getNumberLiteral();
 
   @Nullable
   SentinelStringLiteral getStringLiteral();
@@ -20,9 +29,9 @@ public interface SentinelLiteral extends PsiElement {
   SentinelUndefinedLiteral getUndefinedLiteral();
 
   @Nullable
-  SentinelFloatLit getFloatLit();
+  SentinelHexLit getHexLit();
 
   @Nullable
-  SentinelIntLit getIntLit();
+  SentinelOctalLit getOctalLit();
 
 }

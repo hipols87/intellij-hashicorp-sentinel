@@ -11,14 +11,14 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelMulOpImpl extends ASTWrapperPsiElement implements SentinelMulOp {
+public class SentinelMultipleDivideOperatorImpl extends ASTWrapperPsiElement implements SentinelMultipleDivideOperator {
 
-  public SentinelMulOpImpl(@NotNull ASTNode node) {
+  public SentinelMultipleDivideOperatorImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitMulOp(this);
+    visitor.visitMultipleDivideOperator(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {

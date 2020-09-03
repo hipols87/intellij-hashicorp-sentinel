@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelAssignOp extends PsiElement {
+public interface SentinelDecimal extends PsiElement {
 
-  @Nullable
-  SentinelAddOp getAddOp();
-
-  @Nullable
-  SentinelMulOp getMulOp();
+  @NotNull
+  List<SentinelDecimalDigit> getDecimalDigitList();
 
 }

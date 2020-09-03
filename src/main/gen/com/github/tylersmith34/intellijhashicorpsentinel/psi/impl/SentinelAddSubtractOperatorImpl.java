@@ -11,37 +11,19 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelBasicLitImpl extends ASTWrapperPsiElement implements SentinelBasicLit {
+public class SentinelAddSubtractOperatorImpl extends ASTWrapperPsiElement implements SentinelAddSubtractOperator {
 
-  public SentinelBasicLitImpl(@NotNull ASTNode node) {
+  public SentinelAddSubtractOperatorImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitBasicLit(this);
+    visitor.visitAddSubtractOperator(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof SentinelVisitor) accept((SentinelVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public SentinelStringLiteral getStringLiteral() {
-    return findChildByClass(SentinelStringLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public SentinelFloatLit getFloatLit() {
-    return findChildByClass(SentinelFloatLit.class);
-  }
-
-  @Override
-  @Nullable
-  public SentinelIntLit getIntLit() {
-    return findChildByClass(SentinelIntLit.class);
   }
 
 }

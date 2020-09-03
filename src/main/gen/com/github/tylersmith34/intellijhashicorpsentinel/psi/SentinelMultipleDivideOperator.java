@@ -5,15 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelBasicLit extends PsiElement {
-
-  @Nullable
-  SentinelStringLiteral getStringLiteral();
-
-  @Nullable
-  SentinelFloatLit getFloatLit();
-
-  @Nullable
-  SentinelIntLit getIntLit();
+public interface SentinelMultipleDivideOperator extends PsiElement {
 
 }

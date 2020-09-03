@@ -28,8 +28,8 @@ public class SentinelElementListImpl extends ASTWrapperPsiElement implements Sen
 
   @Override
   @NotNull
-  public SentinelElement getElement() {
-    return findNotNullChildByClass(SentinelElement.class);
+  public List<SentinelElement> getElementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelElement.class);
   }
 
 }

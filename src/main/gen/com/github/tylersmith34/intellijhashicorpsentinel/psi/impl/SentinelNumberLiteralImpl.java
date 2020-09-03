@@ -11,14 +11,14 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelFloatLitImpl extends ASTWrapperPsiElement implements SentinelFloatLit {
+public class SentinelNumberLiteralImpl extends ASTWrapperPsiElement implements SentinelNumberLiteral {
 
-  public SentinelFloatLitImpl(@NotNull ASTNode node) {
+  public SentinelNumberLiteralImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitFloatLit(this);
+    visitor.visitNumberLiteral(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,15 +27,21 @@ public class SentinelFloatLitImpl extends ASTWrapperPsiElement implements Sentin
   }
 
   @Override
-  @NotNull
-  public List<SentinelDecimals> getDecimalsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelDecimals.class);
+  @Nullable
+  public SentinelDecimal getDecimal() {
+    return findChildByClass(SentinelDecimal.class);
   }
 
   @Override
   @Nullable
-  public SentinelExponent getExponent() {
-    return findChildByClass(SentinelExponent.class);
+  public SentinelHexLit getHexLit() {
+    return findChildByClass(SentinelHexLit.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelOctalLit getOctalLit() {
+    return findChildByClass(SentinelOctalLit.class);
   }
 
 }
