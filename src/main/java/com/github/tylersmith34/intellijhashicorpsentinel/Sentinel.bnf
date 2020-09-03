@@ -42,7 +42,6 @@
         DEFAULT='default'
         ELSE='else'
         FOR='for'
-        FUNC='func'
         IF='if'
         RETURN='return'
         WHEN='when'
@@ -50,7 +49,7 @@
 }
 
 SimpleFile ::= Definition*
-Definition ::= { ImportStatement | ExternalParameters | GlobalVariableDefinition | MainRule }
+Definition ::= { ImportStatement | ExternalParameters | GlobalVariableDefinition | MainRule | FunctionDeclaration }
 
 //import
 ImportStatement ::= import StringLiteral (as IDENTIFIER )?
@@ -65,28 +64,15 @@ MainRule       ::= main EQUALS RuleBase
 RuleBase       ::= rule [ "when" <expression> ] L_CURLY <expression> R_CURLY
 
 //Functions
-//FunctionDeclaration ::=  IDENTIFIER EQUALS func L_PAREN (FunctionInput) R_PAREN L_CURLY FunctionBody? R_CURLY {
-//  recoverWhile = not_brace_or_next_value
-//  pin=8
-//}
-//FunctionInput ::= (IDENTIFIER | Literal | COMMA)* {
-//  recoverWhile = not_paren_or_next_value
-//}
-//FunctionBody ::= <statement>* {
-//    recoverWhile = not_terminator_or_next_value
-//    pin=1
-//}
-//<statement> ::= VariableDefinition  | <expression> | <statement> {
-//    recoverWhile = not_EOL
-//    pin=3
-//}
-//VariableDefinition ::= (IDENTIFIER EQUALS Literal) {
-//    recoverWhile = not_EOL
-//}
-//ReturnStatement ::= return ( IDENTIFIER | Literal ) {
-//    recoverWhile = not_EOL
-//}
-
+FunctionDeclaration ::= func Function
+Function            ::= Parameters FunctionBody
+FunctionBody        ::= Block
+Parameters          ::= L_PAREN ( IdentifierList )? R_PAREN
+IdentifierList      ::= IDENTIFIER+ ( "," IDENTIFIER+ )?
+Block               ::= L_CURLY [ <statement> ] R_CURLY
+<statement>         ::= { VariableDefinition  | <expression> | <statement> | ReturnStatement }+
+VariableDefinition  ::= {IDENTIFIER EQUALS Literal}*
+ReturnStatement     ::= return ( IDENTIFIER | Literal )
 
 //primitives
 octal_digit   ::= 1|2|3|4|5|6|7
@@ -137,11 +123,7 @@ hex_byte_value   ::= '\' "x" hex_digit hex_digit
 little_u_value   ::= '\' "u" hex_digit hex_digit hex_digit hex_digit
 big_u_value      ::= '\' "U" hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit
 
-FunctionLit    ::= func Function
-Function       ::= Parameters FunctionBody
-FunctionBody   ::= Block
-Parameters     ::= "(" [ IdentifierList [ "," ] ] ")"
-IdentifierList ::= identifier { "," identifier }
+
 
 ListLit     ::= "[" [ ElementList [ "," ] ] "]"
 ElementList ::= Element ( "," Element )
@@ -165,7 +147,7 @@ ContinueStmt ::= "continue"
 
 //Object types
 //Type ::= int | string | map | list | Literal
-Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral | BasicLit | FunctionLit | ListLit | MapLit
+Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral | BasicLit | FunctionDeclaration | ListLit | MapLit
 StringLiteral::= DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
 NumberLiteral::= <number>
 BooleanLiteral::= true | false

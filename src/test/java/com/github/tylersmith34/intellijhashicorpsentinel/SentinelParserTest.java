@@ -37,4 +37,8 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testGlobalVariable() throws Exception {
         doTest();
     }
+
+    public void testEmptyFunction() throws Exception {
+        doTest();
+    }
 }
