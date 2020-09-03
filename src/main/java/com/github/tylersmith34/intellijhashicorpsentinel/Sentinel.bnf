@@ -1,5 +1,6 @@
 {
   parserClass="com.github.tylersmith34.intellijhashicorpsentinel.SentinelParser"
+  parserUtilClass="com.github.tylersmith34.intellijhashicorpsentinel.SentinelParserUtil"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -61,14 +62,13 @@ MainRule       ::= main EQUALS RuleBase
 RuleBase       ::= rule [ "when" <expression> ] L_CURLY <expression> R_CURLY
 
 //Functions
-FunctionDeclaration ::= func Function
+FunctionDeclaration ::= IDENTIFIER EQUALS func Function
 Function            ::= Parameters FunctionBody
-FunctionBody        ::= L_CURLY Statement R_CURLY
+FunctionBody        ::= L_CURLY Statement ReturnStatement  R_CURLY
 Parameters          ::= L_PAREN ( IdentifierList )? R_PAREN
 IdentifierList      ::= IDENTIFIER+ ( "," IDENTIFIER+ )?
-Block               ::= L_CURLY [ Statement ] R_CURLY
-Statement           ::= { VariableDefinition  | <expression> }* ReturnStatement
-VariableDefinition  ::= IDENTIFIER EQUALS ( Literal )
+Statement           ::= { VariableDefinition  }*
+VariableDefinition  ::= IDENTIFIER EQUALS ( Literal   )
 ReturnStatement     ::= return ( IDENTIFIER | Literal )
 
 //primitives
@@ -122,10 +122,10 @@ big_u_value      ::= '\' "U" hex_digit hex_digit hex_digit hex_digit hex_digit h
 
 
 
-ListLit     ::= "[" [ ElementList [ "," ] ] "]"
-ElementList ::= Element ( "," Element )
+ListLit     ::= L_BRACKET [ ElementList (COMMA)? ] R_BRACKET
+ElementList ::= Element ( COMMA Element )
 Element     ::= <expression> | Literal
-MapLit           ::= "{" [ KeyedElementList [ "," ] ] R_CURLY
+MapLit           ::= "{" [ KeyedElementList [ "," ]? ] R_CURLY
 KeyedElementList ::= KeyedElement ( "," KeyedElement )
 KeyedElement     ::= Element ":" Element
 QuantExpr ::= QuantOp <expression> "as" [ IDENTIFIER "," ] IDENTIFIER "{" <expression> R_CURLY
@@ -144,7 +144,7 @@ ContinueStmt ::= "continue"
 
 //Object types
 //Type ::= int | string | map | list | Literal
-Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral | BasicLit | FunctionDeclaration | ListLit | MapLit
+Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral | BasicLit
 StringLiteral::= DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
 NumberLiteral::= <number>
 BooleanLiteral::= true | false

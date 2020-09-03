@@ -1,17 +1,17 @@
 Sentinel File
-  PsiElement(SentinelTokenType.identifier)('helper')
+  PsiElement(SentinelTokenType.IDENTIFIER)('helper')
   PsiWhiteSpace(' ')
   PsiElement(SentinelTokenType.=)('=')
   PsiWhiteSpace(' ')
   PsiElement(SentinelTokenType.func)('func')
   PsiElement(SentinelTokenType.()('(')
-  PsiElement(SentinelTokenType.identifier)('input')
+  PsiElement(SentinelTokenType.IDENTIFIER)('input')
   PsiElement(SentinelTokenType.,)(',')
   PsiWhiteSpace(' ')
-  PsiElement(SentinelTokenType.identifier)('input2')
+  PsiElement(SentinelTokenType.IDENTIFIER)('input2')
   PsiElement(SentinelTokenType.))(')')
   PsiWhiteSpace(' ')
-  PsiErrorElement:SentinelTokenType.Block expected, got '{'
-    PsiElement(SentinelTokenType.{)('{')
+  PsiElement(SentinelTokenType.{)('{')
   PsiWhiteSpace('\n')
-  PsiElement(SentinelTokenType.})('}')
+  PsiErrorElement:SentinelTokenType.IDENTIFIER or SentinelTokenType.return expected, got '}'
+    PsiElement(SentinelTokenType.})('}')

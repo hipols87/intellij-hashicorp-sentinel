@@ -3,7 +3,7 @@ Sentinel File
     SentinelExternalParametersImpl(EXTERNAL_PARAMETERS)
       PsiElement(SentinelTokenType.param)('param')
       PsiWhiteSpace(' ')
-      PsiElement(SentinelTokenType.identifier)('pword')
+      PsiElement(SentinelTokenType.IDENTIFIER)('pword')
       PsiWhiteSpace(' ')
       PsiElement(SentinelTokenType.default)('default')
       PsiWhiteSpace(' ')

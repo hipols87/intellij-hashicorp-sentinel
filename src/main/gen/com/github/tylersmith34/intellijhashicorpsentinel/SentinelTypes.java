@@ -41,7 +41,7 @@ public interface SentinelTypes {
   IElementType FOR_STMT = new SentinelElementType("FOR_STMT");
   IElementType FUNCTION = new SentinelElementType("FUNCTION");
   IElementType FUNCTION_BODY = new SentinelElementType("FUNCTION_BODY");
-  IElementType FUNCTION_LIT = new SentinelElementType("FUNCTION_LIT");
+  IElementType FUNCTION_DECLARATION = new SentinelElementType("FUNCTION_DECLARATION");
   IElementType GLOBAL_VARIABLE_DEFINITION = new SentinelElementType("GLOBAL_VARIABLE_DEFINITION");
   IElementType HEX_BYTE_VALUE = new SentinelElementType("HEX_BYTE_VALUE");
   IElementType HEX_DIGIT = new SentinelElementType("HEX_DIGIT");
@@ -73,16 +73,19 @@ public interface SentinelTypes {
   IElementType QUANT_EXPR = new SentinelElementType("QUANT_EXPR");
   IElementType QUANT_OP = new SentinelElementType("QUANT_OP");
   IElementType REL_OP = new SentinelElementType("REL_OP");
+  IElementType RETURN_STATEMENT = new SentinelElementType("RETURN_STATEMENT");
   IElementType RULE_BASE = new SentinelElementType("RULE_BASE");
   IElementType SELECTOR = new SentinelElementType("SELECTOR");
   IElementType SET_OP = new SentinelElementType("SET_OP");
   IElementType SLICE = new SentinelElementType("SLICE");
+  IElementType STATEMENT = new SentinelElementType("STATEMENT");
   IElementType STRING_LIT = new SentinelElementType("STRING_LIT");
   IElementType STRING_LITERAL = new SentinelElementType("STRING_LITERAL");
   IElementType UNARY_EXPR = new SentinelElementType("UNARY_EXPR");
   IElementType UNARY_OP = new SentinelElementType("UNARY_OP");
   IElementType UNDEFINED_LITERAL = new SentinelElementType("UNDEFINED_LITERAL");
   IElementType UNICODE_VALUE = new SentinelElementType("UNICODE_VALUE");
+  IElementType VARIABLE_DEFINITION = new SentinelElementType("VARIABLE_DEFINITION");
 
   IElementType ALL = new SentinelTokenType("all");
   IElementType ANY = new SentinelTokenType("any");
@@ -104,7 +107,7 @@ public interface SentinelTypes {
   IElementType FALSE = new SentinelTokenType("false");
   IElementType FOR = new SentinelTokenType("for");
   IElementType FUNC = new SentinelTokenType("func");
-  IElementType IDENTIFIER = new SentinelTokenType("identifier");
+  IElementType IDENTIFIER = new SentinelTokenType("IDENTIFIER");
   IElementType IF = new SentinelTokenType("if");
   IElementType IMPORT = new SentinelTokenType("import");
   IElementType L_BRACKET = new SentinelTokenType("[");
@@ -226,8 +229,8 @@ public interface SentinelTypes {
       else if (type == FUNCTION_BODY) {
         return new SentinelFunctionBodyImpl(node);
       }
-      else if (type == FUNCTION_LIT) {
-        return new SentinelFunctionLitImpl(node);
+      else if (type == FUNCTION_DECLARATION) {
+        return new SentinelFunctionDeclarationImpl(node);
       }
       else if (type == GLOBAL_VARIABLE_DEFINITION) {
         return new SentinelGlobalVariableDefinitionImpl(node);
@@ -322,6 +325,9 @@ public interface SentinelTypes {
       else if (type == REL_OP) {
         return new SentinelRelOpImpl(node);
       }
+      else if (type == RETURN_STATEMENT) {
+        return new SentinelReturnStatementImpl(node);
+      }
       else if (type == RULE_BASE) {
         return new SentinelRuleBaseImpl(node);
       }
@@ -333,6 +339,9 @@ public interface SentinelTypes {
       }
       else if (type == SLICE) {
         return new SentinelSliceImpl(node);
+      }
+      else if (type == STATEMENT) {
+        return new SentinelStatementImpl(node);
       }
       else if (type == STRING_LIT) {
         return new SentinelStringLitImpl(node);
@@ -351,6 +360,9 @@ public interface SentinelTypes {
       }
       else if (type == UNICODE_VALUE) {
         return new SentinelUnicodeValueImpl(node);
+      }
+      else if (type == VARIABLE_DEFINITION) {
+        return new SentinelVariableDefinitionImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }
