@@ -50,7 +50,19 @@ public class SentinelParserTest extends ParsingTestCase {
         doTest();
     }
 
-    public void testListOfLiterals() throws Exception {
+    public void testListOfIntegers() throws Exception {
+        doTest();
+    }
+
+    public void testListOfDecimals() throws Exception {
+        doTest();
+    }
+
+    public void testListOfList() throws Exception {
+        doTest();
+    }
+
+    public void testMap() throws Exception {
         doTest();
     }
 }

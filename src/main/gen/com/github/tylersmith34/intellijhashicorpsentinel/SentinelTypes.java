@@ -57,7 +57,7 @@ public interface SentinelTypes {
   IElementType LITTLE_U_VALUE = new SentinelElementType("LITTLE_U_VALUE");
   IElementType LOGICAL_OP = new SentinelElementType("LOGICAL_OP");
   IElementType MAIN_RULE = new SentinelElementType("MAIN_RULE");
-  IElementType MAP_LIT = new SentinelElementType("MAP_LIT");
+  IElementType MAP_DEFINITION = new SentinelElementType("MAP_DEFINITION");
   IElementType MULTIPLE_DIVIDE_OPERATOR = new SentinelElementType("MULTIPLE_DIVIDE_OPERATOR");
   IElementType NULL_LITERAL = new SentinelElementType("NULL_LITERAL");
   IElementType NUMBER_LITERAL = new SentinelElementType("NUMBER_LITERAL");
@@ -272,8 +272,8 @@ public interface SentinelTypes {
       else if (type == MAIN_RULE) {
         return new SentinelMainRuleImpl(node);
       }
-      else if (type == MAP_LIT) {
-        return new SentinelMapLitImpl(node);
+      else if (type == MAP_DEFINITION) {
+        return new SentinelMapDefinitionImpl(node);
       }
       else if (type == MULTIPLE_DIVIDE_OPERATOR) {
         return new SentinelMultipleDivideOperatorImpl(node);

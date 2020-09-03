@@ -63,14 +63,14 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   "<expression>"              { return EXPRESSION; }
   "func"                      { return FUNC; }
   "return"                    { return RETURN; }
-  "<primary_expr>"            { return PRIMARY_EXPR; }
-  "Block"                     { return BLOCK; }
-  "StatementList"             { return STATEMENTLIST; }
-  "Expressions"               { return EXPRESSIONS; }
   "true"                      { return TRUE; }
   "false"                     { return FALSE; }
   "null"                      { return NULL; }
   "undefined"                 { return UNDEFINED; }
+  "<primary_expr>"            { return PRIMARY_EXPR; }
+  "Block"                     { return BLOCK; }
+  "StatementList"             { return STATEMENTLIST; }
+  "Expressions"               { return EXPRESSIONS; }
   "CRLF"                      { return CRLF; }
   "value"                     { return VALUE; }
   "array"                     { return ARRAY; }

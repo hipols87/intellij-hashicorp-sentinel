@@ -70,16 +70,25 @@ IdentifierList      ::= IDENTIFIER+ ( COMMA IDENTIFIER+ )?
 Statement           ::= { VariableDefinition  }*
 
 //Variables
-VariableDefinition  ::= IDENTIFIER EQUALS ( Literal | ListDefinition  )
+VariableDefinition  ::= IDENTIFIER EQUALS ( Literal | ListDefinition | MapDefinition  )
 //TODO use this instead of equals
 AssignmentOperators ::= ( AddSubtractOperator | MultipleDivideOperator ) EQUALS
 
 
 ListDefinition     ::= L_BRACKET ( ElementList )? R_BRACKET
 ElementList ::= Element+ ( COMMA Element)*
-Element     ::= Literal
+Element     ::= Literal | ListDefinition | MapDefinition
 
-//primitives
+MapDefinition    ::= L_CURLY ( KeyedElementList )? R_CURLY
+KeyedElementList ::= KeyedElement ( COMMA KeyedElement COMMA?)*
+KeyedElement     ::= Element ":" Element
+
+//primitive types
+Literal ::= Number | NumberLiteral | Decimal | octal_lit | hex_lit | Float | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
+BooleanLiteral::= true | false
+NullLiteral::= null
+UndefinedLiteral::= undefined
+
 octal_digit   ::= 1|2|3|4|5|6|7
 hex_digit     ::= 1|2|3|4|5|6|7 | "A" | "F" | "a" | "f"
 letter        ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
@@ -126,9 +135,6 @@ little_u_value   ::= '\' "u" hex_digit hex_digit hex_digit hex_digit
 big_u_value      ::= '\' "U" hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit
 
 
-MapLit           ::= "{" ( KeyedElementList [ "," ] ) R_CURLY
-KeyedElementList ::= KeyedElement ( "," KeyedElement )
-KeyedElement     ::= Element ":" Element
 QuantExpr ::= QuantOp <expression> "as" [ IDENTIFIER "," ] IDENTIFIER "{" <expression> R_CURLY
 QuantOp   ::= "all" | "any" | "filter"
 ExpressionStmt ::= <expression>
@@ -142,12 +148,7 @@ ForStmt ::= "for" Expressions "as" ( IDENTIFIER "," ) IDENTIFIER Block
 BreakStmt ::= "break"
 ContinueStmt ::= "continue"
 
-//Object types
-//Type ::= int | string | map | list | Literal
-Literal ::= Number | NumberLiteral | Decimal | octal_lit | hex_lit | Float | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
-BooleanLiteral::= true | false
-NullLiteral::= null
-UndefinedLiteral::= undefined
+
 
 
 
