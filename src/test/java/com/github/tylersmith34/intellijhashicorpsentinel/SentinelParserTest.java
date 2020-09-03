@@ -49,4 +49,8 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testFunctionWithVarAndReturn() throws Exception {
         doTest();
     }
+
+    public void testListOfLiterals() throws Exception {
+        doTest();
+    }
 }

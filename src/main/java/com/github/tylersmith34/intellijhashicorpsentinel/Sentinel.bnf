@@ -54,7 +54,7 @@ ImportStatement ::= import StringLiteral (as IDENTIFIER )?
 
 //External param
 ExternalParameters       ::= param IDENTIFIER ( default StringLiteral )?
-GlobalVariableDefinition ::= (IDENTIFIER EQUALS Literal)
+GlobalVariableDefinition ::= VariableDefinition
 
 //Rules
 MainRule       ::= main EQUALS RuleBase
@@ -65,11 +65,17 @@ RuleBase       ::= rule [ "when" <expression> ] L_CURLY <expression> R_CURLY
 FunctionDeclaration ::= IDENTIFIER EQUALS func Function
 Function            ::= Parameters FunctionBody
 FunctionBody        ::= L_CURLY Statement ReturnStatement  R_CURLY
-Parameters          ::= L_PAREN ( IdentifierList )? R_PAREN
-IdentifierList      ::= IDENTIFIER+ ( "," IDENTIFIER+ )?
-Statement           ::= { VariableDefinition  }*
-VariableDefinition  ::= IDENTIFIER EQUALS ( Literal   )
 ReturnStatement     ::= return ( IDENTIFIER | Literal )
+Parameters          ::= L_PAREN ( IdentifierList )? R_PAREN
+IdentifierList      ::= IDENTIFIER+ ( COMMA IDENTIFIER+ )?
+Statement           ::= { VariableDefinition  }*
+
+//Variables
+VariableDefinition  ::= IDENTIFIER EQUALS ( Literal | ListDefinition  )
+
+ListDefinition     ::= L_BRACKET ( ElementList )? R_BRACKET
+ElementList ::= Element
+Element     ::= Literal
 
 //primitives
 octal_digit   ::= 1|2|3|4|5|6|7
@@ -97,7 +103,7 @@ mul_op     ::= "*" | "/" | "%"
 else_op    ::= "else"
 unary_op   ::= "+" | "-" | "!" | "not"
 Operand    ::= Literal | IDENTIFIER | "(" <expression> ")"
-BasicLit    ::= int_lit | float_lit | string_lit
+BasicLit    ::= int_lit | float_lit | StringLiteral
 Selector  ::= "." IDENTIFIER
 Index     ::= "[" <expression> "]"
 Slice     ::= "[" ( <expression> ) ":" ( <expression> ) "]" | "[" ( <expression> ) ":" <expression> ":" <expression> "]"
@@ -112,7 +118,7 @@ float_lit ::= decimals "." ( decimals )* ( exponent )? | decimals exponent | "."
 decimals  ::= <digit>*
 exponent  ::= ( "e" | "E" ) [ "+" | "-" ] decimals
 
-string_lit       ::= '"' ( letter | escaped_char)* '"'
+StringLiteral       ::= ('"' ( letter | escaped_char)* '"') | DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
 unicode_value    ::= little_u_value | big_u_value | escaped_char
 byte_value       ::= octal_byte_value | hex_byte_value
 octal_byte_value ::= '\' octal_digit octal_digit octal_digit
@@ -121,11 +127,7 @@ little_u_value   ::= '\' "u" hex_digit hex_digit hex_digit hex_digit
 big_u_value      ::= '\' "U" hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit
 
 
-
-ListLit     ::= L_BRACKET [ ElementList (COMMA)? ] R_BRACKET
-ElementList ::= Element ( COMMA Element )
-Element     ::= <expression> | Literal
-MapLit           ::= "{" [ KeyedElementList [ "," ]? ] R_CURLY
+MapLit           ::= "{" ( KeyedElementList [ "," ] ) R_CURLY
 KeyedElementList ::= KeyedElement ( "," KeyedElement )
 KeyedElement     ::= Element ":" Element
 QuantExpr ::= QuantOp <expression> "as" [ IDENTIFIER "," ] IDENTIFIER "{" <expression> R_CURLY
@@ -144,9 +146,7 @@ ContinueStmt ::= "continue"
 
 //Object types
 //Type ::= int | string | map | list | Literal
-Literal ::= StringLiteral | NumberLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral | BasicLit
-StringLiteral::= DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
-NumberLiteral::= <number>
+Literal ::= int_lit | float_lit | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
 BooleanLiteral::= true | false
 NullLiteral::= NULL
 UndefinedLiteral::= UNDEFINED

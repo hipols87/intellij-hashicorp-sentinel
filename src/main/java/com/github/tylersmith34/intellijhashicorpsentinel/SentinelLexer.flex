@@ -67,6 +67,7 @@ BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
   "<digit>"                   { return DIGIT; }
   "<number>"                  { return NUMBER; }
   "<primary_expr>"            { return PRIMARY_EXPR; }
+  "Block"                     { return BLOCK; }
   "StatementList"             { return STATEMENTLIST; }
   "Expressions"               { return EXPRESSIONS; }
   "true"                      { return TRUE; }

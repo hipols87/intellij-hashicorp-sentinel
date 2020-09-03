@@ -54,7 +54,7 @@ public interface SentinelTypes {
   IElementType KEYED_ELEMENT = new SentinelElementType("KEYED_ELEMENT");
   IElementType KEYED_ELEMENT_LIST = new SentinelElementType("KEYED_ELEMENT_LIST");
   IElementType LETTER = new SentinelElementType("LETTER");
-  IElementType LIST_LIT = new SentinelElementType("LIST_LIT");
+  IElementType LIST_DEFINITION = new SentinelElementType("LIST_DEFINITION");
   IElementType LITERAL = new SentinelElementType("LITERAL");
   IElementType LITTLE_U_VALUE = new SentinelElementType("LITTLE_U_VALUE");
   IElementType LOGICAL_OP = new SentinelElementType("LOGICAL_OP");
@@ -63,7 +63,6 @@ public interface SentinelTypes {
   IElementType MUL_OP = new SentinelElementType("MUL_OP");
   IElementType NULL_LITERAL = new SentinelElementType("NULL_LITERAL");
   IElementType NUMBER = new SentinelElementType("NUMBER");
-  IElementType NUMBER_LITERAL = new SentinelElementType("NUMBER_LITERAL");
   IElementType OCTAL_BYTE_VALUE = new SentinelElementType("OCTAL_BYTE_VALUE");
   IElementType OCTAL_DIGIT = new SentinelElementType("OCTAL_DIGIT");
   IElementType OCTAL_LIT = new SentinelElementType("OCTAL_LIT");
@@ -79,7 +78,6 @@ public interface SentinelTypes {
   IElementType SET_OP = new SentinelElementType("SET_OP");
   IElementType SLICE = new SentinelElementType("SLICE");
   IElementType STATEMENT = new SentinelElementType("STATEMENT");
-  IElementType STRING_LIT = new SentinelElementType("STRING_LIT");
   IElementType STRING_LITERAL = new SentinelElementType("STRING_LITERAL");
   IElementType UNARY_EXPR = new SentinelElementType("UNARY_EXPR");
   IElementType UNARY_OP = new SentinelElementType("UNARY_OP");
@@ -268,8 +266,8 @@ public interface SentinelTypes {
       else if (type == LETTER) {
         return new SentinelLetterImpl(node);
       }
-      else if (type == LIST_LIT) {
-        return new SentinelListLitImpl(node);
+      else if (type == LIST_DEFINITION) {
+        return new SentinelListDefinitionImpl(node);
       }
       else if (type == LITERAL) {
         return new SentinelLiteralImpl(node);
@@ -294,9 +292,6 @@ public interface SentinelTypes {
       }
       else if (type == NUMBER) {
         return new SentinelNumberImpl(node);
-      }
-      else if (type == NUMBER_LITERAL) {
-        return new SentinelNumberLiteralImpl(node);
       }
       else if (type == OCTAL_BYTE_VALUE) {
         return new SentinelOctalByteValueImpl(node);
@@ -342,9 +337,6 @@ public interface SentinelTypes {
       }
       else if (type == STATEMENT) {
         return new SentinelStatementImpl(node);
-      }
-      else if (type == STRING_LIT) {
-        return new SentinelStringLitImpl(node);
       }
       else if (type == STRING_LITERAL) {
         return new SentinelStringLiteralImpl(node);
