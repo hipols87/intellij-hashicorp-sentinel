@@ -1,0 +1,3 @@
+helper = func(input, input2) {
+    return true
+}

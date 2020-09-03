@@ -1,0 +1,4 @@
+helper = func(input, input2) {
+    valid = true
+    return valid
+}
