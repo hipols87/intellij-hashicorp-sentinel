@@ -67,7 +67,7 @@ FunctionBody        ::= L_CURLY Statement R_CURLY
 Parameters          ::= L_PAREN ( IdentifierList )? R_PAREN
 IdentifierList      ::= IDENTIFIER+ ( "," IDENTIFIER+ )?
 Block               ::= L_CURLY [ Statement ] R_CURLY
-Statement           ::= { VariableDefinition  | <expression> | ReturnStatement }+
+Statement           ::= { VariableDefinition  | <expression> }* ReturnStatement
 VariableDefinition  ::= IDENTIFIER EQUALS ( Literal )
 ReturnStatement     ::= return ( IDENTIFIER | Literal )
 
