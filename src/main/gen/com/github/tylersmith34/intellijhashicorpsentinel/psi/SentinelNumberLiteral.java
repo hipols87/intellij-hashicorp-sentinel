@@ -11,9 +11,9 @@ public interface SentinelNumberLiteral extends PsiElement {
   SentinelDecimal getDecimal();
 
   @Nullable
-  SentinelHexLit getHexLit();
+  SentinelHexLiteral getHexLiteral();
 
   @Nullable
-  SentinelOctalLit getOctalLit();
+  SentinelOctalLiteral getOctalLiteral();
 
 }

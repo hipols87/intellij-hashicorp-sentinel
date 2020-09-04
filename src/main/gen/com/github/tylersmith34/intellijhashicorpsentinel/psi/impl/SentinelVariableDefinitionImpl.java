@@ -63,6 +63,12 @@ public class SentinelVariableDefinitionImpl extends ASTWrapperPsiElement impleme
   }
 
   @Override
+  @Nullable
+  public SentinelQuantifierExpression getQuantifierExpression() {
+    return findChildByClass(SentinelQuantifierExpression.class);
+  }
+
+  @Override
   @NotNull
   public PsiElement getIdentifier() {
     return findNotNullChildByType(IDENTIFIER);

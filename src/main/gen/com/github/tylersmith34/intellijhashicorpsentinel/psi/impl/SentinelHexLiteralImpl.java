@@ -11,14 +11,14 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelLittleUValueImpl extends ASTWrapperPsiElement implements SentinelLittleUValue {
+public class SentinelHexLiteralImpl extends ASTWrapperPsiElement implements SentinelHexLiteral {
 
-  public SentinelLittleUValueImpl(@NotNull ASTNode node) {
+  public SentinelHexLiteralImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitLittleUValue(this);
+    visitor.visitHexLiteral(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {

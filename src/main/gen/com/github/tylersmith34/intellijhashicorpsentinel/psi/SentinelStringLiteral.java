@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface SentinelStringLiteral extends PsiElement {
 
   @NotNull
-  List<SentinelEscapedChar> getEscapedCharList();
+  List<SentinelEscapedCharacter> getEscapedCharacterList();
 
   @NotNull
   List<SentinelLetter> getLetterList();

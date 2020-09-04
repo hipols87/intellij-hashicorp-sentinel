@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface SentinelRuleBase extends PsiElement {
 
   @NotNull
-  List<SentinelCondition> getConditionList();
+  SentinelBlock getBlock();
+
+  @Nullable
+  SentinelBooleanExpressions getBooleanExpressions();
 
 }

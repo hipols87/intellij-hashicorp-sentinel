@@ -11,22 +11,12 @@ import com.github.tylersmith34.intellijhashicorpsentinel.psi.impl.*;
 public interface SentinelTypes {
 
   IElementType ADD_SUBTRACT_OPERATOR = new SentinelElementType("ADD_SUBTRACT_OPERATOR");
-  IElementType ARGUMENTS = new SentinelElementType("ARGUMENTS");
-  IElementType ASSIGNMENT = new SentinelElementType("ASSIGNMENT");
-  IElementType ASSIGN_EXPR = new SentinelElementType("ASSIGN_EXPR");
-  IElementType BIG_U_VALUE = new SentinelElementType("BIG_U_VALUE");
-  IElementType BINARY_OPERATION = new SentinelElementType("BINARY_OPERATION");
   IElementType BLOCK = new SentinelElementType("BLOCK");
   IElementType BOOLEAN_EXPRESSION = new SentinelElementType("BOOLEAN_EXPRESSION");
   IElementType BOOLEAN_EXPRESSIONS = new SentinelElementType("BOOLEAN_EXPRESSIONS");
   IElementType BOOLEAN_LITERAL = new SentinelElementType("BOOLEAN_LITERAL");
   IElementType BREAK_STMT = new SentinelElementType("BREAK_STMT");
-  IElementType BYTE_VALUE = new SentinelElementType("BYTE_VALUE");
-  IElementType CASE_STMT = new SentinelElementType("CASE_STMT");
-  IElementType CASE_WHEN_CASE = new SentinelElementType("CASE_WHEN_CASE");
-  IElementType CASE_WHEN_CLAUSE = new SentinelElementType("CASE_WHEN_CLAUSE");
   IElementType COMPARISON_OPERATOR = new SentinelElementType("COMPARISON_OPERATOR");
-  IElementType CONDITION = new SentinelElementType("CONDITION");
   IElementType CONTINUE_STMT = new SentinelElementType("CONTINUE_STMT");
   IElementType DECIMAL = new SentinelElementType("DECIMAL");
   IElementType DECIMALS = new SentinelElementType("DECIMALS");
@@ -36,7 +26,7 @@ public interface SentinelTypes {
   IElementType ELEMENT = new SentinelElementType("ELEMENT");
   IElementType ELEMENT_LIST = new SentinelElementType("ELEMENT_LIST");
   IElementType ELSE_OPERATOR = new SentinelElementType("ELSE_OPERATOR");
-  IElementType ESCAPED_CHAR = new SentinelElementType("ESCAPED_CHAR");
+  IElementType ESCAPED_CHARACTER = new SentinelElementType("ESCAPED_CHARACTER");
   IElementType EXPONENT = new SentinelElementType("EXPONENT");
   IElementType EXTERNAL_PARAMETERS = new SentinelElementType("EXTERNAL_PARAMETERS");
   IElementType FLOAT = new SentinelElementType("FLOAT");
@@ -48,51 +38,41 @@ public interface SentinelTypes {
   IElementType FUNCTION_DECLARATION = new SentinelElementType("FUNCTION_DECLARATION");
   IElementType FUNCTION_STATEMENT = new SentinelElementType("FUNCTION_STATEMENT");
   IElementType GLOBAL_VARIABLE_DEFINITION = new SentinelElementType("GLOBAL_VARIABLE_DEFINITION");
-  IElementType HEX_BYTE_VALUE = new SentinelElementType("HEX_BYTE_VALUE");
   IElementType HEX_DIGIT = new SentinelElementType("HEX_DIGIT");
-  IElementType HEX_LIT = new SentinelElementType("HEX_LIT");
+  IElementType HEX_LITERAL = new SentinelElementType("HEX_LITERAL");
   IElementType IDENTIFIER_LIST = new SentinelElementType("IDENTIFIER_LIST");
   IElementType IF_STATEMENT = new SentinelElementType("IF_STATEMENT");
   IElementType IMPORT_STATEMENT = new SentinelElementType("IMPORT_STATEMENT");
-  IElementType INDEX = new SentinelElementType("INDEX");
   IElementType KEYED_ELEMENT = new SentinelElementType("KEYED_ELEMENT");
   IElementType KEYED_ELEMENT_LIST = new SentinelElementType("KEYED_ELEMENT_LIST");
   IElementType LETTER = new SentinelElementType("LETTER");
   IElementType LIST_DEFINITION = new SentinelElementType("LIST_DEFINITION");
   IElementType LITERAL = new SentinelElementType("LITERAL");
-  IElementType LITTLE_U_VALUE = new SentinelElementType("LITTLE_U_VALUE");
   IElementType LOGICAL_OPERATOR = new SentinelElementType("LOGICAL_OPERATOR");
   IElementType MAIN_RULE = new SentinelElementType("MAIN_RULE");
   IElementType MAP_DEFINITION = new SentinelElementType("MAP_DEFINITION");
   IElementType MULTIPLE_DIVIDE_OPERATOR = new SentinelElementType("MULTIPLE_DIVIDE_OPERATOR");
   IElementType NULL_LITERAL = new SentinelElementType("NULL_LITERAL");
   IElementType NUMBER_LITERAL = new SentinelElementType("NUMBER_LITERAL");
-  IElementType OCTAL_BYTE_VALUE = new SentinelElementType("OCTAL_BYTE_VALUE");
   IElementType OCTAL_DIGIT = new SentinelElementType("OCTAL_DIGIT");
-  IElementType OCTAL_LIT = new SentinelElementType("OCTAL_LIT");
-  IElementType OPERAND = new SentinelElementType("OPERAND");
+  IElementType OCTAL_LITERAL = new SentinelElementType("OCTAL_LITERAL");
   IElementType PARAMETERS = new SentinelElementType("PARAMETERS");
-  IElementType PRIMARY_EXPRESSION = new SentinelElementType("PRIMARY_EXPRESSION");
   IElementType QUANTIFIER_EXPRESSION = new SentinelElementType("QUANTIFIER_EXPRESSION");
   IElementType QUANTIFIER_OPERATOR = new SentinelElementType("QUANTIFIER_OPERATOR");
   IElementType RETURN_STATEMENT = new SentinelElementType("RETURN_STATEMENT");
   IElementType RULE_BASE = new SentinelElementType("RULE_BASE");
   IElementType SELECTOR = new SentinelElementType("SELECTOR");
   IElementType SET_OPERATOR = new SentinelElementType("SET_OPERATOR");
-  IElementType SLICE = new SentinelElementType("SLICE");
   IElementType STATEMENT = new SentinelElementType("STATEMENT");
   IElementType STRING_LITERAL = new SentinelElementType("STRING_LITERAL");
-  IElementType UNARY_EXPRESSION = new SentinelElementType("UNARY_EXPRESSION");
   IElementType UNARY_OPERATOR = new SentinelElementType("UNARY_OPERATOR");
   IElementType UNDEFINED_LITERAL = new SentinelElementType("UNDEFINED_LITERAL");
-  IElementType UNICODE_VALUE = new SentinelElementType("UNICODE_VALUE");
   IElementType VARIABLE_DEFINITION = new SentinelElementType("VARIABLE_DEFINITION");
 
   IElementType ALL = new SentinelTokenType("all");
   IElementType AND = new SentinelTokenType("and");
   IElementType ANY = new SentinelTokenType("any");
   IElementType AS = new SentinelTokenType("as");
-  IElementType ASSIGNMENTOPERATORS = new SentinelTokenType("AssignmentOperators");
   IElementType BLOCK_COMMENT = new SentinelTokenType("BLOCK_COMMENT");
   IElementType BREAK = new SentinelTokenType("break");
   IElementType COMMA = new SentinelTokenType(",");
@@ -127,33 +107,16 @@ public interface SentinelTypes {
   IElementType R_CURLY = new SentinelTokenType("}");
   IElementType R_PAREN = new SentinelTokenType(")");
   IElementType SINGLE_QUOTED_STRING = new SentinelTokenType("SINGLE_QUOTED_STRING");
-  IElementType STATEMENTLIST = new SentinelTokenType("StatementList");
   IElementType TRUE = new SentinelTokenType("true");
   IElementType UNDEFINED = new SentinelTokenType("undefined");
+  IElementType WHEN = new SentinelTokenType("when");
   IElementType XOR = new SentinelTokenType("xor");
-  IElementType _CONDITION_ = new SentinelTokenType("<condition>");
-  IElementType _PRIMARY_EXPRESSION_ = new SentinelTokenType("<primary_expression>");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
       if (type == ADD_SUBTRACT_OPERATOR) {
         return new SentinelAddSubtractOperatorImpl(node);
-      }
-      else if (type == ARGUMENTS) {
-        return new SentinelArgumentsImpl(node);
-      }
-      else if (type == ASSIGNMENT) {
-        return new SentinelAssignmentImpl(node);
-      }
-      else if (type == ASSIGN_EXPR) {
-        return new SentinelAssignExprImpl(node);
-      }
-      else if (type == BIG_U_VALUE) {
-        return new SentinelBigUValueImpl(node);
-      }
-      else if (type == BINARY_OPERATION) {
-        return new SentinelBinaryOperationImpl(node);
       }
       else if (type == BLOCK) {
         return new SentinelBlockImpl(node);
@@ -170,23 +133,8 @@ public interface SentinelTypes {
       else if (type == BREAK_STMT) {
         return new SentinelBreakStmtImpl(node);
       }
-      else if (type == BYTE_VALUE) {
-        return new SentinelByteValueImpl(node);
-      }
-      else if (type == CASE_STMT) {
-        return new SentinelCaseStmtImpl(node);
-      }
-      else if (type == CASE_WHEN_CASE) {
-        return new SentinelCaseWhenCaseImpl(node);
-      }
-      else if (type == CASE_WHEN_CLAUSE) {
-        return new SentinelCaseWhenClauseImpl(node);
-      }
       else if (type == COMPARISON_OPERATOR) {
         return new SentinelComparisonOperatorImpl(node);
-      }
-      else if (type == CONDITION) {
-        return new SentinelConditionImpl(node);
       }
       else if (type == CONTINUE_STMT) {
         return new SentinelContinueStmtImpl(node);
@@ -215,8 +163,8 @@ public interface SentinelTypes {
       else if (type == ELSE_OPERATOR) {
         return new SentinelElseOperatorImpl(node);
       }
-      else if (type == ESCAPED_CHAR) {
-        return new SentinelEscapedCharImpl(node);
+      else if (type == ESCAPED_CHARACTER) {
+        return new SentinelEscapedCharacterImpl(node);
       }
       else if (type == EXPONENT) {
         return new SentinelExponentImpl(node);
@@ -251,14 +199,11 @@ public interface SentinelTypes {
       else if (type == GLOBAL_VARIABLE_DEFINITION) {
         return new SentinelGlobalVariableDefinitionImpl(node);
       }
-      else if (type == HEX_BYTE_VALUE) {
-        return new SentinelHexByteValueImpl(node);
-      }
       else if (type == HEX_DIGIT) {
         return new SentinelHexDigitImpl(node);
       }
-      else if (type == HEX_LIT) {
-        return new SentinelHexLitImpl(node);
+      else if (type == HEX_LITERAL) {
+        return new SentinelHexLiteralImpl(node);
       }
       else if (type == IDENTIFIER_LIST) {
         return new SentinelIdentifierListImpl(node);
@@ -268,9 +213,6 @@ public interface SentinelTypes {
       }
       else if (type == IMPORT_STATEMENT) {
         return new SentinelImportStatementImpl(node);
-      }
-      else if (type == INDEX) {
-        return new SentinelIndexImpl(node);
       }
       else if (type == KEYED_ELEMENT) {
         return new SentinelKeyedElementImpl(node);
@@ -286,9 +228,6 @@ public interface SentinelTypes {
       }
       else if (type == LITERAL) {
         return new SentinelLiteralImpl(node);
-      }
-      else if (type == LITTLE_U_VALUE) {
-        return new SentinelLittleUValueImpl(node);
       }
       else if (type == LOGICAL_OPERATOR) {
         return new SentinelLogicalOperatorImpl(node);
@@ -308,23 +247,14 @@ public interface SentinelTypes {
       else if (type == NUMBER_LITERAL) {
         return new SentinelNumberLiteralImpl(node);
       }
-      else if (type == OCTAL_BYTE_VALUE) {
-        return new SentinelOctalByteValueImpl(node);
-      }
       else if (type == OCTAL_DIGIT) {
         return new SentinelOctalDigitImpl(node);
       }
-      else if (type == OCTAL_LIT) {
-        return new SentinelOctalLitImpl(node);
-      }
-      else if (type == OPERAND) {
-        return new SentinelOperandImpl(node);
+      else if (type == OCTAL_LITERAL) {
+        return new SentinelOctalLiteralImpl(node);
       }
       else if (type == PARAMETERS) {
         return new SentinelParametersImpl(node);
-      }
-      else if (type == PRIMARY_EXPRESSION) {
-        return new SentinelPrimaryExpressionImpl(node);
       }
       else if (type == QUANTIFIER_EXPRESSION) {
         return new SentinelQuantifierExpressionImpl(node);
@@ -344,26 +274,17 @@ public interface SentinelTypes {
       else if (type == SET_OPERATOR) {
         return new SentinelSetOperatorImpl(node);
       }
-      else if (type == SLICE) {
-        return new SentinelSliceImpl(node);
-      }
       else if (type == STATEMENT) {
         return new SentinelStatementImpl(node);
       }
       else if (type == STRING_LITERAL) {
         return new SentinelStringLiteralImpl(node);
       }
-      else if (type == UNARY_EXPRESSION) {
-        return new SentinelUnaryExpressionImpl(node);
-      }
       else if (type == UNARY_OPERATOR) {
         return new SentinelUnaryOperatorImpl(node);
       }
       else if (type == UNDEFINED_LITERAL) {
         return new SentinelUndefinedLiteralImpl(node);
-      }
-      else if (type == UNICODE_VALUE) {
-        return new SentinelUnicodeValueImpl(node);
       }
       else if (type == VARIABLE_DEFINITION) {
         return new SentinelVariableDefinitionImpl(node);

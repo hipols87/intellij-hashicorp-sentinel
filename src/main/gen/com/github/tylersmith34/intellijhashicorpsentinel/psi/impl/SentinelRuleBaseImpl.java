@@ -28,8 +28,14 @@ public class SentinelRuleBaseImpl extends ASTWrapperPsiElement implements Sentin
 
   @Override
   @NotNull
-  public List<SentinelCondition> getConditionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelCondition.class);
+  public SentinelBlock getBlock() {
+    return findNotNullChildByClass(SentinelBlock.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelBooleanExpressions getBooleanExpressions() {
+    return findChildByClass(SentinelBooleanExpressions.class);
   }
 
 }

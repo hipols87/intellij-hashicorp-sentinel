@@ -52,11 +52,17 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   "default"                   { return DEFAULT; }
   "main"                      { return MAIN; }
   "rule"                      { return RULE; }
-  "<condition>"               { return CONDITION; }
+  "when"                      { return WHEN; }
   "func"                      { return FUNC; }
   "return"                    { return RETURN; }
   "if"                        { return IF; }
   "else"                      { return ELSE; }
+  "and"                       { return AND; }
+  "or"                        { return OR; }
+  "xor"                       { return XOR; }
+  "not"                       { return NOT; }
+  "contains"                  { return CONTAINS; }
+  "in"                        { return IN; }
   "for"                       { return FOR; }
   "break"                     { return BREAK; }
   "continue"                  { return CONTINUE; }
@@ -67,16 +73,6 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   "false"                     { return FALSE; }
   "null"                      { return NULL; }
   "undefined"                 { return UNDEFINED; }
-  "<unary_expression>"        { return UNARY_EXPRESSION; }
-  "<primary_expression>"      { return PRIMARY_EXPRESSION; }
-  "and"                       { return AND; }
-  "or"                        { return OR; }
-  "xor"                       { return XOR; }
-  "not"                       { return NOT; }
-  "contains"                  { return CONTAINS; }
-  "in"                        { return IN; }
-  "AssignmentOperators"       { return ASSIGNMENTOPERATORS; }
-  "StatementList"             { return STATEMENTLIST; }
 
   {IDENTIFIER}                { return IDENTIFIER; }
   {WHITE_SPACE}               { return WHITE_SPACE; }

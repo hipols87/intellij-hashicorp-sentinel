@@ -34,14 +34,14 @@ public class SentinelNumberLiteralImpl extends ASTWrapperPsiElement implements S
 
   @Override
   @Nullable
-  public SentinelHexLit getHexLit() {
-    return findChildByClass(SentinelHexLit.class);
+  public SentinelHexLiteral getHexLiteral() {
+    return findChildByClass(SentinelHexLiteral.class);
   }
 
   @Override
   @Nullable
-  public SentinelOctalLit getOctalLit() {
-    return findChildByClass(SentinelOctalLit.class);
+  public SentinelOctalLiteral getOctalLiteral() {
+    return findChildByClass(SentinelOctalLiteral.class);
   }
 
 }

@@ -8,13 +8,22 @@ import com.intellij.psi.PsiElement;
 public interface SentinelBooleanExpression extends PsiElement {
 
   @Nullable
+  SentinelAddSubtractOperator getAddSubtractOperator();
+
+  @Nullable
   SentinelComparisonOperator getComparisonOperator();
+
+  @Nullable
+  SentinelElseOperator getElseOperator();
 
   @Nullable
   SentinelFunctionCall getFunctionCall();
 
   @Nullable
   SentinelLiteral getLiteral();
+
+  @Nullable
+  SentinelMultipleDivideOperator getMultipleDivideOperator();
 
   @Nullable
   SentinelSetOperator getSetOperator();

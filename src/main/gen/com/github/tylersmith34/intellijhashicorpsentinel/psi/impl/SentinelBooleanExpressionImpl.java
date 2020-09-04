@@ -28,8 +28,20 @@ public class SentinelBooleanExpressionImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @Nullable
+  public SentinelAddSubtractOperator getAddSubtractOperator() {
+    return findChildByClass(SentinelAddSubtractOperator.class);
+  }
+
+  @Override
+  @Nullable
   public SentinelComparisonOperator getComparisonOperator() {
     return findChildByClass(SentinelComparisonOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelElseOperator getElseOperator() {
+    return findChildByClass(SentinelElseOperator.class);
   }
 
   @Override
@@ -42,6 +54,12 @@ public class SentinelBooleanExpressionImpl extends ASTWrapperPsiElement implemen
   @Nullable
   public SentinelLiteral getLiteral() {
     return findChildByClass(SentinelLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelMultipleDivideOperator getMultipleDivideOperator() {
+    return findChildByClass(SentinelMultipleDivideOperator.class);
   }
 
   @Override

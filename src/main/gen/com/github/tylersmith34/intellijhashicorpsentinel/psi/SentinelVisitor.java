@@ -11,22 +11,6 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitArguments(@NotNull SentinelArguments o) {
-    visitPsiElement(o);
-  }
-
-  public void visitAssignExpr(@NotNull SentinelAssignExpr o) {
-    visitPsiElement(o);
-  }
-
-  public void visitAssignment(@NotNull SentinelAssignment o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBinaryOperation(@NotNull SentinelBinaryOperation o) {
-    visitPsiElement(o);
-  }
-
   public void visitBlock(@NotNull SentinelBlock o) {
     visitPsiElement(o);
   }
@@ -44,18 +28,6 @@ public class SentinelVisitor extends PsiElementVisitor {
   }
 
   public void visitBreakStmt(@NotNull SentinelBreakStmt o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCaseStmt(@NotNull SentinelCaseStmt o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCaseWhenCase(@NotNull SentinelCaseWhenCase o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCaseWhenClause(@NotNull SentinelCaseWhenClause o) {
     visitPsiElement(o);
   }
 
@@ -92,6 +64,10 @@ public class SentinelVisitor extends PsiElementVisitor {
   }
 
   public void visitElseOperator(@NotNull SentinelElseOperator o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEscapedCharacter(@NotNull SentinelEscapedCharacter o) {
     visitPsiElement(o);
   }
 
@@ -135,6 +111,14 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitHexDigit(@NotNull SentinelHexDigit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitHexLiteral(@NotNull SentinelHexLiteral o) {
+    visitPsiElement(o);
+  }
+
   public void visitIdentifierList(@NotNull SentinelIdentifierList o) {
     visitPsiElement(o);
   }
@@ -147,15 +131,15 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitIndex(@NotNull SentinelIndex o) {
-    visitPsiElement(o);
-  }
-
   public void visitKeyedElement(@NotNull SentinelKeyedElement o) {
     visitPsiElement(o);
   }
 
   public void visitKeyedElementList(@NotNull SentinelKeyedElementList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLetter(@NotNull SentinelLetter o) {
     visitPsiElement(o);
   }
 
@@ -191,7 +175,11 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitOperand(@NotNull SentinelOperand o) {
+  public void visitOctalDigit(@NotNull SentinelOctalDigit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOctalLiteral(@NotNull SentinelOctalLiteral o) {
     visitPsiElement(o);
   }
 
@@ -223,10 +211,6 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitSlice(@NotNull SentinelSlice o) {
-    visitPsiElement(o);
-  }
-
   public void visitStatement(@NotNull SentinelStatement o) {
     visitPsiElement(o);
   }
@@ -247,71 +231,11 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBigUValue(@NotNull SentinelBigUValue o) {
-    visitPsiElement(o);
-  }
-
-  public void visitByteValue(@NotNull SentinelByteValue o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCondition(@NotNull SentinelCondition o) {
-    visitPsiElement(o);
-  }
-
   public void visitDecimals(@NotNull SentinelDecimals o) {
     visitPsiElement(o);
   }
 
-  public void visitEscapedChar(@NotNull SentinelEscapedChar o) {
-    visitPsiElement(o);
-  }
-
   public void visitExponent(@NotNull SentinelExponent o) {
-    visitPsiElement(o);
-  }
-
-  public void visitHexByteValue(@NotNull SentinelHexByteValue o) {
-    visitPsiElement(o);
-  }
-
-  public void visitHexDigit(@NotNull SentinelHexDigit o) {
-    visitPsiElement(o);
-  }
-
-  public void visitHexLit(@NotNull SentinelHexLit o) {
-    visitPsiElement(o);
-  }
-
-  public void visitLetter(@NotNull SentinelLetter o) {
-    visitPsiElement(o);
-  }
-
-  public void visitLittleUValue(@NotNull SentinelLittleUValue o) {
-    visitPsiElement(o);
-  }
-
-  public void visitOctalByteValue(@NotNull SentinelOctalByteValue o) {
-    visitPsiElement(o);
-  }
-
-  public void visitOctalDigit(@NotNull SentinelOctalDigit o) {
-    visitPsiElement(o);
-  }
-
-  public void visitOctalLit(@NotNull SentinelOctalLit o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPrimaryExpression(@NotNull SentinelPrimaryExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitUnaryExpression(@NotNull SentinelUnaryExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitUnicodeValue(@NotNull SentinelUnicodeValue o) {
     visitPsiElement(o);
   }
 

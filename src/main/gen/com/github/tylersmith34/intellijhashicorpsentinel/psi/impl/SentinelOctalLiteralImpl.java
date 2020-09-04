@@ -11,14 +11,14 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelConditionImpl extends ASTWrapperPsiElement implements SentinelCondition {
+public class SentinelOctalLiteralImpl extends ASTWrapperPsiElement implements SentinelOctalLiteral {
 
-  public SentinelConditionImpl(@NotNull ASTNode node) {
+  public SentinelOctalLiteralImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitCondition(this);
+    visitor.visitOctalLiteral(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,21 +27,9 @@ public class SentinelConditionImpl extends ASTWrapperPsiElement implements Senti
   }
 
   @Override
-  @Nullable
-  public SentinelBinaryOperation getBinaryOperation() {
-    return findChildByClass(SentinelBinaryOperation.class);
-  }
-
-  @Override
   @NotNull
-  public List<SentinelCondition> getConditionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelCondition.class);
-  }
-
-  @Override
-  @Nullable
-  public SentinelUnaryExpression getUnaryExpression() {
-    return findChildByClass(SentinelUnaryExpression.class);
+  public SentinelOctalDigit getOctalDigit() {
+    return findNotNullChildByClass(SentinelOctalDigit.class);
   }
 
 }

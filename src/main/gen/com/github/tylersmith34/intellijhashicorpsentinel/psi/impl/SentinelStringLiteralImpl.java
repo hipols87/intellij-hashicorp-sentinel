@@ -28,8 +28,8 @@ public class SentinelStringLiteralImpl extends ASTWrapperPsiElement implements S
 
   @Override
   @NotNull
-  public List<SentinelEscapedChar> getEscapedCharList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelEscapedChar.class);
+  public List<SentinelEscapedCharacter> getEscapedCharacterList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelEscapedCharacter.class);
   }
 
   @Override

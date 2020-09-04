@@ -25,6 +25,9 @@ public interface SentinelVariableDefinition extends PsiElement {
   @Nullable
   SentinelMultipleDivideOperator getMultipleDivideOperator();
 
+  @Nullable
+  SentinelQuantifierExpression getQuantifierExpression();
+
   @NotNull
   PsiElement getIdentifier();
 

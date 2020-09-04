@@ -17,21 +17,21 @@ public interface SentinelLiteral extends PsiElement {
   SentinelFloat getFloat();
 
   @Nullable
+  SentinelHexLiteral getHexLiteral();
+
+  @Nullable
   SentinelNullLiteral getNullLiteral();
 
   @Nullable
   SentinelNumberLiteral getNumberLiteral();
 
   @Nullable
+  SentinelOctalLiteral getOctalLiteral();
+
+  @Nullable
   SentinelStringLiteral getStringLiteral();
 
   @Nullable
   SentinelUndefinedLiteral getUndefinedLiteral();
-
-  @Nullable
-  SentinelHexLit getHexLit();
-
-  @Nullable
-  SentinelOctalLit getOctalLit();
 
 }

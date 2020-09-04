@@ -11,31 +11,19 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelArgumentsImpl extends ASTWrapperPsiElement implements SentinelArguments {
+public class SentinelEscapedCharacterImpl extends ASTWrapperPsiElement implements SentinelEscapedCharacter {
 
-  public SentinelArgumentsImpl(@NotNull ASTNode node) {
+  public SentinelEscapedCharacterImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitArguments(this);
+    visitor.visitEscapedCharacter(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof SentinelVisitor) accept((SentinelVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public SentinelLiteral getLiteral() {
-    return findChildByClass(SentinelLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public SentinelCondition getCondition() {
-    return findChildByClass(SentinelCondition.class);
   }
 
 }

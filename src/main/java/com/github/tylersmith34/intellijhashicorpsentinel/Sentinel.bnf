@@ -50,7 +50,7 @@ GlobalVariableDefinition ::= VariableDefinition
 //Rules
 MainRule       ::= main EQUALS RuleBase
 //RuleDefinition ::= IDENTIFIER EQUALS RuleBase
-RuleBase       ::= rule ( "when" <condition> )? L_CURLY <condition> R_CURLY
+RuleBase       ::= rule ( when BooleanExpressions )? Block
 
 //Functions
 FunctionDeclaration ::= IDENTIFIER EQUALS func Function
@@ -67,108 +67,96 @@ Statement           ::= VariableDefinition | IfStatement | ReturnStatement | For
 
 
 // If Statements
-IfStatement ::= if ( BooleanExpressions | L_PAREN BooleanExpressions R_PAREN ) Block ( else ( IfStatement | Block ) )?
-Block ::= L_CURLY Statement R_CURLY
+IfStatement        ::= if ( BooleanExpressions | L_PAREN BooleanExpressions R_PAREN ) Block ( else ( IfStatement | Block ) )?
+Block              ::= L_CURLY Statement R_CURLY
 
+//Boolean expressions
 BooleanExpressions ::= BooleanExpression+ (LogicalOperator BooleanExpression)*
-BooleanExpression ::= FunctionCall |
- UnaryOperator ( IDENTIFIER | Literal ) |
-  ( IDENTIFIER | Literal ) ( SetOperator | ComparisonOperator | UnaryOperator) ( IDENTIFIER | Literal )
-
-// For Statements
-ForBlock ::= L_CURLY ( Statement | BreakStmt | ContinueStmt ) R_CURLY
-ForStatement ::= for IDENTIFIER as ( IDENTIFIER "," )? IDENTIFIER ForBlock
-BreakStmt ::= break
-ContinueStmt ::= continue
-
-
-//Variables
-VariableDefinition  ::= IDENTIFIER ( AddSubtractOperator | MultipleDivideOperator )? EQUALS ( Literal | ListDefinition | MapDefinition | FunctionCall )
-
-
-ListDefinition     ::= L_BRACKET ( ElementList )? R_BRACKET
-ElementList ::= Element+ ( COMMA Element)*
-Element     ::= Literal | ListDefinition | MapDefinition
-
-MapDefinition    ::= L_CURLY ( KeyedElementList )? R_CURLY
-KeyedElementList ::= KeyedElement ( COMMA KeyedElement COMMA?)*
-KeyedElement     ::= Element ":" Element
-
-QuantifierExpression ::= QuantifierOperator DotIdentifier as IDENTIFIER L_CURLY BooleanExpressions  R_CURLY
-QuantifierOperator   ::= all | any | filter
-DotIdentifier ::= IDENTIFIER+ (Selector | (L_BRACKET StringLiteral R_BRACKET ) )*
-
-//primitive types
-Literal ::= Number | NumberLiteral | Decimal | octal_lit | hex_lit | Float | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
-BooleanLiteral::= true | false
-NullLiteral::= null
-UndefinedLiteral::= undefined
-
-octal_digit   ::= 1|2|3|4|5|6|7
-hex_digit     ::= 1|2|3|4|5|6|7 | "A" | "F" | "a" | "f"
-letter        ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
-escaped_char  ::= '\' ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | '\' | '"' )
-
-
-<condition> ::= <unary_expression> | (<condition>)* BinaryOperation (<condition>)*
-<unary_expression>  ::= <primary_expression> | UnaryOperator <unary_expression>
-<primary_expression> ::=
-    Operand |
-    (<primary_expression>)* Selector |
-    (<primary_expression>)* Index |
-    (<primary_expression>)* Slice |
-    (<primary_expression>)* Arguments
-BinaryOperation  ::= LogicalOperator | SetOperator | ComparisonOperator | AddSubtractOperator | MultipleDivideOperator | ElseOperator
+BooleanExpression  ::= FunctionCall |
+    UnaryOperator ( IDENTIFIER | Literal )? |
+    ( IDENTIFIER | Literal ) ( SetOperator | ComparisonOperator | UnaryOperator | MultipleDivideOperator | AddSubtractOperator) ( IDENTIFIER | Literal ) |
+    ElseOperator
+ElseOperator    ::= else Literal
 LogicalOperator ::= and | or | xor
 SetOperator     ::= (not)? ( contains | in )
 ComparisonOperator     ::= "==" | "!=" | "<" | "<=" | ">" | ">=" | "is" | "is not" | "matches" | "not matches"
 AddSubtractOperator     ::= "+" | "-"
 MultipleDivideOperator  ::= "*" | "/" | "%"
-ElseOperator    ::= else Literal
 UnaryOperator   ::= "+" | "-" | "!" | not
 
-Operand    ::= Literal | IDENTIFIER | "(" <condition> ")"
-Selector  ::= "." IDENTIFIER
-Index     ::= "[" <condition> "]"
-Slice     ::= "[" ( <condition> ) ":" ( <condition> ) "]" | "[" ( <condition> ) ":" <condition> ":" <condition> "]"
-Arguments ::= "(" [ ( <condition> | Literal [ "," <condition> ] ) [ "..." ] [ "," ] ] ")"
 
-NumberLiteral ::= Decimal | octal_lit | hex_lit
+// For Statements
+ForBlock     ::= L_CURLY ( Statement | BreakStmt | ContinueStmt ) R_CURLY
+ForStatement ::= for IDENTIFIER as ( IDENTIFIER "," )? IDENTIFIER ForBlock
+BreakStmt    ::= break
+ContinueStmt ::= continue
+
+
+//Variables
+VariableDefinition ::= IDENTIFIER ( AddSubtractOperator | MultipleDivideOperator )? EQUALS ( Literal | ListDefinition | MapDefinition | FunctionCall | QuantifierExpression )
+ListDefinition     ::= L_BRACKET ( ElementList )? R_BRACKET
+ElementList        ::= Element+ ( COMMA Element)*
+Element            ::= Literal | ListDefinition | MapDefinition
+MapDefinition      ::= L_CURLY ( KeyedElementList )? R_CURLY
+KeyedElementList   ::= KeyedElement ( COMMA KeyedElement COMMA?)*
+KeyedElement       ::= Element ":" Element
+
+QuantifierExpression ::= QuantifierOperator DotIdentifier as IDENTIFIER L_CURLY BooleanExpressions  R_CURLY
+QuantifierOperator   ::= all | any | filter
+DotIdentifier ::= IDENTIFIER+ (Selector | (L_BRACKET StringLiteral R_BRACKET ) )*
+Selector  ::= "." IDENTIFIER
+
+
+//primitive types
+Literal ::= Number | NumberLiteral | Decimal | OctalLiteral | HexLiteral | Float | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
+BooleanLiteral::= true | false
+NullLiteral::= null
+UndefinedLiteral::= undefined
+NumberLiteral ::= Decimal | OctalLiteral | HexLiteral
+OctalLiteral    ::= "0" ( OctalDigit )
+OctalDigit   ::= 1|2|3|4|5|6|7
+HexDigit     ::= 1|2|3|4|5|6|7 | "A" | "F" | "a" | "f"
+Letter        ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+EscapedCharacter  ::= '\' ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | '\' | '"' )
+HexLiteral      ::= "0" ( "x" | "X" ) HexDigit { HexDigit }
 Decimal      ::= '-'? DecimalDigit+ ('.' DecimalDigit+)?
 DecimalDigit ::= 1|2|3|4|5|6|7|8|9|0
-octal_lit    ::= "0" ( octal_digit )
-hex_lit      ::= "0" ( "x" | "X" ) hex_digit { hex_digit }
 Float ::= decimals "." ( decimals )* ( exponent )? | decimals exponent | "." decimals ( exponent )?
 decimals  ::= Decimal*
 exponent  ::= ( "e" | "E" ) [ "+" | "-" ] decimals
+StringLiteral       ::= ('"' ( Letter | EscapedCharacter)* '"') | DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
 
-StringLiteral       ::= ('"' ( letter | escaped_char)* '"') | DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
-unicode_value    ::= little_u_value | big_u_value | escaped_char
-byte_value       ::= octal_byte_value | hex_byte_value
-octal_byte_value ::= '\' octal_digit octal_digit octal_digit
-hex_byte_value   ::= '\' "x" hex_digit hex_digit
-little_u_value   ::= '\' "u" hex_digit hex_digit hex_digit hex_digit
-big_u_value      ::= '\' "U" hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit hex_digit
-
-
-
-Assignment ::= AssignExpr AssignmentOperators <condition>
-AssignExpr ::= IDENTIFIER
+//<condition> ::= <unary_expression> | (<condition>)* BinaryOperation (<condition>)*
+//<unary_expression>  ::= <primary_expression> | UnaryOperator <unary_expression>
+//<primary_expression> ::=
+//    Operand |
+//    (<primary_expression>)* Selector |
+//    (<primary_expression>)* Index |
+//    (<primary_expression>)* Slice |
+//    (<primary_expression>)* Arguments
+//BinaryOperation  ::= LogicalOperator | SetOperator | ComparisonOperator | AddSubtractOperator | MultipleDivideOperator | ElseOperator
 
 
-CaseStmt ::= "case" [ <condition> ] "{" ( CaseWhenClause ) R_CURLY
-CaseWhenClause ::= CaseWhenCase ":" StatementList
-CaseWhenCase ::= "when" <condition> ( "," <condition> ) | "else"
+//Operand    ::= Literal | IDENTIFIER | "(" <condition> ")"
+//Index     ::= "[" <condition> "]"
+//Slice     ::= "[" ( <condition> ) ":" ( <condition> ) "]" | "[" ( <condition> ) ":" <condition> ":" <condition> "]"
+//Arguments ::= "(" [ ( <condition> | Literal [ "," <condition> ] ) [ "..." ] [ "," ] ] ")"
 
 
+//unicode_value    ::= little_u_value | big_u_value | EscapedCharacter
+//byte_value       ::= octal_byte_value | hex_byte_value
+//octal_byte_value ::= '\' OctalDigit OctalDigit OctalDigit
+//hex_byte_value   ::= '\' "x" HexDigit HexDigit
+//little_u_value   ::= '\' "u" HexDigit HexDigit HexDigit HexDigit
+//big_u_value      ::= '\' "U" HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit
 //
 //
 //
+//Assignment ::= AssignExpr AssignmentOperators <condition>
+//AssignExpr ::= IDENTIFIER
 //
-//private EOL ::= CRLF
-//private not_EOL ::= !CRLF
-//private not_EOL ::= !(func)
-//private not_terminator_or_next_value ::= !(R_CURLY|')'|']')
-//private not_brace_or_next_value ::= !(R_CURLY)
-//private not_paren_or_next_value ::= !(')')
-//private not_bracket_or_next_value ::= !(']'|(Literal | array | object))
+//
+//CaseStmt ::= "case" [ <condition> ] "{" ( CaseWhenClause ) R_CURLY
+//CaseWhenClause ::= CaseWhenCase ":" StatementList
+//CaseWhenCase ::= "when" <condition> ( "," <condition> ) | "else"
+

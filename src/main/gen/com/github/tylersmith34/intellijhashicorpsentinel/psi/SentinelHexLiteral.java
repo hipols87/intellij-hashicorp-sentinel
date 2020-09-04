@@ -5,15 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelCondition extends PsiElement {
-
-  @Nullable
-  SentinelBinaryOperation getBinaryOperation();
+public interface SentinelHexLiteral extends PsiElement {
 
   @NotNull
-  List<SentinelCondition> getConditionList();
-
-  @Nullable
-  SentinelUnaryExpression getUnaryExpression();
+  List<SentinelHexDigit> getHexDigitList();
 
 }
