@@ -58,6 +58,12 @@ public class SentinelBooleanExpressionImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @Nullable
+  public SentinelLogicalOperator getLogicalOperator() {
+    return findChildByClass(SentinelLogicalOperator.class);
+  }
+
+  @Override
+  @Nullable
   public SentinelMultipleDivideOperator getMultipleDivideOperator() {
     return findChildByClass(SentinelMultipleDivideOperator.class);
   }

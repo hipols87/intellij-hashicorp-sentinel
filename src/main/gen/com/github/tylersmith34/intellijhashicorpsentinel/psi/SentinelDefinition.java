@@ -22,4 +22,7 @@ public interface SentinelDefinition extends PsiElement {
   @Nullable
   SentinelMainRule getMainRule();
 
+  @Nullable
+  SentinelRuleDefinition getRuleDefinition();
+
 }

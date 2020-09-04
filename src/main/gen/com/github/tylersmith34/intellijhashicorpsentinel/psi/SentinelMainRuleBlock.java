@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelRuleBase extends PsiElement {
-
-  @Nullable
-  SentinelBooleanExpressions getBooleanExpressions();
+public interface SentinelMainRuleBlock extends PsiElement {
 
   @NotNull
-  SentinelMainRuleBlock getMainRuleBlock();
+  SentinelBooleanExpressions getBooleanExpressions();
 
 }

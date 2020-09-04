@@ -23,6 +23,9 @@ public interface SentinelBooleanExpression extends PsiElement {
   SentinelLiteral getLiteral();
 
   @Nullable
+  SentinelLogicalOperator getLogicalOperator();
+
+  @Nullable
   SentinelMultipleDivideOperator getMultipleDivideOperator();
 
   @Nullable

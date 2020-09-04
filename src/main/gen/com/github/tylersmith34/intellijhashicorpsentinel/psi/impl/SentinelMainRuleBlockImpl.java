@@ -11,14 +11,14 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelRuleBaseImpl extends ASTWrapperPsiElement implements SentinelRuleBase {
+public class SentinelMainRuleBlockImpl extends ASTWrapperPsiElement implements SentinelMainRuleBlock {
 
-  public SentinelRuleBaseImpl(@NotNull ASTNode node) {
+  public SentinelMainRuleBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitRuleBase(this);
+    visitor.visitMainRuleBlock(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,15 +27,9 @@ public class SentinelRuleBaseImpl extends ASTWrapperPsiElement implements Sentin
   }
 
   @Override
-  @Nullable
-  public SentinelBooleanExpressions getBooleanExpressions() {
-    return findChildByClass(SentinelBooleanExpressions.class);
-  }
-
-  @Override
   @NotNull
-  public SentinelMainRuleBlock getMainRuleBlock() {
-    return findNotNullChildByClass(SentinelMainRuleBlock.class);
+  public SentinelBooleanExpressions getBooleanExpressions() {
+    return findNotNullChildByClass(SentinelBooleanExpressions.class);
   }
 
 }

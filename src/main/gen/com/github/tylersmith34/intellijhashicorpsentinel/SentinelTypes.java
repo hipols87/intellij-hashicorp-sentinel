@@ -50,6 +50,7 @@ public interface SentinelTypes {
   IElementType LITERAL = new SentinelElementType("LITERAL");
   IElementType LOGICAL_OPERATOR = new SentinelElementType("LOGICAL_OPERATOR");
   IElementType MAIN_RULE = new SentinelElementType("MAIN_RULE");
+  IElementType MAIN_RULE_BLOCK = new SentinelElementType("MAIN_RULE_BLOCK");
   IElementType MAP_DEFINITION = new SentinelElementType("MAP_DEFINITION");
   IElementType MULTIPLE_DIVIDE_OPERATOR = new SentinelElementType("MULTIPLE_DIVIDE_OPERATOR");
   IElementType NULL_LITERAL = new SentinelElementType("NULL_LITERAL");
@@ -61,6 +62,7 @@ public interface SentinelTypes {
   IElementType QUANTIFIER_OPERATOR = new SentinelElementType("QUANTIFIER_OPERATOR");
   IElementType RETURN_STATEMENT = new SentinelElementType("RETURN_STATEMENT");
   IElementType RULE_BASE = new SentinelElementType("RULE_BASE");
+  IElementType RULE_DEFINITION = new SentinelElementType("RULE_DEFINITION");
   IElementType SELECTOR = new SentinelElementType("SELECTOR");
   IElementType SET_OPERATOR = new SentinelElementType("SET_OPERATOR");
   IElementType STATEMENT = new SentinelElementType("STATEMENT");
@@ -235,6 +237,9 @@ public interface SentinelTypes {
       else if (type == MAIN_RULE) {
         return new SentinelMainRuleImpl(node);
       }
+      else if (type == MAIN_RULE_BLOCK) {
+        return new SentinelMainRuleBlockImpl(node);
+      }
       else if (type == MAP_DEFINITION) {
         return new SentinelMapDefinitionImpl(node);
       }
@@ -267,6 +272,9 @@ public interface SentinelTypes {
       }
       else if (type == RULE_BASE) {
         return new SentinelRuleBaseImpl(node);
+      }
+      else if (type == RULE_DEFINITION) {
+        return new SentinelRuleDefinitionImpl(node);
       }
       else if (type == SELECTOR) {
         return new SentinelSelectorImpl(node);

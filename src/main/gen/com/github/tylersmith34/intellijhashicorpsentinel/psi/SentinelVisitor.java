@@ -159,6 +159,10 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMainRuleBlock(@NotNull SentinelMainRuleBlock o) {
+    visitPsiElement(o);
+  }
+
   public void visitMapDefinition(@NotNull SentinelMapDefinition o) {
     visitPsiElement(o);
   }
@@ -200,6 +204,10 @@ public class SentinelVisitor extends PsiElementVisitor {
   }
 
   public void visitRuleBase(@NotNull SentinelRuleBase o) {
+    visitPsiElement(o);
+  }
+
+  public void visitRuleDefinition(@NotNull SentinelRuleDefinition o) {
     visitPsiElement(o);
   }
 

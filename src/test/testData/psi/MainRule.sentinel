@@ -1,0 +1,4 @@
+main = rule {
+    true and
+    true
+}

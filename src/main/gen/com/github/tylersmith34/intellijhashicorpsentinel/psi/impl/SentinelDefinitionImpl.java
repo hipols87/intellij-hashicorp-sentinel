@@ -56,4 +56,10 @@ public class SentinelDefinitionImpl extends ASTWrapperPsiElement implements Sent
     return findChildByClass(SentinelMainRule.class);
   }
 
+  @Override
+  @Nullable
+  public SentinelRuleDefinition getRuleDefinition() {
+    return findChildByClass(SentinelRuleDefinition.class);
+  }
+
 }

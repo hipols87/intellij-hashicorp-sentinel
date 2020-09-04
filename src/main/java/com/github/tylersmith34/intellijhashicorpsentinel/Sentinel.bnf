@@ -37,7 +37,7 @@
 
 //SimpleFile ::= IfStatement*
 SimpleFile ::= Definition*
-Definition ::= { ImportStatement | ExternalParameters | GlobalVariableDefinition | MainRule | FunctionDeclaration }
+Definition ::= { ImportStatement | ExternalParameters | GlobalVariableDefinition | MainRule | RuleDefinition | FunctionDeclaration }
 
 //import
 ImportStatement ::= import StringLiteral (as IDENTIFIER )?
@@ -49,8 +49,9 @@ GlobalVariableDefinition ::= VariableDefinition
 
 //Rules
 MainRule       ::= main EQUALS RuleBase
-//RuleDefinition ::= IDENTIFIER EQUALS RuleBase
-RuleBase       ::= rule ( when BooleanExpressions )? Block
+MainRuleBlock  ::= L_CURLY BooleanExpressions R_CURLY
+RuleDefinition ::= IDENTIFIER EQUALS RuleBase
+RuleBase       ::= rule ( when BooleanExpressions )? MainRuleBlock
 
 //Functions
 FunctionDeclaration ::= IDENTIFIER EQUALS func Function
@@ -74,12 +75,12 @@ Block              ::= L_CURLY Statement R_CURLY
 BooleanExpressions ::= BooleanExpression+ (LogicalOperator BooleanExpression)*
 BooleanExpression  ::= FunctionCall |
     UnaryOperator ( IDENTIFIER | Literal )? |
-    ( IDENTIFIER | Literal ) ( SetOperator | ComparisonOperator | UnaryOperator | MultipleDivideOperator | AddSubtractOperator) ( IDENTIFIER | Literal ) |
+    ( IDENTIFIER | Literal ) ( SetOperator | ComparisonOperator | UnaryOperator | MultipleDivideOperator | AddSubtractOperator | LogicalOperator ) ( IDENTIFIER | Literal ) |
     ElseOperator
 ElseOperator    ::= else Literal
 LogicalOperator ::= and | or | xor
 SetOperator     ::= (not)? ( contains | in )
-ComparisonOperator     ::= "==" | "!=" | "<" | "<=" | ">" | ">=" | "is" | "is not" | "matches" | "not matches"
+ComparisonOperator     ::= "==" | "!=" | '<' | "<=" | ">" | ">=" | "is" | "is not" | "matches" | "not matches"
 AddSubtractOperator     ::= "+" | "-"
 MultipleDivideOperator  ::= "*" | "/" | "%"
 UnaryOperator   ::= "+" | "-" | "!" | not
