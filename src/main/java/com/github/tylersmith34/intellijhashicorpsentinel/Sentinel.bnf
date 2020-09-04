@@ -58,7 +58,7 @@ Function            ::= Parameters FunctionBody
 FunctionBody        ::= L_CURLY FunctionStatement* ReturnStatement  R_CURLY
 ReturnStatement     ::= return ( IDENTIFIER | Literal )
 Parameters          ::= L_PAREN ( IdentifierList )? R_PAREN
-IdentifierList      ::= IDENTIFIER+ ( COMMA IDENTIFIER+ )?
+IdentifierList      ::= IDENTIFIER+ ( COMMA IDENTIFIER+ )*
 FunctionStatement           ::= VariableDefinition | IfStatement
 Statement           ::= VariableDefinition | IfStatement | ReturnStatement
 
@@ -95,9 +95,10 @@ letter        ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K
 escaped_char  ::= '\' ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | '\' | '"' )
 
 Block ::= L_CURLY Statement R_CURLY
-IfStatement ::= if ( boolean_expression | L_PAREN boolean_expression R_PAREN ) Block ( else ( IfStatement | Block ) )?
+IfStatement ::= if ( BooleanExpressions | L_PAREN BooleanExpressions R_PAREN ) Block ( else ( IfStatement | Block ) )?
 
-boolean_expression ::= FunctionCall |
+BooleanExpressions ::= BooleanExpression+ (LogicalOperator BooleanExpression)*
+BooleanExpression ::= FunctionCall |
  UnaryOperator ( IDENTIFIER | Literal ) |
   ( IDENTIFIER | Literal ) ( SetOperator | ComparisonOperator | UnaryOperator) ( IDENTIFIER | Literal )
 

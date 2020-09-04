@@ -19,6 +19,7 @@ public interface SentinelTypes {
   IElementType BINARY_OPERATION = new SentinelElementType("BINARY_OPERATION");
   IElementType BLOCK = new SentinelElementType("BLOCK");
   IElementType BOOLEAN_EXPRESSION = new SentinelElementType("BOOLEAN_EXPRESSION");
+  IElementType BOOLEAN_EXPRESSIONS = new SentinelElementType("BOOLEAN_EXPRESSIONS");
   IElementType BOOLEAN_LITERAL = new SentinelElementType("BOOLEAN_LITERAL");
   IElementType BREAK_STMT = new SentinelElementType("BREAK_STMT");
   IElementType BYTE_VALUE = new SentinelElementType("BYTE_VALUE");
@@ -163,6 +164,9 @@ public interface SentinelTypes {
       }
       else if (type == BOOLEAN_EXPRESSION) {
         return new SentinelBooleanExpressionImpl(node);
+      }
+      else if (type == BOOLEAN_EXPRESSIONS) {
+        return new SentinelBooleanExpressionsImpl(node);
       }
       else if (type == BOOLEAN_LITERAL) {
         return new SentinelBooleanLiteralImpl(node);
