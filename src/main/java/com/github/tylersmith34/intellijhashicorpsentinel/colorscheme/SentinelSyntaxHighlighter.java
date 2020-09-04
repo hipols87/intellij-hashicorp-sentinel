@@ -33,7 +33,7 @@ public class SentinelSyntaxHighlighter extends SyntaxHighlighterBase {
         fillMap(attributes, COMMENT, BLOCK_COMMENT, SentinelTypes.COMMENT);
         fillMap(attributes, CURLY, L_CURLY, R_CURLY);
         fillMap(attributes, BAD_CHARACTER, TokenType.BAD_CHARACTER);
-        fillMap(attributes, KEYWORD, SentinelTypes.IMPORT, PARAM, TRUE, SentinelTypes.FALSE, SentinelTypes.NULL, SentinelTypes.UNDEFINED, SentinelTypes.ALL, SentinelTypes.ANY, SentinelTypes.AS, SentinelTypes.BREAK, SentinelTypes.CASE, SentinelTypes.CONTINUE, SentinelTypes.DEFAULT, SentinelTypes.ELSE, SentinelTypes.FOR, SentinelTypes.FUNC, SentinelTypes.IF, SentinelTypes.RETURN, SentinelTypes.WHEN);
+        fillMap(attributes, KEYWORD, SentinelTypes.IMPORT, PARAM, TRUE, SentinelTypes.FALSE, SentinelTypes.NULL, SentinelTypes.UNDEFINED, SentinelTypes.ALL, SentinelTypes.ANY, SentinelTypes.AS, SentinelTypes.DEFAULT, SentinelTypes.ELSE, SentinelTypes.FUNC, SentinelTypes.IF, SentinelTypes.RETURN);
     }
 
     @Override

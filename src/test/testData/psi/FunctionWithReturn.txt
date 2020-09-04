@@ -19,8 +19,6 @@ Sentinel File
         SentinelFunctionBodyImpl(FUNCTION_BODY)
           PsiElement(SentinelTokenType.{)('{')
           PsiWhiteSpace('\n    ')
-          SentinelStatementImpl(STATEMENT)
-            <empty list>
           SentinelReturnStatementImpl(RETURN_STATEMENT)
             PsiElement(SentinelTokenType.return)('return')
             PsiWhiteSpace(' ')

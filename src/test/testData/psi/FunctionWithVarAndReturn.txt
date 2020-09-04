@@ -19,7 +19,7 @@ Sentinel File
         SentinelFunctionBodyImpl(FUNCTION_BODY)
           PsiElement(SentinelTokenType.{)('{')
           PsiWhiteSpace('\n    ')
-          SentinelStatementImpl(STATEMENT)
+          SentinelFunctionStatementImpl(FUNCTION_STATEMENT)
             SentinelVariableDefinitionImpl(VARIABLE_DEFINITION)
               PsiElement(SentinelTokenType.IDENTIFIER)('valid')
               PsiWhiteSpace(' ')

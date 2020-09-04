@@ -10,13 +10,13 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 %%
 
 %{
-  public SentinelLexer() {
+  public _SentinelLexer() {
     this((java.io.Reader)null);
   }
 %}
 
 %public
-%class SentinelLexer
+%class _SentinelLexer
 %implements FlexLexer
 %function advance
 %type IElementType
@@ -31,6 +31,7 @@ DOUBLE_QUOTED_STRING=\"([^\\\"\r\n]|\\[^\r\n])*\"?
 SINGLE_QUOTED_STRING='([^\\'\r\n]|\\[^\r\n])*'?
 COMMENT=("//".*)|(#.*)
 BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
+NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
 
 %%
 <YYINITIAL> {
@@ -43,23 +44,34 @@ BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
   "("                         { return L_PAREN; }
   ")"                         { return R_PAREN; }
   ","                         { return COMMA; }
+  "."                         { return PERIOD; }
   "="                         { return EQUALS; }
-  "true"                      { return TRUE; }
-  "false"                     { return FALSE; }
-  "null"                      { return NULL; }
-  "undefined"                 { return UNDEFINED; }
   "import"                    { return IMPORT; }
   "as"                        { return AS; }
   "param"                     { return PARAM; }
   "default"                   { return DEFAULT; }
   "main"                      { return MAIN; }
   "rule"                      { return RULE; }
-  "<expression>"              { return EXPRESSION; }
-  "<digit>"                   { return DIGIT; }
-  "<number>"                  { return NUMBER; }
-  "<primary_expr>"            { return PRIMARY_EXPR; }
+  "<condition>"               { return CONDITION; }
   "func"                      { return FUNC; }
-  "Block"                     { return BLOCK; }
+  "return"                    { return RETURN; }
+  "all"                       { return ALL; }
+  "any"                       { return ANY; }
+  "filter"                    { return FILTER; }
+  "true"                      { return TRUE; }
+  "false"                     { return FALSE; }
+  "null"                      { return NULL; }
+  "undefined"                 { return UNDEFINED; }
+  "if"                        { return IF; }
+  "else"                      { return ELSE; }
+  "<unary_expression>"        { return UNARY_EXPRESSION; }
+  "<primary_expression>"      { return PRIMARY_EXPRESSION; }
+  "and"                       { return AND; }
+  "or"                        { return OR; }
+  "xor"                       { return XOR; }
+  "not"                       { return NOT; }
+  "contains"                  { return CONTAINS; }
+  "in"                        { return IN; }
   "StatementList"             { return STATEMENTLIST; }
   "Expressions"               { return EXPRESSIONS; }
   "CRLF"                      { return CRLF; }
@@ -73,6 +85,7 @@ BLOCK_COMMENT="/"\*([^*]|\*[^/])*\*?(\*"/")?
   {SINGLE_QUOTED_STRING}      { return SINGLE_QUOTED_STRING; }
   {COMMENT}                   { return COMMENT; }
   {BLOCK_COMMENT}             { return BLOCK_COMMENT; }
+  {NUMBER}                    { return NUMBER; }
 
 }
 

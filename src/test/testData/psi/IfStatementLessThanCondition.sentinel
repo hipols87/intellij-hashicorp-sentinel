@@ -1,0 +1,6 @@
+isvalid = func(x, y){
+    if ( x < y ) {
+        valid = false
+    }
+    return valid
+}

@@ -65,4 +65,12 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testMap() throws Exception {
         doTest();
     }
+
+    public void testIfStatementLessThanCondition() throws Exception {
+        doTest();
+    }
+
+    public void testIfStatementWithElse() throws Exception {
+        doTest();
+    }
 }

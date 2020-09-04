@@ -13,5 +13,5 @@ Sentinel File
   PsiWhiteSpace(' ')
   PsiElement(SentinelTokenType.{)('{')
   PsiWhiteSpace('\n')
-  PsiErrorElement:SentinelTokenType.IDENTIFIER or SentinelTokenType.return expected, got '}'
+  PsiErrorElement:<function statement> or SentinelTokenType.return expected, got '}'
     PsiElement(SentinelTokenType.})('}')
