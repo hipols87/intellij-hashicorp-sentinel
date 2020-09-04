@@ -62,6 +62,8 @@ IdentifierList      ::= IDENTIFIER+ ( COMMA IDENTIFIER+ )?
 FunctionStatement           ::= VariableDefinition | IfStatement
 Statement           ::= VariableDefinition | IfStatement | ReturnStatement
 
+FunctionCall        ::= IDENTIFIER Parameters
+
 //Variables
 VariableDefinition  ::= IDENTIFIER EQUALS ( Literal | ListDefinition | MapDefinition  )
 //TODO use this instead of equals
@@ -93,9 +95,12 @@ letter        ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K
 escaped_char  ::= '\' ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | '\' | '"' )
 
 Block ::= L_CURLY Statement R_CURLY
-IfStatement ::= if ( BooleanExpression | L_PAREN BooleanExpression R_PAREN ) Block ( else ( IfStatement | Block ) )?
+IfStatement ::= if ( boolean_expression | L_PAREN boolean_expression R_PAREN ) Block ( else ( IfStatement | Block ) )?
 
-BooleanExpression ::= ( IDENTIFIER | Literal ) ( SetOperator | ComparisonOperator | UnaryOperator) ( IDENTIFIER | Literal )
+boolean_expression ::= FunctionCall |
+ UnaryOperator ( IDENTIFIER | Literal ) |
+  ( IDENTIFIER | Literal ) ( SetOperator | ComparisonOperator | UnaryOperator) ( IDENTIFIER | Literal )
+
 <condition> ::= <unary_expression> | (<condition>)* BinaryOperation (<condition>)*
 <unary_expression>  ::= <primary_expression> | UnaryOperator <unary_expression>
 <primary_expression> ::=

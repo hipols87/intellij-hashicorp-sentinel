@@ -1,0 +1,7 @@
+isvalid = func(x, y) {
+    valid = true
+    if checkMyValue(x) {
+        return x
+    }
+    return valid
+}

@@ -73,4 +73,16 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testIfStatementWithElse() throws Exception {
         doTest();
     }
+
+    public void testIfStatementElseIfElse() throws Exception {
+        doTest();
+    }
+
+    public void testIfStatementUnary() throws Exception {
+        doTest();
+    }
+
+    public void testIfStatementFunctionCall() throws Exception {
+        doTest();
+    }
 }

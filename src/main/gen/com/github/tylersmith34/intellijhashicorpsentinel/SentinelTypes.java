@@ -43,6 +43,7 @@ public interface SentinelTypes {
   IElementType FOR_STMT = new SentinelElementType("FOR_STMT");
   IElementType FUNCTION = new SentinelElementType("FUNCTION");
   IElementType FUNCTION_BODY = new SentinelElementType("FUNCTION_BODY");
+  IElementType FUNCTION_CALL = new SentinelElementType("FUNCTION_CALL");
   IElementType FUNCTION_DECLARATION = new SentinelElementType("FUNCTION_DECLARATION");
   IElementType FUNCTION_STATEMENT = new SentinelElementType("FUNCTION_STATEMENT");
   IElementType GLOBAL_VARIABLE_DEFINITION = new SentinelElementType("GLOBAL_VARIABLE_DEFINITION");
@@ -234,6 +235,9 @@ public interface SentinelTypes {
       }
       else if (type == FUNCTION_BODY) {
         return new SentinelFunctionBodyImpl(node);
+      }
+      else if (type == FUNCTION_CALL) {
+        return new SentinelFunctionCallImpl(node);
       }
       else if (type == FUNCTION_DECLARATION) {
         return new SentinelFunctionDeclarationImpl(node);
