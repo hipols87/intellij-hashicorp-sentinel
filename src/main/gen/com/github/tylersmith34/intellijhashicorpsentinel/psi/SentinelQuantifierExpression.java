@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface SentinelQuantifierExpression extends PsiElement {
 
   @NotNull
+  SentinelBooleanExpressions getBooleanExpressions();
+
+  @NotNull
   SentinelDotIdentifier getDotIdentifier();
 
   @NotNull

@@ -11,14 +11,14 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelForStmtImpl extends ASTWrapperPsiElement implements SentinelForStmt {
+public class SentinelForStatementImpl extends ASTWrapperPsiElement implements SentinelForStatement {
 
-  public SentinelForStmtImpl(@NotNull ASTNode node) {
+  public SentinelForStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitForStmt(this);
+    visitor.visitForStatement(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,8 +28,8 @@ public class SentinelForStmtImpl extends ASTWrapperPsiElement implements Sentine
 
   @Override
   @NotNull
-  public SentinelBlock getBlock() {
-    return findNotNullChildByClass(SentinelBlock.class);
+  public SentinelForBlock getForBlock() {
+    return findNotNullChildByClass(SentinelForBlock.class);
   }
 
 }

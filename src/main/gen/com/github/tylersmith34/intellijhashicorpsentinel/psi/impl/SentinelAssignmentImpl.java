@@ -34,12 +34,6 @@ public class SentinelAssignmentImpl extends ASTWrapperPsiElement implements Sent
 
   @Override
   @NotNull
-  public SentinelAssignmentOperators getAssignmentOperators() {
-    return findNotNullChildByClass(SentinelAssignmentOperators.class);
-  }
-
-  @Override
-  @NotNull
   public SentinelCondition getCondition() {
     return findNotNullChildByClass(SentinelCondition.class);
   }

@@ -11,14 +11,14 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelAssignmentOperatorsImpl extends ASTWrapperPsiElement implements SentinelAssignmentOperators {
+public class SentinelForBlockImpl extends ASTWrapperPsiElement implements SentinelForBlock {
 
-  public SentinelAssignmentOperatorsImpl(@NotNull ASTNode node) {
+  public SentinelForBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitAssignmentOperators(this);
+    visitor.visitForBlock(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,14 +28,20 @@ public class SentinelAssignmentOperatorsImpl extends ASTWrapperPsiElement implem
 
   @Override
   @Nullable
-  public SentinelAddSubtractOperator getAddSubtractOperator() {
-    return findChildByClass(SentinelAddSubtractOperator.class);
+  public SentinelBreakStmt getBreakStmt() {
+    return findChildByClass(SentinelBreakStmt.class);
   }
 
   @Override
   @Nullable
-  public SentinelMultipleDivideOperator getMultipleDivideOperator() {
-    return findChildByClass(SentinelMultipleDivideOperator.class);
+  public SentinelContinueStmt getContinueStmt() {
+    return findChildByClass(SentinelContinueStmt.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelStatement getStatement() {
+    return findChildByClass(SentinelStatement.class);
   }
 
 }

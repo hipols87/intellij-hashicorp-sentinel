@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface SentinelStatement extends PsiElement {
 
   @Nullable
+  SentinelForStatement getForStatement();
+
+  @Nullable
+  SentinelFunctionCall getFunctionCall();
+
+  @Nullable
   SentinelIfStatement getIfStatement();
 
   @Nullable

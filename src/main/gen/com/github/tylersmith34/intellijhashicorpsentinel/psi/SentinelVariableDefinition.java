@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface SentinelVariableDefinition extends PsiElement {
 
   @Nullable
+  SentinelAddSubtractOperator getAddSubtractOperator();
+
+  @Nullable
+  SentinelFunctionCall getFunctionCall();
+
+  @Nullable
   SentinelListDefinition getListDefinition();
 
   @Nullable
@@ -15,6 +21,9 @@ public interface SentinelVariableDefinition extends PsiElement {
 
   @Nullable
   SentinelMapDefinition getMapDefinition();
+
+  @Nullable
+  SentinelMultipleDivideOperator getMultipleDivideOperator();
 
   @NotNull
   PsiElement getIdentifier();

@@ -1,0 +1,6 @@
+isvalid = func(x, y, z) {
+    mylist = [1, 2]
+    someotherval = load(x)
+    update(z)
+    return true
+}

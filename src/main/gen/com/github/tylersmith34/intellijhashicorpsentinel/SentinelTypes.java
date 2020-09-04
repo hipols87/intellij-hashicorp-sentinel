@@ -13,7 +13,6 @@ public interface SentinelTypes {
   IElementType ADD_SUBTRACT_OPERATOR = new SentinelElementType("ADD_SUBTRACT_OPERATOR");
   IElementType ARGUMENTS = new SentinelElementType("ARGUMENTS");
   IElementType ASSIGNMENT = new SentinelElementType("ASSIGNMENT");
-  IElementType ASSIGNMENT_OPERATORS = new SentinelElementType("ASSIGNMENT_OPERATORS");
   IElementType ASSIGN_EXPR = new SentinelElementType("ASSIGN_EXPR");
   IElementType BIG_U_VALUE = new SentinelElementType("BIG_U_VALUE");
   IElementType BINARY_OPERATION = new SentinelElementType("BINARY_OPERATION");
@@ -41,7 +40,8 @@ public interface SentinelTypes {
   IElementType EXPONENT = new SentinelElementType("EXPONENT");
   IElementType EXTERNAL_PARAMETERS = new SentinelElementType("EXTERNAL_PARAMETERS");
   IElementType FLOAT = new SentinelElementType("FLOAT");
-  IElementType FOR_STMT = new SentinelElementType("FOR_STMT");
+  IElementType FOR_BLOCK = new SentinelElementType("FOR_BLOCK");
+  IElementType FOR_STATEMENT = new SentinelElementType("FOR_STATEMENT");
   IElementType FUNCTION = new SentinelElementType("FUNCTION");
   IElementType FUNCTION_BODY = new SentinelElementType("FUNCTION_BODY");
   IElementType FUNCTION_CALL = new SentinelElementType("FUNCTION_CALL");
@@ -91,20 +91,21 @@ public interface SentinelTypes {
   IElementType ALL = new SentinelTokenType("all");
   IElementType AND = new SentinelTokenType("and");
   IElementType ANY = new SentinelTokenType("any");
-  IElementType ARRAY = new SentinelTokenType("array");
   IElementType AS = new SentinelTokenType("as");
+  IElementType ASSIGNMENTOPERATORS = new SentinelTokenType("AssignmentOperators");
   IElementType BLOCK_COMMENT = new SentinelTokenType("BLOCK_COMMENT");
+  IElementType BREAK = new SentinelTokenType("break");
   IElementType COMMA = new SentinelTokenType(",");
   IElementType COMMENT = new SentinelTokenType("COMMENT");
   IElementType CONTAINS = new SentinelTokenType("contains");
-  IElementType CRLF = new SentinelTokenType("CRLF");
+  IElementType CONTINUE = new SentinelTokenType("continue");
   IElementType DEFAULT = new SentinelTokenType("default");
   IElementType DOUBLE_QUOTED_STRING = new SentinelTokenType("DOUBLE_QUOTED_STRING");
   IElementType ELSE = new SentinelTokenType("else");
   IElementType EQUALS = new SentinelTokenType("=");
-  IElementType EXPRESSIONS = new SentinelTokenType("Expressions");
   IElementType FALSE = new SentinelTokenType("false");
   IElementType FILTER = new SentinelTokenType("filter");
+  IElementType FOR = new SentinelTokenType("for");
   IElementType FUNC = new SentinelTokenType("func");
   IElementType IDENTIFIER = new SentinelTokenType("IDENTIFIER");
   IElementType IF = new SentinelTokenType("if");
@@ -117,7 +118,6 @@ public interface SentinelTypes {
   IElementType NOT = new SentinelTokenType("not");
   IElementType NULL = new SentinelTokenType("null");
   IElementType NUMBER = new SentinelTokenType("Number");
-  IElementType OBJECT = new SentinelTokenType("object");
   IElementType OR = new SentinelTokenType("or");
   IElementType PARAM = new SentinelTokenType("param");
   IElementType PERIOD = new SentinelTokenType(".");
@@ -130,7 +130,6 @@ public interface SentinelTypes {
   IElementType STATEMENTLIST = new SentinelTokenType("StatementList");
   IElementType TRUE = new SentinelTokenType("true");
   IElementType UNDEFINED = new SentinelTokenType("undefined");
-  IElementType VALUE = new SentinelTokenType("value");
   IElementType XOR = new SentinelTokenType("xor");
   IElementType _CONDITION_ = new SentinelTokenType("<condition>");
   IElementType _PRIMARY_EXPRESSION_ = new SentinelTokenType("<primary_expression>");
@@ -146,9 +145,6 @@ public interface SentinelTypes {
       }
       else if (type == ASSIGNMENT) {
         return new SentinelAssignmentImpl(node);
-      }
-      else if (type == ASSIGNMENT_OPERATORS) {
-        return new SentinelAssignmentOperatorsImpl(node);
       }
       else if (type == ASSIGN_EXPR) {
         return new SentinelAssignExprImpl(node);
@@ -231,8 +227,11 @@ public interface SentinelTypes {
       else if (type == FLOAT) {
         return new SentinelFloatImpl(node);
       }
-      else if (type == FOR_STMT) {
-        return new SentinelForStmtImpl(node);
+      else if (type == FOR_BLOCK) {
+        return new SentinelForBlockImpl(node);
+      }
+      else if (type == FOR_STATEMENT) {
+        return new SentinelForStatementImpl(node);
       }
       else if (type == FUNCTION) {
         return new SentinelFunctionImpl(node);

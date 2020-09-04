@@ -28,6 +28,18 @@ public class SentinelStatementImpl extends ASTWrapperPsiElement implements Senti
 
   @Override
   @Nullable
+  public SentinelForStatement getForStatement() {
+    return findChildByClass(SentinelForStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelFunctionCall getFunctionCall() {
+    return findChildByClass(SentinelFunctionCall.class);
+  }
+
+  @Override
+  @Nullable
   public SentinelIfStatement getIfStatement() {
     return findChildByClass(SentinelIfStatement.class);
   }

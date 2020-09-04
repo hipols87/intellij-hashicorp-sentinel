@@ -28,6 +28,18 @@ public class SentinelVariableDefinitionImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @Nullable
+  public SentinelAddSubtractOperator getAddSubtractOperator() {
+    return findChildByClass(SentinelAddSubtractOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelFunctionCall getFunctionCall() {
+    return findChildByClass(SentinelFunctionCall.class);
+  }
+
+  @Override
+  @Nullable
   public SentinelListDefinition getListDefinition() {
     return findChildByClass(SentinelListDefinition.class);
   }
@@ -42,6 +54,12 @@ public class SentinelVariableDefinitionImpl extends ASTWrapperPsiElement impleme
   @Nullable
   public SentinelMapDefinition getMapDefinition() {
     return findChildByClass(SentinelMapDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public SentinelMultipleDivideOperator getMultipleDivideOperator() {
+    return findChildByClass(SentinelMultipleDivideOperator.class);
   }
 
   @Override

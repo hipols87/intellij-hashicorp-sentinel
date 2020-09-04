@@ -5,18 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelFunctionStatement extends PsiElement {
+public interface SentinelForBlock extends PsiElement {
 
   @Nullable
-  SentinelForStatement getForStatement();
+  SentinelBreakStmt getBreakStmt();
 
   @Nullable
-  SentinelFunctionCall getFunctionCall();
+  SentinelContinueStmt getContinueStmt();
 
   @Nullable
-  SentinelIfStatement getIfStatement();
-
-  @Nullable
-  SentinelVariableDefinition getVariableDefinition();
+  SentinelStatement getStatement();
 
 }

@@ -89,4 +89,16 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testIfStatementCompoundLogic() throws Exception {
         doTest();
     }
+
+    public void testForEach() throws Exception {
+        doTest();
+    }
+
+    public void testForEachBreak() throws Exception {
+        doTest();
+    }
+
+    public void testFunctionCalls() throws Exception {
+        doTest();
+    }
 }

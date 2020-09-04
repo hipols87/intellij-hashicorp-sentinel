@@ -143,37 +143,8 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b);
     r = AssignExpr(b, l + 1);
-    r = r && AssignmentOperators(b, l + 1);
-    r = r && condition(b, l + 1);
+    r = r && consumeTokens(b, 0, ASSIGNMENTOPERATORS, _CONDITION_);
     exit_section_(b, m, ASSIGNMENT, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // ( AddSubtractOperator | MultipleDivideOperator )? EQUALS
-  public static boolean AssignmentOperators(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentOperators")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT_OPERATORS, "<assignment operators>");
-    r = AssignmentOperators_0(b, l + 1);
-    r = r && consumeToken(b, EQUALS);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // ( AddSubtractOperator | MultipleDivideOperator )?
-  private static boolean AssignmentOperators_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentOperators_0")) return false;
-    AssignmentOperators_0_0(b, l + 1);
-    return true;
-  }
-
-  // AddSubtractOperator | MultipleDivideOperator
-  private static boolean AssignmentOperators_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentOperators_0_0")) return false;
-    boolean r;
-    r = AddSubtractOperator(b, l + 1);
-    if (!r) r = MultipleDivideOperator(b, l + 1);
     return r;
   }
 
@@ -345,13 +316,14 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "break"
+  // break
   public static boolean BreakStmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BreakStmt")) return false;
+    if (!nextTokenIs(b, BREAK)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, BREAK_STMT, "<break stmt>");
-    r = consumeToken(b, "break");
-    exit_section_(b, l, m, r, false, null);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, BREAK);
+    exit_section_(b, m, BREAK_STMT, r);
     return r;
   }
 
@@ -455,13 +427,14 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "continue"
+  // continue
   public static boolean ContinueStmt(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ContinueStmt")) return false;
+    if (!nextTokenIs(b, CONTINUE)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, CONTINUE_STMT, "<continue stmt>");
-    r = consumeToken(b, "continue");
-    exit_section_(b, l, m, r, false, null);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CONTINUE);
+    exit_section_(b, m, CONTINUE_STMT, r);
     return r;
   }
 
@@ -628,12 +601,6 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, R_BRACKET);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  /* ********************************************************** */
-  // CRLF
-  static boolean EOL(PsiBuilder b, int l) {
-    return consumeToken(b, CRLF);
   }
 
   /* ********************************************************** */
@@ -847,24 +814,54 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "for" Expressions "as" ( IDENTIFIER "," ) IDENTIFIER Block
-  public static boolean ForStmt(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ForStmt")) return false;
+  // L_CURLY ( Statement | BreakStmt | ContinueStmt ) R_CURLY
+  public static boolean ForBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForBlock")) return false;
+    if (!nextTokenIs(b, L_CURLY)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FOR_STMT, "<for stmt>");
-    r = consumeToken(b, "for");
-    r = r && consumeToken(b, EXPRESSIONS);
-    r = r && consumeToken(b, "as");
-    r = r && ForStmt_3(b, l + 1);
-    r = r && consumeToken(b, IDENTIFIER);
-    r = r && Block(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, L_CURLY);
+    r = r && ForBlock_1(b, l + 1);
+    r = r && consumeToken(b, R_CURLY);
+    exit_section_(b, m, FOR_BLOCK, r);
     return r;
   }
 
+  // Statement | BreakStmt | ContinueStmt
+  private static boolean ForBlock_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForBlock_1")) return false;
+    boolean r;
+    r = Statement(b, l + 1);
+    if (!r) r = BreakStmt(b, l + 1);
+    if (!r) r = ContinueStmt(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // for IDENTIFIER as ( IDENTIFIER "," )? IDENTIFIER ForBlock
+  public static boolean ForStatement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForStatement")) return false;
+    if (!nextTokenIs(b, FOR)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, FOR, IDENTIFIER, AS);
+    r = r && ForStatement_3(b, l + 1);
+    r = r && consumeToken(b, IDENTIFIER);
+    r = r && ForBlock(b, l + 1);
+    exit_section_(b, m, FOR_STATEMENT, r);
+    return r;
+  }
+
+  // ( IDENTIFIER "," )?
+  private static boolean ForStatement_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForStatement_3")) return false;
+    ForStatement_3_0(b, l + 1);
+    return true;
+  }
+
   // IDENTIFIER ","
-  private static boolean ForStmt_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ForStmt_3")) return false;
+  private static boolean ForStatement_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForStatement_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, IDENTIFIER, COMMA);
@@ -938,14 +935,15 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VariableDefinition | IfStatement
+  // VariableDefinition | IfStatement | ForStatement | FunctionCall
   public static boolean FunctionStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FunctionStatement")) return false;
-    if (!nextTokenIs(b, "<function statement>", IDENTIFIER, IF)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FUNCTION_STATEMENT, "<function statement>");
     r = VariableDefinition(b, l + 1);
     if (!r) r = IfStatement(b, l + 1);
+    if (!r) r = ForStatement(b, l + 1);
+    if (!r) r = FunctionCall(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1381,14 +1379,16 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // QuantifierOperator DotIdentifier as IDENTIFIER L_CURLY  R_CURLY
+  // QuantifierOperator DotIdentifier as IDENTIFIER L_CURLY BooleanExpressions  R_CURLY
   public static boolean QuantifierExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "QuantifierExpression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, QUANTIFIER_EXPRESSION, "<quantifier expression>");
     r = QuantifierOperator(b, l + 1);
     r = r && DotIdentifier(b, l + 1);
-    r = r && consumeTokens(b, 0, AS, IDENTIFIER, L_CURLY, R_CURLY);
+    r = r && consumeTokens(b, 0, AS, IDENTIFIER, L_CURLY);
+    r = r && BooleanExpressions(b, l + 1);
+    r = r && consumeToken(b, R_CURLY);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1556,7 +1556,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VariableDefinition | IfStatement | ReturnStatement
+  // VariableDefinition | IfStatement | ReturnStatement | ForStatement | FunctionCall
   public static boolean Statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Statement")) return false;
     boolean r;
@@ -1564,6 +1564,8 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     r = VariableDefinition(b, l + 1);
     if (!r) r = IfStatement(b, l + 1);
     if (!r) r = ReturnStatement(b, l + 1);
+    if (!r) r = ForStatement(b, l + 1);
+    if (!r) r = FunctionCall(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1640,25 +1642,44 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER EQUALS ( Literal | ListDefinition | MapDefinition  )
+  // IDENTIFIER ( AddSubtractOperator | MultipleDivideOperator )? EQUALS ( Literal | ListDefinition | MapDefinition | FunctionCall )
   public static boolean VariableDefinition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IDENTIFIER, EQUALS);
-    r = r && VariableDefinition_2(b, l + 1);
+    r = consumeToken(b, IDENTIFIER);
+    r = r && VariableDefinition_1(b, l + 1);
+    r = r && consumeToken(b, EQUALS);
+    r = r && VariableDefinition_3(b, l + 1);
     exit_section_(b, m, VARIABLE_DEFINITION, r);
     return r;
   }
 
-  // Literal | ListDefinition | MapDefinition
-  private static boolean VariableDefinition_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableDefinition_2")) return false;
+  // ( AddSubtractOperator | MultipleDivideOperator )?
+  private static boolean VariableDefinition_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableDefinition_1")) return false;
+    VariableDefinition_1_0(b, l + 1);
+    return true;
+  }
+
+  // AddSubtractOperator | MultipleDivideOperator
+  private static boolean VariableDefinition_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableDefinition_1_0")) return false;
+    boolean r;
+    r = AddSubtractOperator(b, l + 1);
+    if (!r) r = MultipleDivideOperator(b, l + 1);
+    return r;
+  }
+
+  // Literal | ListDefinition | MapDefinition | FunctionCall
+  private static boolean VariableDefinition_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableDefinition_3")) return false;
     boolean r;
     r = Literal(b, l + 1);
     if (!r) r = ListDefinition(b, l + 1);
     if (!r) r = MapDefinition(b, l + 1);
+    if (!r) r = FunctionCall(b, l + 1);
     return r;
   }
 
@@ -1963,111 +1984,6 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     r = r && hex_digit(b, l + 1);
     r = r && hex_digit(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !CRLF
-  static boolean not_EOL(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_EOL")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !consumeToken(b, CRLF);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !(R_CURLY|value)
-  static boolean not_brace_or_next_value(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_brace_or_next_value")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !not_brace_or_next_value_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // R_CURLY|value
-  private static boolean not_brace_or_next_value_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_brace_or_next_value_0")) return false;
-    boolean r;
-    r = consumeToken(b, R_CURLY);
-    if (!r) r = consumeToken(b, VALUE);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !(']'|(Literal | array | object))
-  static boolean not_bracket_or_next_value(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_bracket_or_next_value")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !not_bracket_or_next_value_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // ']'|(Literal | array | object)
-  private static boolean not_bracket_or_next_value_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_bracket_or_next_value_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, R_BRACKET);
-    if (!r) r = not_bracket_or_next_value_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // Literal | array | object
-  private static boolean not_bracket_or_next_value_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_bracket_or_next_value_0_1")) return false;
-    boolean r;
-    r = Literal(b, l + 1);
-    if (!r) r = consumeToken(b, ARRAY);
-    if (!r) r = consumeToken(b, OBJECT);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !(')'|value)
-  static boolean not_paren_or_next_value(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_paren_or_next_value")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !not_paren_or_next_value_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // ')'|value
-  private static boolean not_paren_or_next_value_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_paren_or_next_value_0")) return false;
-    boolean r;
-    r = consumeToken(b, R_PAREN);
-    if (!r) r = consumeToken(b, VALUE);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !(R_CURLY|')'|']'|value)
-  static boolean not_terminator_or_next_value(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_terminator_or_next_value")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !not_terminator_or_next_value_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // R_CURLY|')'|']'|value
-  private static boolean not_terminator_or_next_value_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "not_terminator_or_next_value_0")) return false;
-    boolean r;
-    r = consumeToken(b, R_CURLY);
-    if (!r) r = consumeToken(b, R_PAREN);
-    if (!r) r = consumeToken(b, R_BRACKET);
-    if (!r) r = consumeToken(b, VALUE);
     return r;
   }
 

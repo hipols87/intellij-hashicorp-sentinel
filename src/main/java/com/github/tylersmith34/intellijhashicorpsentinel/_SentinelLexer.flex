@@ -55,6 +55,11 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   "<condition>"               { return CONDITION; }
   "func"                      { return FUNC; }
   "return"                    { return RETURN; }
+  "if"                        { return IF; }
+  "else"                      { return ELSE; }
+  "for"                       { return FOR; }
+  "break"                     { return BREAK; }
+  "continue"                  { return CONTINUE; }
   "all"                       { return ALL; }
   "any"                       { return ANY; }
   "filter"                    { return FILTER; }
@@ -62,8 +67,6 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   "false"                     { return FALSE; }
   "null"                      { return NULL; }
   "undefined"                 { return UNDEFINED; }
-  "if"                        { return IF; }
-  "else"                      { return ELSE; }
   "<unary_expression>"        { return UNARY_EXPRESSION; }
   "<primary_expression>"      { return PRIMARY_EXPRESSION; }
   "and"                       { return AND; }
@@ -72,12 +75,8 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   "not"                       { return NOT; }
   "contains"                  { return CONTAINS; }
   "in"                        { return IN; }
+  "AssignmentOperators"       { return ASSIGNMENTOPERATORS; }
   "StatementList"             { return STATEMENTLIST; }
-  "Expressions"               { return EXPRESSIONS; }
-  "CRLF"                      { return CRLF; }
-  "value"                     { return VALUE; }
-  "array"                     { return ARRAY; }
-  "object"                    { return OBJECT; }
 
   {IDENTIFIER}                { return IDENTIFIER; }
   {WHITE_SPACE}               { return WHITE_SPACE; }

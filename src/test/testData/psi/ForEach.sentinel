@@ -1,0 +1,9 @@
+isvalid = func(x, y, z) {
+    mylist = [1, 2]
+    for mylist as key, value {
+        if(valid()){
+            return true
+        }
+    }
+    return true
+}

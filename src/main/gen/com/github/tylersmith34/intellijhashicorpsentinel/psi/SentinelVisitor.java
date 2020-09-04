@@ -23,10 +23,6 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitAssignmentOperators(@NotNull SentinelAssignmentOperators o) {
-    visitPsiElement(o);
-  }
-
   public void visitBinaryOperation(@NotNull SentinelBinaryOperation o) {
     visitPsiElement(o);
   }
@@ -107,7 +103,11 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitForStmt(@NotNull SentinelForStmt o) {
+  public void visitForBlock(@NotNull SentinelForBlock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitForStatement(@NotNull SentinelForStatement o) {
     visitPsiElement(o);
   }
 

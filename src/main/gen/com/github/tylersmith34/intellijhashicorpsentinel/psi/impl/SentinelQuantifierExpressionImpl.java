@@ -28,6 +28,12 @@ public class SentinelQuantifierExpressionImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
+  public SentinelBooleanExpressions getBooleanExpressions() {
+    return findNotNullChildByClass(SentinelBooleanExpressions.class);
+  }
+
+  @Override
+  @NotNull
   public SentinelDotIdentifier getDotIdentifier() {
     return findNotNullChildByClass(SentinelDotIdentifier.class);
   }

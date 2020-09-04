@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelAssignment extends PsiElement {
+public interface SentinelForStatement extends PsiElement {
 
   @NotNull
-  SentinelAssignExpr getAssignExpr();
-
-  @NotNull
-  SentinelCondition getCondition();
+  SentinelForBlock getForBlock();
 
 }
