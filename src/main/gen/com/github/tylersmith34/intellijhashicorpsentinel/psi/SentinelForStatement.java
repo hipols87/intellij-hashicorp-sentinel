@@ -10,4 +10,7 @@ public interface SentinelForStatement extends PsiElement {
   @NotNull
   SentinelForBlock getForBlock();
 
+  @NotNull
+  List<SentinelIdent> getIdentList();
+
 }

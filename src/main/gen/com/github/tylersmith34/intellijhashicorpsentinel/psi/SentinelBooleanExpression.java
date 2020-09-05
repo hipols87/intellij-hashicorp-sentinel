@@ -17,6 +17,9 @@ public interface SentinelBooleanExpression extends PsiElement {
   SentinelFunctionCall getFunctionCall();
 
   @Nullable
+  SentinelIdent getIdent();
+
+  @Nullable
   SentinelLiteral getLiteral();
 
   @Nullable
@@ -24,8 +27,5 @@ public interface SentinelBooleanExpression extends PsiElement {
 
   @Nullable
   SentinelUnaryOperator getUnaryOperator();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

@@ -34,14 +34,14 @@ public class SentinelCaseStatementImpl extends ASTWrapperPsiElement implements S
 
   @Override
   @Nullable
-  public SentinelLiteral getLiteral() {
-    return findChildByClass(SentinelLiteral.class);
+  public SentinelIdent getIdent() {
+    return findChildByClass(SentinelIdent.class);
   }
 
   @Override
   @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
+  public SentinelLiteral getLiteral() {
+    return findChildByClass(SentinelLiteral.class);
   }
 
 }

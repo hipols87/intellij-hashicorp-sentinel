@@ -28,6 +28,12 @@ public class SentinelCaseClauseImpl extends ASTWrapperPsiElement implements Sent
 
   @Override
   @Nullable
+  public SentinelIdent getIdent() {
+    return findChildByClass(SentinelIdent.class);
+  }
+
+  @Override
+  @Nullable
   public SentinelLiteral getLiteral() {
     return findChildByClass(SentinelLiteral.class);
   }
@@ -36,12 +42,6 @@ public class SentinelCaseClauseImpl extends ASTWrapperPsiElement implements Sent
   @Nullable
   public SentinelStatement getStatement() {
     return findChildByClass(SentinelStatement.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
   }
 
 }

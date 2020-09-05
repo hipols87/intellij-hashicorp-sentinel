@@ -64,8 +64,8 @@ public class SentinelParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // FunctionCall |
-  //     UnaryOperator ( IDENTIFIER | Literal | QuantifierExpression)? |
-  //     ( IDENTIFIER | Literal | QuantifierExpression ) ( BooleanOperators ) ( IDENTIFIER | Literal | QuantifierExpression) |
+  //     UnaryOperator ( Ident | Literal | QuantifierExpression)? |
+  //     ( Ident | Literal | QuantifierExpression ) ( BooleanOperators ) ( Ident | Literal | QuantifierExpression) |
   //     ElseOperator
   public static boolean BooleanExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BooleanExpression")) return false;
@@ -79,7 +79,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // UnaryOperator ( IDENTIFIER | Literal | QuantifierExpression)?
+  // UnaryOperator ( Ident | Literal | QuantifierExpression)?
   private static boolean BooleanExpression_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BooleanExpression_1")) return false;
     boolean r;
@@ -90,24 +90,24 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ( IDENTIFIER | Literal | QuantifierExpression)?
+  // ( Ident | Literal | QuantifierExpression)?
   private static boolean BooleanExpression_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BooleanExpression_1_1")) return false;
     BooleanExpression_1_1_0(b, l + 1);
     return true;
   }
 
-  // IDENTIFIER | Literal | QuantifierExpression
+  // Ident | Literal | QuantifierExpression
   private static boolean BooleanExpression_1_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BooleanExpression_1_1_0")) return false;
     boolean r;
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     if (!r) r = Literal(b, l + 1);
     if (!r) r = QuantifierExpression(b, l + 1);
     return r;
   }
 
-  // ( IDENTIFIER | Literal | QuantifierExpression ) ( BooleanOperators ) ( IDENTIFIER | Literal | QuantifierExpression)
+  // ( Ident | Literal | QuantifierExpression ) ( BooleanOperators ) ( Ident | Literal | QuantifierExpression)
   private static boolean BooleanExpression_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BooleanExpression_2")) return false;
     boolean r;
@@ -119,11 +119,11 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IDENTIFIER | Literal | QuantifierExpression
+  // Ident | Literal | QuantifierExpression
   private static boolean BooleanExpression_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BooleanExpression_2_0")) return false;
     boolean r;
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     if (!r) r = Literal(b, l + 1);
     if (!r) r = QuantifierExpression(b, l + 1);
     return r;
@@ -139,11 +139,11 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IDENTIFIER | Literal | QuantifierExpression
+  // Ident | Literal | QuantifierExpression
   private static boolean BooleanExpression_2_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BooleanExpression_2_2")) return false;
     boolean r;
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     if (!r) r = Literal(b, l + 1);
     if (!r) r = QuantifierExpression(b, l + 1);
     return r;
@@ -240,12 +240,12 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER | Literal | Statement
+  // Ident | Literal | Statement
   public static boolean CaseClause(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CaseClause")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CASE_CLAUSE, "<case clause>");
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     if (!r) r = Literal(b, l + 1);
     if (!r) r = Statement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
@@ -253,7 +253,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // case (IDENTIFIER | Literal) L_CURLY ( CaseWhenClause* ) R_CURLY
+  // case (Ident | Literal) L_CURLY ( CaseWhenClause* ) R_CURLY
   public static boolean CaseStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CaseStatement")) return false;
     if (!nextTokenIs(b, CASE)) return false;
@@ -268,11 +268,11 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IDENTIFIER | Literal
+  // Ident | Literal
   private static boolean CaseStatement_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CaseStatement_1")) return false;
     boolean r;
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     if (!r) r = Literal(b, l + 1);
     return r;
   }
@@ -501,77 +501,6 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER+ (Selector | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET ) )*
-  public static boolean DotIdentifier(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DotIdentifier")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = DotIdentifier_0(b, l + 1);
-    r = r && DotIdentifier_1(b, l + 1);
-    exit_section_(b, m, DOT_IDENTIFIER, r);
-    return r;
-  }
-
-  // IDENTIFIER+
-  private static boolean DotIdentifier_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DotIdentifier_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
-    while (r) {
-      int c = current_position_(b);
-      if (!consumeToken(b, IDENTIFIER)) break;
-      if (!empty_element_parsed_guard_(b, "DotIdentifier_0", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (Selector | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET ) )*
-  private static boolean DotIdentifier_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DotIdentifier_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!DotIdentifier_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "DotIdentifier_1", c)) break;
-    }
-    return true;
-  }
-
-  // Selector | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET )
-  private static boolean DotIdentifier_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DotIdentifier_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = Selector(b, l + 1);
-    if (!r) r = DotIdentifier_1_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET
-  private static boolean DotIdentifier_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DotIdentifier_1_0_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, L_BRACKET);
-    r = r && DotIdentifier_1_0_1_1(b, l + 1);
-    r = r && consumeToken(b, R_BRACKET);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // StringLiteral | NumberLiteral
-  private static boolean DotIdentifier_1_0_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "DotIdentifier_1_0_1_1")) return false;
-    boolean r;
-    r = StringLiteral(b, l + 1);
-    if (!r) r = NumberLiteral(b, l + 1);
-    return r;
-  }
-
-  /* ********************************************************** */
   // Literal | ListDefinition | MapDefinition
   public static boolean Element(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Element")) return false;
@@ -687,13 +616,14 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // param IDENTIFIER ( default Literal )?
+  // param Ident ( default Literal )?
   public static boolean ExternalParameters(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ExternalParameters")) return false;
     if (!nextTokenIs(b, PARAM)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PARAM, IDENTIFIER);
+    r = consumeToken(b, PARAM);
+    r = r && Ident(b, l + 1);
     r = r && ExternalParameters_2(b, l + 1);
     exit_section_(b, m, EXTERNAL_PARAMETERS, r);
     return r;
@@ -846,33 +776,36 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // for IDENTIFIER as ( IDENTIFIER COMMA )? IDENTIFIER ForBlock
+  // for Ident as ( Ident COMMA )? Ident ForBlock
   public static boolean ForStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ForStatement")) return false;
     if (!nextTokenIs(b, FOR)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, FOR, IDENTIFIER, AS);
+    r = consumeToken(b, FOR);
+    r = r && Ident(b, l + 1);
+    r = r && consumeToken(b, AS);
     r = r && ForStatement_3(b, l + 1);
-    r = r && consumeToken(b, IDENTIFIER);
+    r = r && Ident(b, l + 1);
     r = r && ForBlock(b, l + 1);
     exit_section_(b, m, FOR_STATEMENT, r);
     return r;
   }
 
-  // ( IDENTIFIER COMMA )?
+  // ( Ident COMMA )?
   private static boolean ForStatement_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ForStatement_3")) return false;
     ForStatement_3_0(b, l + 1);
     return true;
   }
 
-  // IDENTIFIER COMMA
+  // Ident COMMA
   private static boolean ForStatement_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ForStatement_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IDENTIFIER, COMMA);
+    r = Ident(b, l + 1);
+    r = r && consumeToken(b, COMMA);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -917,26 +850,27 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER Parameters
+  // Ident Parameters
   public static boolean FunctionCall(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FunctionCall")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     r = r && Parameters(b, l + 1);
     exit_section_(b, m, FUNCTION_CALL, r);
     return r;
   }
 
   /* ********************************************************** */
-  // IDENTIFIER EQUALS func Function
+  // Ident EQUALS func Function
   public static boolean FunctionDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FunctionDeclaration")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IDENTIFIER, EQUALS, FUNC);
+    r = Ident(b, l + 1);
+    r = r && consumeTokens(b, 0, EQUALS, FUNC);
     r = r && Function(b, l + 1);
     exit_section_(b, m, FUNCTION_DECLARATION, r);
     return r;
@@ -1024,7 +958,79 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER+ ( COMMA IDENTIFIER+ )*
+  // identifier+ (Selector | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET ) | ElseOperator)*
+  public static boolean Ident(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Ident")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Ident_0(b, l + 1);
+    r = r && Ident_1(b, l + 1);
+    exit_section_(b, m, IDENT, r);
+    return r;
+  }
+
+  // identifier+
+  private static boolean Ident_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Ident_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, IDENTIFIER)) break;
+      if (!empty_element_parsed_guard_(b, "Ident_0", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (Selector | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET ) | ElseOperator)*
+  private static boolean Ident_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Ident_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!Ident_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "Ident_1", c)) break;
+    }
+    return true;
+  }
+
+  // Selector | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET ) | ElseOperator
+  private static boolean Ident_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Ident_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Selector(b, l + 1);
+    if (!r) r = Ident_1_0_1(b, l + 1);
+    if (!r) r = ElseOperator(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET
+  private static boolean Ident_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Ident_1_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, L_BRACKET);
+    r = r && Ident_1_0_1_1(b, l + 1);
+    r = r && consumeToken(b, R_BRACKET);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // StringLiteral | NumberLiteral
+  private static boolean Ident_1_0_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Ident_1_0_1_1")) return false;
+    boolean r;
+    r = StringLiteral(b, l + 1);
+    if (!r) r = NumberLiteral(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // Ident+ ( COMMA Ident+ )*
   public static boolean IdentifierList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IdentifierList")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
@@ -1036,22 +1042,22 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IDENTIFIER+
+  // Ident+
   private static boolean IdentifierList_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IdentifierList_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     while (r) {
       int c = current_position_(b);
-      if (!consumeToken(b, IDENTIFIER)) break;
+      if (!Ident(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "IdentifierList_0", c)) break;
     }
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // ( COMMA IDENTIFIER+ )*
+  // ( COMMA Ident+ )*
   private static boolean IdentifierList_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IdentifierList_1")) return false;
     while (true) {
@@ -1062,7 +1068,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // COMMA IDENTIFIER+
+  // COMMA Ident+
   private static boolean IdentifierList_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IdentifierList_1_0")) return false;
     boolean r;
@@ -1073,15 +1079,15 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IDENTIFIER+
+  // Ident+
   private static boolean IdentifierList_1_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IdentifierList_1_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     while (r) {
       int c = current_position_(b);
-      if (!consumeToken(b, IDENTIFIER)) break;
+      if (!Ident(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "IdentifierList_1_0_1", c)) break;
     }
     exit_section_(b, m, null, r);
@@ -1154,7 +1160,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // import StringLiteral (as IDENTIFIER )?
+  // import StringLiteral (as Ident )?
   public static boolean ImportStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ImportStatement")) return false;
     if (!nextTokenIs(b, IMPORT)) return false;
@@ -1167,19 +1173,20 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (as IDENTIFIER )?
+  // (as Ident )?
   private static boolean ImportStatement_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ImportStatement_2")) return false;
     ImportStatement_2_0(b, l + 1);
     return true;
   }
 
-  // as IDENTIFIER
+  // as Ident
   private static boolean ImportStatement_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ImportStatement_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, AS, IDENTIFIER);
+    r = consumeToken(b, AS);
+    r = r && Ident(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1532,35 +1539,37 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // QuantifierOperator DotIdentifier as ( IDENTIFIER COMMA )? IDENTIFIER L_CURLY BooleanExpressions  R_CURLY
+  // QuantifierOperator Ident as ( Ident COMMA )? Ident L_CURLY BooleanExpressions  R_CURLY
   public static boolean QuantifierExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "QuantifierExpression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, QUANTIFIER_EXPRESSION, "<quantifier expression>");
     r = QuantifierOperator(b, l + 1);
-    r = r && DotIdentifier(b, l + 1);
+    r = r && Ident(b, l + 1);
     r = r && consumeToken(b, AS);
     r = r && QuantifierExpression_3(b, l + 1);
-    r = r && consumeTokens(b, 0, IDENTIFIER, L_CURLY);
+    r = r && Ident(b, l + 1);
+    r = r && consumeToken(b, L_CURLY);
     r = r && BooleanExpressions(b, l + 1);
     r = r && consumeToken(b, R_CURLY);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // ( IDENTIFIER COMMA )?
+  // ( Ident COMMA )?
   private static boolean QuantifierExpression_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "QuantifierExpression_3")) return false;
     QuantifierExpression_3_0(b, l + 1);
     return true;
   }
 
-  // IDENTIFIER COMMA
+  // Ident COMMA
   private static boolean QuantifierExpression_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "QuantifierExpression_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IDENTIFIER, COMMA);
+    r = Ident(b, l + 1);
+    r = r && consumeToken(b, COMMA);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1579,7 +1588,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // return ( IDENTIFIER | Literal )
+  // return ( Ident | Literal )
   public static boolean ReturnStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReturnStatement")) return false;
     if (!nextTokenIs(b, RETURN)) return false;
@@ -1591,11 +1600,11 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IDENTIFIER | Literal
+  // Ident | Literal
   private static boolean ReturnStatement_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReturnStatement_1")) return false;
     boolean r;
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     if (!r) r = Literal(b, l + 1);
     return r;
   }
@@ -1633,26 +1642,28 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER EQUALS RuleBase
+  // Ident EQUALS RuleBase
   public static boolean RuleDefinition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "RuleDefinition")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IDENTIFIER, EQUALS);
+    r = Ident(b, l + 1);
+    r = r && consumeToken(b, EQUALS);
     r = r && RuleBase(b, l + 1);
     exit_section_(b, m, RULE_DEFINITION, r);
     return r;
   }
 
   /* ********************************************************** */
-  // "." IDENTIFIER
+  // "." Ident
   public static boolean Selector(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Selector")) return false;
     if (!nextTokenIs(b, PERIOD)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PERIOD, IDENTIFIER);
+    r = consumeToken(b, PERIOD);
+    r = r && Ident(b, l + 1);
     exit_section_(b, m, SELECTOR, r);
     return r;
   }
@@ -1785,13 +1796,13 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER ( AddSubtractOperator | MultipleDivideOperator )? EQUALS ( Literal | ListDefinition | MapDefinition | FunctionCall | QuantifierExpression )
+  // Ident ( AddSubtractOperator | MultipleDivideOperator )? EQUALS ( Literal | ListDefinition | MapDefinition | FunctionCall | QuantifierExpression | BooleanExpressions )
   public static boolean VariableDefinition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
+    r = Ident(b, l + 1);
     r = r && VariableDefinition_1(b, l + 1);
     r = r && consumeToken(b, EQUALS);
     r = r && VariableDefinition_3(b, l + 1);
@@ -1815,7 +1826,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // Literal | ListDefinition | MapDefinition | FunctionCall | QuantifierExpression
+  // Literal | ListDefinition | MapDefinition | FunctionCall | QuantifierExpression | BooleanExpressions
   private static boolean VariableDefinition_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition_3")) return false;
     boolean r;
@@ -1824,6 +1835,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     if (!r) r = MapDefinition(b, l + 1);
     if (!r) r = FunctionCall(b, l + 1);
     if (!r) r = QuantifierExpression(b, l + 1);
+    if (!r) r = BooleanExpressions(b, l + 1);
     return r;
   }
 

@@ -11,7 +11,13 @@ public interface SentinelVariableDefinition extends PsiElement {
   SentinelAddSubtractOperator getAddSubtractOperator();
 
   @Nullable
+  SentinelBooleanExpressions getBooleanExpressions();
+
+  @Nullable
   SentinelFunctionCall getFunctionCall();
+
+  @NotNull
+  SentinelIdent getIdent();
 
   @Nullable
   SentinelListDefinition getListDefinition();
@@ -27,8 +33,5 @@ public interface SentinelVariableDefinition extends PsiElement {
 
   @Nullable
   SentinelQuantifierExpression getQuantifierExpression();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

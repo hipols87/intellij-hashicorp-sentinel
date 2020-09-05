@@ -26,4 +26,10 @@ public class SentinelIdentifierListImpl extends ASTWrapperPsiElement implements 
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<SentinelIdent> getIdentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelIdent.class);
+  }
+
 }

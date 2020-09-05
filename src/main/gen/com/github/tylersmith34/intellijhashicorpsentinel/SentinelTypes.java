@@ -27,7 +27,6 @@ public interface SentinelTypes {
   IElementType DECIMALS = new SentinelElementType("DECIMALS");
   IElementType DECIMAL_DIGIT = new SentinelElementType("DECIMAL_DIGIT");
   IElementType DEFINITION = new SentinelElementType("DEFINITION");
-  IElementType DOT_IDENTIFIER = new SentinelElementType("DOT_IDENTIFIER");
   IElementType ELEMENT = new SentinelElementType("ELEMENT");
   IElementType ELEMENT_LIST = new SentinelElementType("ELEMENT_LIST");
   IElementType ELSE_CLAUSE = new SentinelElementType("ELSE_CLAUSE");
@@ -46,6 +45,7 @@ public interface SentinelTypes {
   IElementType GLOBAL_VARIABLE_DEFINITION = new SentinelElementType("GLOBAL_VARIABLE_DEFINITION");
   IElementType HEX_DIGIT = new SentinelElementType("HEX_DIGIT");
   IElementType HEX_LITERAL = new SentinelElementType("HEX_LITERAL");
+  IElementType IDENT = new SentinelElementType("IDENT");
   IElementType IDENTIFIER_LIST = new SentinelElementType("IDENTIFIER_LIST");
   IElementType IF_STATEMENT = new SentinelElementType("IF_STATEMENT");
   IElementType IMPORT_STATEMENT = new SentinelElementType("IMPORT_STATEMENT");
@@ -101,7 +101,7 @@ public interface SentinelTypes {
   IElementType FUNC = new SentinelTokenType("func");
   IElementType GREATER_THAN = new SentinelTokenType(">");
   IElementType GREATER_THAN_EQUALS = new SentinelTokenType(">=");
-  IElementType IDENTIFIER = new SentinelTokenType("IDENTIFIER");
+  IElementType IDENTIFIER = new SentinelTokenType("identifier");
   IElementType IF = new SentinelTokenType("if");
   IElementType IMPORT = new SentinelTokenType("import");
   IElementType IN = new SentinelTokenType("in");
@@ -190,9 +190,6 @@ public interface SentinelTypes {
       else if (type == DEFINITION) {
         return new SentinelDefinitionImpl(node);
       }
-      else if (type == DOT_IDENTIFIER) {
-        return new SentinelDotIdentifierImpl(node);
-      }
       else if (type == ELEMENT) {
         return new SentinelElementImpl(node);
       }
@@ -246,6 +243,9 @@ public interface SentinelTypes {
       }
       else if (type == HEX_LITERAL) {
         return new SentinelHexLiteralImpl(node);
+      }
+      else if (type == IDENT) {
+        return new SentinelIdentImpl(node);
       }
       else if (type == IDENTIFIER_LIST) {
         return new SentinelIdentifierListImpl(node);

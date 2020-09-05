@@ -28,8 +28,8 @@ public class SentinelSelectorImpl extends ASTWrapperPsiElement implements Sentin
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public SentinelIdent getIdent() {
+    return findNotNullChildByClass(SentinelIdent.class);
   }
 
 }

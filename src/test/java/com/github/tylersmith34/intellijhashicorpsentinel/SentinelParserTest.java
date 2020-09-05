@@ -113,4 +113,8 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testCaseWhenElse() throws Exception {
         doTest();
     }
+
+    public void testIdentWithSelectorAndElse() throws Exception {
+        doTest();
+    }
 }

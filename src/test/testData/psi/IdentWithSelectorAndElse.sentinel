@@ -1,0 +1,7 @@
+isvalid = func(states) {
+    valid = true
+    if states.capitol else "missing" is "des moines"{
+        return x
+    }
+    return valid
+}

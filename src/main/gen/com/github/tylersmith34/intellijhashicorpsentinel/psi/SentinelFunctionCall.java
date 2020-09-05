@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface SentinelFunctionCall extends PsiElement {
 
   @NotNull
-  SentinelParameters getParameters();
+  SentinelIdent getIdent();
 
   @NotNull
-  PsiElement getIdentifier();
+  SentinelParameters getParameters();
 
 }

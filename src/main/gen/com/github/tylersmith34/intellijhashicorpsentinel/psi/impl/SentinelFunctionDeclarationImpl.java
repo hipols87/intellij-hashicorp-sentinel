@@ -34,8 +34,8 @@ public class SentinelFunctionDeclarationImpl extends ASTWrapperPsiElement implem
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public SentinelIdent getIdent() {
+    return findNotNullChildByClass(SentinelIdent.class);
   }
 
 }

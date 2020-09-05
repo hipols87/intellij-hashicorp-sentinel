@@ -11,9 +11,9 @@ public interface SentinelCaseStatement extends PsiElement {
   List<SentinelCaseWhenClause> getCaseWhenClauseList();
 
   @Nullable
-  SentinelLiteral getLiteral();
+  SentinelIdent getIdent();
 
   @Nullable
-  PsiElement getIdentifier();
+  SentinelLiteral getLiteral();
 
 }

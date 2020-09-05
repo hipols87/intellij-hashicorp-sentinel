@@ -8,12 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface SentinelCaseClause extends PsiElement {
 
   @Nullable
+  SentinelIdent getIdent();
+
+  @Nullable
   SentinelLiteral getLiteral();
 
   @Nullable
   SentinelStatement getStatement();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

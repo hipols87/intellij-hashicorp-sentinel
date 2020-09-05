@@ -28,14 +28,14 @@ public class SentinelFunctionCallImpl extends ASTWrapperPsiElement implements Se
 
   @Override
   @NotNull
-  public SentinelParameters getParameters() {
-    return findNotNullChildByClass(SentinelParameters.class);
+  public SentinelIdent getIdent() {
+    return findNotNullChildByClass(SentinelIdent.class);
   }
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public SentinelParameters getParameters() {
+    return findNotNullChildByClass(SentinelParameters.class);
   }
 
 }
