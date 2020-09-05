@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelImportStatement extends PsiElement {
+public interface SentinelImportedName extends PsiElement {
+
+  @Nullable
+  SentinelImportedAlias getImportedAlias();
 
   @NotNull
-  SentinelImportedName getImportedName();
+  SentinelStringLiteral getStringLiteral();
 
 }

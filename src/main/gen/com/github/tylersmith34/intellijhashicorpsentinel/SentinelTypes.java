@@ -48,6 +48,8 @@ public interface SentinelTypes {
   IElementType IDENT = new SentinelElementType("IDENT");
   IElementType IDENTIFIER_LIST = new SentinelElementType("IDENTIFIER_LIST");
   IElementType IF_STATEMENT = new SentinelElementType("IF_STATEMENT");
+  IElementType IMPORTED_ALIAS = new SentinelElementType("IMPORTED_ALIAS");
+  IElementType IMPORTED_NAME = new SentinelElementType("IMPORTED_NAME");
   IElementType IMPORT_STATEMENT = new SentinelElementType("IMPORT_STATEMENT");
   IElementType KEYED_ELEMENT = new SentinelElementType("KEYED_ELEMENT");
   IElementType KEYED_ELEMENT_LIST = new SentinelElementType("KEYED_ELEMENT_LIST");
@@ -252,6 +254,12 @@ public interface SentinelTypes {
       }
       else if (type == IF_STATEMENT) {
         return new SentinelIfStatementImpl(node);
+      }
+      else if (type == IMPORTED_ALIAS) {
+        return new SentinelImportedAliasImpl(node);
+      }
+      else if (type == IMPORTED_NAME) {
+        return new SentinelImportedNameImpl(node);
       }
       else if (type == IMPORT_STATEMENT) {
         return new SentinelImportStatementImpl(node);
