@@ -37,7 +37,7 @@ Sentinel File
               SentinelBooleanExpressionsImpl(BOOLEAN_EXPRESSIONS)
                 SentinelBooleanExpressionImpl(BOOLEAN_EXPRESSION)
                   SentinelUnaryOperatorImpl(UNARY_OPERATOR)
-                    PsiElement(BAD_CHARACTER)('!')
+                    PsiElement(SentinelTokenType.!)('!')
                   PsiElement(SentinelTokenType.IDENTIFIER)('valid')
               PsiElement(SentinelTokenType.))(')')
               PsiWhiteSpace(' ')

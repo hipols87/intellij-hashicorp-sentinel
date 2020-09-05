@@ -16,7 +16,4 @@ public interface SentinelQuantifierExpression extends PsiElement {
   @NotNull
   SentinelQuantifierOperator getQuantifierOperator();
 
-  @NotNull
-  PsiElement getIdentifier();
-
 }

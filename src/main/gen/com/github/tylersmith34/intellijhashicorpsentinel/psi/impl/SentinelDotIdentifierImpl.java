@@ -28,6 +28,12 @@ public class SentinelDotIdentifierImpl extends ASTWrapperPsiElement implements S
 
   @Override
   @NotNull
+  public List<SentinelNumberLiteral> getNumberLiteralList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelNumberLiteral.class);
+  }
+
+  @Override
+  @NotNull
   public List<SentinelSelector> getSelectorList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelSelector.class);
   }

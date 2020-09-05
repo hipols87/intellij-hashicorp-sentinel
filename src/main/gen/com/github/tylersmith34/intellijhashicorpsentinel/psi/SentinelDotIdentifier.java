@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface SentinelDotIdentifier extends PsiElement {
 
   @NotNull
+  List<SentinelNumberLiteral> getNumberLiteralList();
+
+  @NotNull
   List<SentinelSelector> getSelectorList();
 
   @NotNull

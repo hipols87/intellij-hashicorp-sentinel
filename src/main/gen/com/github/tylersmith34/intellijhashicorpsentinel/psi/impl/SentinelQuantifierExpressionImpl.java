@@ -44,10 +44,4 @@ public class SentinelQuantifierExpressionImpl extends ASTWrapperPsiElement imple
     return findNotNullChildByClass(SentinelQuantifierOperator.class);
   }
 
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
-  }
-
 }

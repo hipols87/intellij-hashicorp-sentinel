@@ -46,6 +46,19 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   ","                         { return COMMA; }
   "."                         { return PERIOD; }
   "="                         { return EQUALS; }
+  "<"                         { return LESS_THAN; }
+  "-"                         { return MINUS; }
+  "+"                         { return PLUS; }
+  "*"                         { return SPLAT; }
+  "/"                         { return SLASH; }
+  "%"                         { return PERCENT; }
+  ":"                         { return COLON; }
+  "=="                        { return DOUBLE_EQUALS; }
+  "!="                        { return NOT_EQUALS; }
+  "<="                        { return LESS_THAN_EQUALS; }
+  ">"                         { return GREATER_THAN; }
+  ">="                        { return GREATER_THAN_EQUALS; }
+  "!"                         { return EXCLAMATION; }
   "import"                    { return IMPORT; }
   "as"                        { return AS; }
   "param"                     { return PARAM; }
@@ -63,6 +76,8 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   "not"                       { return NOT; }
   "contains"                  { return CONTAINS; }
   "in"                        { return IN; }
+  "is"                        { return IS; }
+  "matches"                   { return MATCHES; }
   "for"                       { return FOR; }
   "break"                     { return BREAK; }
   "continue"                  { return CONTINUE; }

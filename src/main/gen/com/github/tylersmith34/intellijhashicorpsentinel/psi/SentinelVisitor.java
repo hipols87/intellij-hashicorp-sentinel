@@ -27,6 +27,10 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBooleanOperators(@NotNull SentinelBooleanOperators o) {
+    visitPsiElement(o);
+  }
+
   public void visitBreakStmt(@NotNull SentinelBreakStmt o) {
     visitPsiElement(o);
   }

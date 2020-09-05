@@ -5,27 +5,24 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelBooleanExpression extends PsiElement {
+public interface SentinelBooleanOperators extends PsiElement {
 
   @Nullable
-  SentinelBooleanOperators getBooleanOperators();
+  SentinelAddSubtractOperator getAddSubtractOperator();
 
   @Nullable
-  SentinelElseOperator getElseOperator();
+  SentinelComparisonOperator getComparisonOperator();
 
   @Nullable
-  SentinelFunctionCall getFunctionCall();
+  SentinelLogicalOperator getLogicalOperator();
 
   @Nullable
-  SentinelLiteral getLiteral();
+  SentinelMultipleDivideOperator getMultipleDivideOperator();
 
   @Nullable
-  SentinelQuantifierExpression getQuantifierExpression();
+  SentinelSetOperator getSetOperator();
 
   @Nullable
   SentinelUnaryOperator getUnaryOperator();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

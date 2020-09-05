@@ -15,6 +15,7 @@ public interface SentinelTypes {
   IElementType BOOLEAN_EXPRESSION = new SentinelElementType("BOOLEAN_EXPRESSION");
   IElementType BOOLEAN_EXPRESSIONS = new SentinelElementType("BOOLEAN_EXPRESSIONS");
   IElementType BOOLEAN_LITERAL = new SentinelElementType("BOOLEAN_LITERAL");
+  IElementType BOOLEAN_OPERATORS = new SentinelElementType("BOOLEAN_OPERATORS");
   IElementType BREAK_STMT = new SentinelElementType("BREAK_STMT");
   IElementType COMPARISON_OPERATOR = new SentinelElementType("COMPARISON_OPERATOR");
   IElementType CONTINUE_STMT = new SentinelElementType("CONTINUE_STMT");
@@ -77,38 +78,53 @@ public interface SentinelTypes {
   IElementType AS = new SentinelTokenType("as");
   IElementType BLOCK_COMMENT = new SentinelTokenType("BLOCK_COMMENT");
   IElementType BREAK = new SentinelTokenType("break");
+  IElementType COLON = new SentinelTokenType(":");
   IElementType COMMA = new SentinelTokenType(",");
   IElementType COMMENT = new SentinelTokenType("COMMENT");
   IElementType CONTAINS = new SentinelTokenType("contains");
   IElementType CONTINUE = new SentinelTokenType("continue");
   IElementType DEFAULT = new SentinelTokenType("default");
+  IElementType DOUBLE_EQUALS = new SentinelTokenType("==");
   IElementType DOUBLE_QUOTED_STRING = new SentinelTokenType("DOUBLE_QUOTED_STRING");
   IElementType ELSE = new SentinelTokenType("else");
   IElementType EQUALS = new SentinelTokenType("=");
+  IElementType EXCLAMATION = new SentinelTokenType("!");
   IElementType FALSE = new SentinelTokenType("false");
   IElementType FILTER = new SentinelTokenType("filter");
   IElementType FOR = new SentinelTokenType("for");
   IElementType FUNC = new SentinelTokenType("func");
+  IElementType GREATER_THAN = new SentinelTokenType(">");
+  IElementType GREATER_THAN_EQUALS = new SentinelTokenType(">=");
   IElementType IDENTIFIER = new SentinelTokenType("IDENTIFIER");
   IElementType IF = new SentinelTokenType("if");
   IElementType IMPORT = new SentinelTokenType("import");
   IElementType IN = new SentinelTokenType("in");
+  IElementType IS = new SentinelTokenType("is");
+  IElementType LESS_THAN = new SentinelTokenType("<");
+  IElementType LESS_THAN_EQUALS = new SentinelTokenType("<=");
   IElementType L_BRACKET = new SentinelTokenType("[");
   IElementType L_CURLY = new SentinelTokenType("{");
   IElementType L_PAREN = new SentinelTokenType("(");
   IElementType MAIN = new SentinelTokenType("main");
+  IElementType MATCHES = new SentinelTokenType("matches");
+  IElementType MINUS = new SentinelTokenType("-");
   IElementType NOT = new SentinelTokenType("not");
+  IElementType NOT_EQUALS = new SentinelTokenType("!=");
   IElementType NULL = new SentinelTokenType("null");
   IElementType NUMBER = new SentinelTokenType("Number");
   IElementType OR = new SentinelTokenType("or");
   IElementType PARAM = new SentinelTokenType("param");
+  IElementType PERCENT = new SentinelTokenType("%");
   IElementType PERIOD = new SentinelTokenType(".");
+  IElementType PLUS = new SentinelTokenType("+");
   IElementType RETURN = new SentinelTokenType("return");
   IElementType RULE = new SentinelTokenType("rule");
   IElementType R_BRACKET = new SentinelTokenType("]");
   IElementType R_CURLY = new SentinelTokenType("}");
   IElementType R_PAREN = new SentinelTokenType(")");
   IElementType SINGLE_QUOTED_STRING = new SentinelTokenType("SINGLE_QUOTED_STRING");
+  IElementType SLASH = new SentinelTokenType("/");
+  IElementType SPLAT = new SentinelTokenType("*");
   IElementType TRUE = new SentinelTokenType("true");
   IElementType UNDEFINED = new SentinelTokenType("undefined");
   IElementType WHEN = new SentinelTokenType("when");
@@ -131,6 +147,9 @@ public interface SentinelTypes {
       }
       else if (type == BOOLEAN_LITERAL) {
         return new SentinelBooleanLiteralImpl(node);
+      }
+      else if (type == BOOLEAN_OPERATORS) {
+        return new SentinelBooleanOperatorsImpl(node);
       }
       else if (type == BREAK_STMT) {
         return new SentinelBreakStmtImpl(node);

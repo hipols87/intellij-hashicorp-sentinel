@@ -32,6 +32,20 @@
         COMMA=','
         PERIOD='.'
         EQUALS='='
+        LESS_THAN='<'
+        MINUS='-'
+        PLUS='+'
+        SPLAT='*'
+        SLASH='/'
+        PERCENT='%'
+        COLON=':'
+        DOUBLE_EQUALS='=='
+        NOT_EQUALS='!='
+        LESS_THAN_EQUALS='<='
+        GREATER_THAN='>'
+        GREATER_THAN_EQUALS='>='
+        MINUS='-'
+        EXCLAMATION='!'
    ]
 }
 
@@ -71,24 +85,26 @@ Statement           ::= VariableDefinition | IfStatement | ReturnStatement | For
 IfStatement        ::= if ( BooleanExpressions | L_PAREN BooleanExpressions R_PAREN ) Block ( else ( IfStatement | Block ) )?
 Block              ::= L_CURLY Statement R_CURLY
 
+
 //Boolean expressions
-BooleanExpressions ::= BooleanExpression+ (LogicalOperator BooleanExpression)*
-BooleanExpression  ::= FunctionCall |
-    UnaryOperator ( IDENTIFIER | Literal )? |
-    ( IDENTIFIER | Literal ) ( SetOperator | ComparisonOperator | UnaryOperator | MultipleDivideOperator | AddSubtractOperator | LogicalOperator ) ( IDENTIFIER | Literal ) |
+BooleanExpressions     ::= BooleanExpression+ (LogicalOperator BooleanExpression)*
+BooleanExpression      ::= FunctionCall |
+    UnaryOperator ( IDENTIFIER | Literal | QuantifierExpression)? |
+    ( IDENTIFIER | Literal | QuantifierExpression ) ( BooleanOperators ) ( IDENTIFIER | Literal | QuantifierExpression) |
     ElseOperator
-ElseOperator    ::= else Literal
-LogicalOperator ::= and | or | xor
-SetOperator     ::= (not)? ( contains | in )
-ComparisonOperator     ::= "==" | "!=" | '<' | "<=" | ">" | ">=" | "is" | "is not" | "matches" | "not matches"
-AddSubtractOperator     ::= "+" | "-"
-MultipleDivideOperator  ::= "*" | "/" | "%"
-UnaryOperator   ::= "+" | "-" | "!" | not
+BooleanOperators       ::= SetOperator | ComparisonOperator | UnaryOperator | MultipleDivideOperator | AddSubtractOperator | LogicalOperator
+ElseOperator           ::= else Literal
+LogicalOperator        ::= and | or | xor
+SetOperator            ::= (not)? ( contains | in )
+ComparisonOperator     ::= DOUBLE_EQUALS | NOT_EQUALS | LESS_THAN | LESS_THAN_EQUALS | GREATER_THAN | GREATER_THAN_EQUALS | is | is not | matches | not matches
+AddSubtractOperator    ::= PLUS | MINUS
+MultipleDivideOperator ::= SPLAT | SLASH | PERCENT
+UnaryOperator          ::= PLUS | MINUS | EXCLAMATION | not
 
 
 // For Statements
 ForBlock     ::= L_CURLY ( Statement | BreakStmt | ContinueStmt ) R_CURLY
-ForStatement ::= for IDENTIFIER as ( IDENTIFIER "," )? IDENTIFIER ForBlock
+ForStatement ::= for IDENTIFIER as ( IDENTIFIER COMMA )? IDENTIFIER ForBlock
 BreakStmt    ::= break
 ContinueStmt ::= continue
 
@@ -100,11 +116,11 @@ ElementList        ::= Element+ ( COMMA Element)*
 Element            ::= Literal | ListDefinition | MapDefinition
 MapDefinition      ::= L_CURLY ( KeyedElementList )? R_CURLY
 KeyedElementList   ::= KeyedElement ( COMMA KeyedElement COMMA?)*
-KeyedElement       ::= Element ":" Element
+KeyedElement       ::= Element COLON Element
 
-QuantifierExpression ::= QuantifierOperator DotIdentifier as IDENTIFIER L_CURLY BooleanExpressions  R_CURLY
+QuantifierExpression ::= QuantifierOperator DotIdentifier as ( IDENTIFIER COMMA )? IDENTIFIER L_CURLY BooleanExpressions  R_CURLY
 QuantifierOperator   ::= all | any | filter
-DotIdentifier ::= IDENTIFIER+ (Selector | (L_BRACKET StringLiteral R_BRACKET ) )*
+DotIdentifier ::= IDENTIFIER+ (Selector | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET ) )*
 Selector  ::= "." IDENTIFIER
 
 
@@ -120,11 +136,11 @@ HexDigit     ::= 1|2|3|4|5|6|7 | "A" | "F" | "a" | "f"
 Letter        ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
 EscapedCharacter  ::= '\' ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | '\' | '"' )
 HexLiteral      ::= "0" ( "x" | "X" ) HexDigit { HexDigit }
-Decimal      ::= '-'? DecimalDigit+ ('.' DecimalDigit+)?
+Decimal      ::= '-'? DecimalDigit+ (PERIOD DecimalDigit+)?
 DecimalDigit ::= 1|2|3|4|5|6|7|8|9|0
 Float ::= decimals "." ( decimals )* ( exponent )? | decimals exponent | "." decimals ( exponent )?
 decimals  ::= Decimal*
-exponent  ::= ( "e" | "E" ) [ "+" | "-" ] decimals
+exponent  ::= ( "e" | "E" ) [ PLUS | MINUS ] decimals
 StringLiteral       ::= ('"' ( Letter | EscapedCharacter)* '"') | DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING
 
 //<condition> ::= <unary_expression> | (<condition>)* BinaryOperation (<condition>)*
@@ -140,7 +156,7 @@ StringLiteral       ::= ('"' ( Letter | EscapedCharacter)* '"') | DOUBLE_QUOTED_
 
 //Operand    ::= Literal | IDENTIFIER | "(" <condition> ")"
 //Index     ::= "[" <condition> "]"
-//Slice     ::= "[" ( <condition> ) ":" ( <condition> ) "]" | "[" ( <condition> ) ":" <condition> ":" <condition> "]"
+//Slice     ::= "[" ( <condition> ) COLON ( <condition> ) "]" | "[" ( <condition> ) COLON <condition> COLON <condition> "]"
 //Arguments ::= "(" [ ( <condition> | Literal [ "," <condition> ] ) [ "..." ] [ "," ] ] ")"
 
 
@@ -158,6 +174,6 @@ StringLiteral       ::= ('"' ( Letter | EscapedCharacter)* '"') | DOUBLE_QUOTED_
 //
 //
 //CaseStmt ::= "case" [ <condition> ] "{" ( CaseWhenClause ) R_CURLY
-//CaseWhenClause ::= CaseWhenCase ":" StatementList
+//CaseWhenClause ::= CaseWhenCase COLON StatementList
 //CaseWhenCase ::= "when" <condition> ( "," <condition> ) | "else"
 
