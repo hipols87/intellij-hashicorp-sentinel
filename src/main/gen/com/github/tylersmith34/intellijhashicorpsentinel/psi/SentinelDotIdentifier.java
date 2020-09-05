@@ -5,10 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SentinelIdent extends PsiElement {
-
-  @NotNull
-  List<SentinelElseOperator> getElseOperatorList();
+public interface SentinelDotIdentifier extends PsiElement {
 
   @NotNull
   List<SentinelNumberLiteral> getNumberLiteralList();

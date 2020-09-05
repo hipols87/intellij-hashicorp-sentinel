@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface SentinelReturnStatement extends PsiElement {
 
   @Nullable
-  SentinelIdent getIdent();
+  SentinelLiteral getLiteral();
 
   @Nullable
-  SentinelLiteral getLiteral();
+  PsiElement getIdentifier();
 
 }

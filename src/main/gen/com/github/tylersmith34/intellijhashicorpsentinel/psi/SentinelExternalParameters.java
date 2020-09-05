@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface SentinelExternalParameters extends PsiElement {
 
-  @NotNull
-  SentinelIdent getIdent();
-
   @Nullable
   SentinelLiteral getLiteral();
+
+  @NotNull
+  PsiElement getIdentifier();
 
 }

@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface SentinelImportStatement extends PsiElement {
 
-  @Nullable
-  SentinelIdent getIdent();
-
   @NotNull
   SentinelStringLiteral getStringLiteral();
+
+  @Nullable
+  PsiElement getIdentifier();
 
 }

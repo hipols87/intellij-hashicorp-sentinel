@@ -27,15 +27,15 @@ public class SentinelImportStatementImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @Nullable
-  public SentinelIdent getIdent() {
-    return findChildByClass(SentinelIdent.class);
-  }
-
-  @Override
   @NotNull
   public SentinelStringLiteral getStringLiteral() {
     return findNotNullChildByClass(SentinelStringLiteral.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIdentifier() {
+    return findChildByType(IDENTIFIER);
   }
 
 }

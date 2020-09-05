@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface SentinelRuleDefinition extends PsiElement {
 
   @NotNull
-  SentinelIdent getIdent();
+  SentinelRuleBase getRuleBase();
 
   @NotNull
-  SentinelRuleBase getRuleBase();
+  PsiElement getIdentifier();
 
 }

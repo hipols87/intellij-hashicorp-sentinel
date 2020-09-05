@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface SentinelIdentifierList extends PsiElement {
 
-  @NotNull
-  List<SentinelIdent> getIdentList();
-
 }

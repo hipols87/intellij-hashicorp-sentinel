@@ -11,25 +11,19 @@ import static com.github.tylersmith34.intellijhashicorpsentinel.SentinelTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tylersmith34.intellijhashicorpsentinel.psi.*;
 
-public class SentinelIdentImpl extends ASTWrapperPsiElement implements SentinelIdent {
+public class SentinelDotIdentifierImpl extends ASTWrapperPsiElement implements SentinelDotIdentifier {
 
-  public SentinelIdentImpl(@NotNull ASTNode node) {
+  public SentinelDotIdentifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SentinelVisitor visitor) {
-    visitor.visitIdent(this);
+    visitor.visitDotIdentifier(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof SentinelVisitor) accept((SentinelVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<SentinelElseOperator> getElseOperatorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelElseOperator.class);
   }
 
   @Override

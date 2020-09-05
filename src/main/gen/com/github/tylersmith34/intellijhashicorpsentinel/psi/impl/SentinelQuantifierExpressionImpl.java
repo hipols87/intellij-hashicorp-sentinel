@@ -34,8 +34,8 @@ public class SentinelQuantifierExpressionImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
-  public List<SentinelIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelIdent.class);
+  public SentinelDotIdentifier getDotIdentifier() {
+    return findNotNullChildByClass(SentinelDotIdentifier.class);
   }
 
   @Override

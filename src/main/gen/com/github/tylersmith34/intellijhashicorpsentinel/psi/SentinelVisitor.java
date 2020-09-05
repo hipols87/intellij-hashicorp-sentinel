@@ -71,6 +71,10 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDotIdentifier(@NotNull SentinelDotIdentifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitElement(@NotNull SentinelElement o) {
     visitPsiElement(o);
   }
@@ -136,10 +140,6 @@ public class SentinelVisitor extends PsiElementVisitor {
   }
 
   public void visitHexLiteral(@NotNull SentinelHexLiteral o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIdent(@NotNull SentinelIdent o) {
     visitPsiElement(o);
   }
 

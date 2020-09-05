@@ -28,14 +28,14 @@ public class SentinelRuleDefinitionImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public SentinelIdent getIdent() {
-    return findNotNullChildByClass(SentinelIdent.class);
+  public SentinelRuleBase getRuleBase() {
+    return findNotNullChildByClass(SentinelRuleBase.class);
   }
 
   @Override
   @NotNull
-  public SentinelRuleBase getRuleBase() {
-    return findNotNullChildByClass(SentinelRuleBase.class);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

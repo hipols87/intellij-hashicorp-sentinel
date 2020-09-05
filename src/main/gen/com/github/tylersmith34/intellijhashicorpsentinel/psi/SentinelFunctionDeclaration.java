@@ -11,6 +11,6 @@ public interface SentinelFunctionDeclaration extends PsiElement {
   SentinelFunction getFunction();
 
   @NotNull
-  SentinelIdent getIdent();
+  PsiElement getIdentifier();
 
 }

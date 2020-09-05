@@ -27,15 +27,15 @@ public class SentinelExternalParametersImpl extends ASTWrapperPsiElement impleme
   }
 
   @Override
-  @NotNull
-  public SentinelIdent getIdent() {
-    return findNotNullChildByClass(SentinelIdent.class);
-  }
-
-  @Override
   @Nullable
   public SentinelLiteral getLiteral() {
     return findChildByClass(SentinelLiteral.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

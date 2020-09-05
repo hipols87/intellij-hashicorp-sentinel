@@ -32,10 +32,4 @@ public class SentinelForStatementImpl extends ASTWrapperPsiElement implements Se
     return findNotNullChildByClass(SentinelForBlock.class);
   }
 
-  @Override
-  @NotNull
-  public List<SentinelIdent> getIdentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SentinelIdent.class);
-  }
-
 }

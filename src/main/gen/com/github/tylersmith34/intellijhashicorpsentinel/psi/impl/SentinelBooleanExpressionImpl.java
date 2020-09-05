@@ -46,12 +46,6 @@ public class SentinelBooleanExpressionImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @Nullable
-  public SentinelIdent getIdent() {
-    return findChildByClass(SentinelIdent.class);
-  }
-
-  @Override
-  @Nullable
   public SentinelLiteral getLiteral() {
     return findChildByClass(SentinelLiteral.class);
   }
@@ -66,6 +60,12 @@ public class SentinelBooleanExpressionImpl extends ASTWrapperPsiElement implemen
   @Nullable
   public SentinelUnaryOperator getUnaryOperator() {
     return findChildByClass(SentinelUnaryOperator.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIdentifier() {
+    return findChildByType(IDENTIFIER);
   }
 
 }
