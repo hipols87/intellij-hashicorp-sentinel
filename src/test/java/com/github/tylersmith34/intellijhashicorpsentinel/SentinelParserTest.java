@@ -109,4 +109,8 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testMainRule() throws Exception {
         doTest();
     }
+
+    public void testCaseWhenElse() throws Exception {
+        doTest();
+    }
 }

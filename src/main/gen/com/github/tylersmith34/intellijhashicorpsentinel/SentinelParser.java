@@ -240,6 +240,131 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IDENTIFIER | Literal | Statement
+  public static boolean CaseClause(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseClause")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CASE_CLAUSE, "<case clause>");
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = Literal(b, l + 1);
+    if (!r) r = Statement(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // case (IDENTIFIER | Literal) L_CURLY ( CaseWhenClause* ) R_CURLY
+  public static boolean CaseStatement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseStatement")) return false;
+    if (!nextTokenIs(b, CASE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CASE);
+    r = r && CaseStatement_1(b, l + 1);
+    r = r && consumeToken(b, L_CURLY);
+    r = r && CaseStatement_3(b, l + 1);
+    r = r && consumeToken(b, R_CURLY);
+    exit_section_(b, m, CASE_STATEMENT, r);
+    return r;
+  }
+
+  // IDENTIFIER | Literal
+  private static boolean CaseStatement_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseStatement_1")) return false;
+    boolean r;
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = Literal(b, l + 1);
+    return r;
+  }
+
+  // CaseWhenClause*
+  private static boolean CaseStatement_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseStatement_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!CaseWhenClause(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "CaseStatement_3", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // when CaseClause+ ( COMMA CaseClause )* | ElseClause
+  public static boolean CaseWhenCase(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseWhenCase")) return false;
+    if (!nextTokenIs(b, "<case when case>", ELSE, WHEN)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CASE_WHEN_CASE, "<case when case>");
+    r = CaseWhenCase_0(b, l + 1);
+    if (!r) r = ElseClause(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // when CaseClause+ ( COMMA CaseClause )*
+  private static boolean CaseWhenCase_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseWhenCase_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, WHEN);
+    r = r && CaseWhenCase_0_1(b, l + 1);
+    r = r && CaseWhenCase_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // CaseClause+
+  private static boolean CaseWhenCase_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseWhenCase_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = CaseClause(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!CaseClause(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "CaseWhenCase_0_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ( COMMA CaseClause )*
+  private static boolean CaseWhenCase_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseWhenCase_0_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!CaseWhenCase_0_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "CaseWhenCase_0_2", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA CaseClause
+  private static boolean CaseWhenCase_0_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseWhenCase_0_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && CaseClause(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // CaseWhenCase COLON Statement
+  public static boolean CaseWhenClause(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CaseWhenClause")) return false;
+    if (!nextTokenIs(b, "<case when clause>", ELSE, WHEN)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CASE_WHEN_CLAUSE, "<case when clause>");
+    r = CaseWhenCase(b, l + 1);
+    r = r && consumeToken(b, COLON);
+    r = r && Statement(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // DOUBLE_EQUALS | NOT_EQUALS | LESS_THAN | LESS_THAN_EQUALS | GREATER_THAN | GREATER_THAN_EQUALS | is | is not | matches | not matches
   public static boolean ComparisonOperator(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ComparisonOperator")) return false;
@@ -509,13 +634,25 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // else Literal
+  // else
+  public static boolean ElseClause(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseClause")) return false;
+    if (!nextTokenIs(b, ELSE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE);
+    exit_section_(b, m, ELSE_CLAUSE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // ElseClause Literal
   public static boolean ElseOperator(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ElseOperator")) return false;
     if (!nextTokenIs(b, ELSE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, ELSE);
+    r = ElseClause(b, l + 1);
     r = r && Literal(b, l + 1);
     exit_section_(b, m, ELSE_OPERATOR, r);
     return r;
@@ -806,7 +943,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VariableDefinition | IfStatement | ForStatement | FunctionCall
+  // VariableDefinition | IfStatement | ForStatement | FunctionCall | CaseStatement
   public static boolean FunctionStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FunctionStatement")) return false;
     boolean r;
@@ -815,6 +952,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     if (!r) r = IfStatement(b, l + 1);
     if (!r) r = ForStatement(b, l + 1);
     if (!r) r = FunctionCall(b, l + 1);
+    if (!r) r = CaseStatement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1560,7 +1698,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VariableDefinition | IfStatement | ReturnStatement | ForStatement | FunctionCall
+  // VariableDefinition | IfStatement | ReturnStatement | ForStatement | FunctionCall | CaseStatement
   public static boolean Statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Statement")) return false;
     boolean r;
@@ -1570,6 +1708,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     if (!r) r = ReturnStatement(b, l + 1);
     if (!r) r = ForStatement(b, l + 1);
     if (!r) r = FunctionCall(b, l + 1);
+    if (!r) r = CaseStatement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

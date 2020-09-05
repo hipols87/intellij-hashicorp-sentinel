@@ -1,0 +1,10 @@
+isvalid = func(x, y) {
+    valid = undefined
+    case x {
+        when "foo", "bar":
+            return true
+        else:
+            return false
+    }
+    return valid
+}

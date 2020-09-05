@@ -84,6 +84,7 @@ NUMBER=-?(0x)?(0|[1-9])[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?
   "all"                       { return ALL; }
   "any"                       { return ANY; }
   "filter"                    { return FILTER; }
+  "case"                      { return CASE; }
   "true"                      { return TRUE; }
   "false"                     { return FALSE; }
   "null"                      { return NULL; }

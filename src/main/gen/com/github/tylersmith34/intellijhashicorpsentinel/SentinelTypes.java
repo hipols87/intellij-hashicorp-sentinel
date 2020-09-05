@@ -17,6 +17,10 @@ public interface SentinelTypes {
   IElementType BOOLEAN_LITERAL = new SentinelElementType("BOOLEAN_LITERAL");
   IElementType BOOLEAN_OPERATORS = new SentinelElementType("BOOLEAN_OPERATORS");
   IElementType BREAK_STMT = new SentinelElementType("BREAK_STMT");
+  IElementType CASE_CLAUSE = new SentinelElementType("CASE_CLAUSE");
+  IElementType CASE_STATEMENT = new SentinelElementType("CASE_STATEMENT");
+  IElementType CASE_WHEN_CASE = new SentinelElementType("CASE_WHEN_CASE");
+  IElementType CASE_WHEN_CLAUSE = new SentinelElementType("CASE_WHEN_CLAUSE");
   IElementType COMPARISON_OPERATOR = new SentinelElementType("COMPARISON_OPERATOR");
   IElementType CONTINUE_STMT = new SentinelElementType("CONTINUE_STMT");
   IElementType DECIMAL = new SentinelElementType("DECIMAL");
@@ -26,6 +30,7 @@ public interface SentinelTypes {
   IElementType DOT_IDENTIFIER = new SentinelElementType("DOT_IDENTIFIER");
   IElementType ELEMENT = new SentinelElementType("ELEMENT");
   IElementType ELEMENT_LIST = new SentinelElementType("ELEMENT_LIST");
+  IElementType ELSE_CLAUSE = new SentinelElementType("ELSE_CLAUSE");
   IElementType ELSE_OPERATOR = new SentinelElementType("ELSE_OPERATOR");
   IElementType ESCAPED_CHARACTER = new SentinelElementType("ESCAPED_CHARACTER");
   IElementType EXPONENT = new SentinelElementType("EXPONENT");
@@ -78,6 +83,7 @@ public interface SentinelTypes {
   IElementType AS = new SentinelTokenType("as");
   IElementType BLOCK_COMMENT = new SentinelTokenType("BLOCK_COMMENT");
   IElementType BREAK = new SentinelTokenType("break");
+  IElementType CASE = new SentinelTokenType("case");
   IElementType COLON = new SentinelTokenType(":");
   IElementType COMMA = new SentinelTokenType(",");
   IElementType COMMENT = new SentinelTokenType("COMMENT");
@@ -154,6 +160,18 @@ public interface SentinelTypes {
       else if (type == BREAK_STMT) {
         return new SentinelBreakStmtImpl(node);
       }
+      else if (type == CASE_CLAUSE) {
+        return new SentinelCaseClauseImpl(node);
+      }
+      else if (type == CASE_STATEMENT) {
+        return new SentinelCaseStatementImpl(node);
+      }
+      else if (type == CASE_WHEN_CASE) {
+        return new SentinelCaseWhenCaseImpl(node);
+      }
+      else if (type == CASE_WHEN_CLAUSE) {
+        return new SentinelCaseWhenClauseImpl(node);
+      }
       else if (type == COMPARISON_OPERATOR) {
         return new SentinelComparisonOperatorImpl(node);
       }
@@ -180,6 +198,9 @@ public interface SentinelTypes {
       }
       else if (type == ELEMENT_LIST) {
         return new SentinelElementListImpl(node);
+      }
+      else if (type == ELSE_CLAUSE) {
+        return new SentinelElseClauseImpl(node);
       }
       else if (type == ELSE_OPERATOR) {
         return new SentinelElseOperatorImpl(node);
