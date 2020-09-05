@@ -21,13 +21,13 @@ public interface SentinelTypes {
   IElementType CASE_STATEMENT = new SentinelElementType("CASE_STATEMENT");
   IElementType CASE_WHEN_CASE = new SentinelElementType("CASE_WHEN_CASE");
   IElementType CASE_WHEN_CLAUSE = new SentinelElementType("CASE_WHEN_CLAUSE");
+  IElementType CHAINED_IDENTIFIER = new SentinelElementType("CHAINED_IDENTIFIER");
   IElementType COMPARISON_OPERATOR = new SentinelElementType("COMPARISON_OPERATOR");
   IElementType CONTINUE_STMT = new SentinelElementType("CONTINUE_STMT");
   IElementType DECIMAL = new SentinelElementType("DECIMAL");
   IElementType DECIMALS = new SentinelElementType("DECIMALS");
   IElementType DECIMAL_DIGIT = new SentinelElementType("DECIMAL_DIGIT");
   IElementType DEFINITION = new SentinelElementType("DEFINITION");
-  IElementType DOT_IDENTIFIER = new SentinelElementType("DOT_IDENTIFIER");
   IElementType ELEMENT = new SentinelElementType("ELEMENT");
   IElementType ELEMENT_LIST = new SentinelElementType("ELEMENT_LIST");
   IElementType ELSE_CLAUSE = new SentinelElementType("ELSE_CLAUSE");
@@ -41,12 +41,13 @@ public interface SentinelTypes {
   IElementType FUNCTION = new SentinelElementType("FUNCTION");
   IElementType FUNCTION_BODY = new SentinelElementType("FUNCTION_BODY");
   IElementType FUNCTION_CALL = new SentinelElementType("FUNCTION_CALL");
+  IElementType FUNCTION_CALL_PARAMETERS = new SentinelElementType("FUNCTION_CALL_PARAMETERS");
   IElementType FUNCTION_DECLARATION = new SentinelElementType("FUNCTION_DECLARATION");
+  IElementType FUNCTION_PARAMETERS = new SentinelElementType("FUNCTION_PARAMETERS");
   IElementType FUNCTION_STATEMENT = new SentinelElementType("FUNCTION_STATEMENT");
   IElementType GLOBAL_VARIABLE_DEFINITION = new SentinelElementType("GLOBAL_VARIABLE_DEFINITION");
   IElementType HEX_DIGIT = new SentinelElementType("HEX_DIGIT");
   IElementType HEX_LITERAL = new SentinelElementType("HEX_LITERAL");
-  IElementType IDENTIFIER_LIST = new SentinelElementType("IDENTIFIER_LIST");
   IElementType IF_STATEMENT = new SentinelElementType("IF_STATEMENT");
   IElementType IMPORT_STATEMENT = new SentinelElementType("IMPORT_STATEMENT");
   IElementType KEYED_ELEMENT = new SentinelElementType("KEYED_ELEMENT");
@@ -63,7 +64,6 @@ public interface SentinelTypes {
   IElementType NUMBER_LITERAL = new SentinelElementType("NUMBER_LITERAL");
   IElementType OCTAL_DIGIT = new SentinelElementType("OCTAL_DIGIT");
   IElementType OCTAL_LITERAL = new SentinelElementType("OCTAL_LITERAL");
-  IElementType PARAMETERS = new SentinelElementType("PARAMETERS");
   IElementType QUANTIFIER_EXPRESSION = new SentinelElementType("QUANTIFIER_EXPRESSION");
   IElementType QUANTIFIER_OPERATOR = new SentinelElementType("QUANTIFIER_OPERATOR");
   IElementType RETURN_STATEMENT = new SentinelElementType("RETURN_STATEMENT");
@@ -172,6 +172,9 @@ public interface SentinelTypes {
       else if (type == CASE_WHEN_CLAUSE) {
         return new SentinelCaseWhenClauseImpl(node);
       }
+      else if (type == CHAINED_IDENTIFIER) {
+        return new SentinelChainedIdentifierImpl(node);
+      }
       else if (type == COMPARISON_OPERATOR) {
         return new SentinelComparisonOperatorImpl(node);
       }
@@ -189,9 +192,6 @@ public interface SentinelTypes {
       }
       else if (type == DEFINITION) {
         return new SentinelDefinitionImpl(node);
-      }
-      else if (type == DOT_IDENTIFIER) {
-        return new SentinelDotIdentifierImpl(node);
       }
       else if (type == ELEMENT) {
         return new SentinelElementImpl(node);
@@ -232,8 +232,14 @@ public interface SentinelTypes {
       else if (type == FUNCTION_CALL) {
         return new SentinelFunctionCallImpl(node);
       }
+      else if (type == FUNCTION_CALL_PARAMETERS) {
+        return new SentinelFunctionCallParametersImpl(node);
+      }
       else if (type == FUNCTION_DECLARATION) {
         return new SentinelFunctionDeclarationImpl(node);
+      }
+      else if (type == FUNCTION_PARAMETERS) {
+        return new SentinelFunctionParametersImpl(node);
       }
       else if (type == FUNCTION_STATEMENT) {
         return new SentinelFunctionStatementImpl(node);
@@ -246,9 +252,6 @@ public interface SentinelTypes {
       }
       else if (type == HEX_LITERAL) {
         return new SentinelHexLiteralImpl(node);
-      }
-      else if (type == IDENTIFIER_LIST) {
-        return new SentinelIdentifierListImpl(node);
       }
       else if (type == IF_STATEMENT) {
         return new SentinelIfStatementImpl(node);
@@ -297,9 +300,6 @@ public interface SentinelTypes {
       }
       else if (type == OCTAL_LITERAL) {
         return new SentinelOctalLiteralImpl(node);
-      }
-      else if (type == PARAMETERS) {
-        return new SentinelParametersImpl(node);
       }
       else if (type == QUANTIFIER_EXPRESSION) {
         return new SentinelQuantifierExpressionImpl(node);

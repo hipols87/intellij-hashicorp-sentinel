@@ -1,1 +1,2 @@
 import "json"
+import "tfplan/v2" as tfplan
