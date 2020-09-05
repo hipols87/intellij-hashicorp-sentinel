@@ -687,7 +687,7 @@ public class SentinelParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // param IDENTIFIER ( default StringLiteral )?
+  // param IDENTIFIER ( default Literal )?
   public static boolean ExternalParameters(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ExternalParameters")) return false;
     if (!nextTokenIs(b, PARAM)) return false;
@@ -699,20 +699,20 @@ public class SentinelParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ( default StringLiteral )?
+  // ( default Literal )?
   private static boolean ExternalParameters_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ExternalParameters_2")) return false;
     ExternalParameters_2_0(b, l + 1);
     return true;
   }
 
-  // default StringLiteral
+  // default Literal
   private static boolean ExternalParameters_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ExternalParameters_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, DEFAULT);
-    r = r && StringLiteral(b, l + 1);
+    r = r && Literal(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }

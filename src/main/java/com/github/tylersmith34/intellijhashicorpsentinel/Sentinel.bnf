@@ -58,7 +58,7 @@ ImportStatement ::= import StringLiteral (as IDENTIFIER )?
 
 //External param
 //TODO use `Literal` instead
-ExternalParameters       ::= param IDENTIFIER ( default StringLiteral )?
+ExternalParameters       ::= param IDENTIFIER ( default Literal )?
 GlobalVariableDefinition ::= VariableDefinition
 
 //Rules

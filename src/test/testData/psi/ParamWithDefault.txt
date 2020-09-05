@@ -7,5 +7,6 @@ Sentinel File
       PsiWhiteSpace(' ')
       PsiElement(SentinelTokenType.default)('default')
       PsiWhiteSpace(' ')
-      SentinelStringLiteralImpl(STRING_LITERAL)
-        PsiElement(SentinelTokenType.DOUBLE_QUOTED_STRING)('"missing"')
+      SentinelLiteralImpl(LITERAL)
+        SentinelStringLiteralImpl(STRING_LITERAL)
+          PsiElement(SentinelTokenType.DOUBLE_QUOTED_STRING)('"missing"')
