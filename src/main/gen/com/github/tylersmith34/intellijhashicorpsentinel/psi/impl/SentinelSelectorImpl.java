@@ -27,15 +27,9 @@ public class SentinelSelectorImpl extends ASTWrapperPsiElement implements Sentin
   }
 
   @Override
-  @Nullable
-  public SentinelFunctionCall getFunctionCall() {
-    return findChildByClass(SentinelFunctionCall.class);
-  }
-
-  @Override
-  @Nullable
+  @NotNull
   public SentinelIdent getIdent() {
-    return findChildByClass(SentinelIdent.class);
+    return findNotNullChildByClass(SentinelIdent.class);
   }
 
 }

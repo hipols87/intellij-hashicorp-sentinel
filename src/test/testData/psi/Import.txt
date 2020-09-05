@@ -3,6 +3,5 @@ Sentinel File
     SentinelImportStatementImpl(IMPORT_STATEMENT)
       PsiElement(SentinelTokenType.import)('import')
       PsiWhiteSpace(' ')
-      SentinelImportedNameImpl(IMPORTED_NAME)
-        SentinelStringLiteralImpl(STRING_LITERAL)
-          PsiElement(SentinelTokenType.DOUBLE_QUOTED_STRING)('"json"')
+      SentinelStringLiteralImpl(STRING_LITERAL)
+        PsiElement(SentinelTokenType.DOUBLE_QUOTED_STRING)('"json"')

@@ -53,20 +53,11 @@
 SimpleFile ::= Definition*
 Definition ::= { ImportStatement | ExternalParameters | GlobalVariableDefinition | MainRule | RuleDefinition | FunctionDeclaration }
 
-//Ident    ::= identifier+ (Selector | ( L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET ) | ElseOperator)*
-
-
-Ident    ::= identifier+ (Selector
-                            |  ( L_BRACKET ( StringLiteral | NumberLiteral ) R_BRACKET )
-                            | (L_PAREN ( StringLiteral | NumberLiteral ) R_PAREN )
-                            | ElseOperator
-                          )*
-Selector ::= PERIOD ( Ident | FunctionCall )
+Ident    ::= identifier+ (Selector | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET ) | ElseOperator)*
+Selector ::= "." Ident
 
 //import
-ImportStatement ::= import ImportedName
-ImportedName    ::= StringLiteral (as ImportedAlias )?
-ImportedAlias   ::= Ident
+ImportStatement ::= import StringLiteral (as Ident )?
 
 //External param
 ExternalParameters       ::= param Ident ( default Literal )?

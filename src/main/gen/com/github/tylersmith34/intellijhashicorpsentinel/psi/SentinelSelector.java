@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface SentinelSelector extends PsiElement {
 
-  @Nullable
-  SentinelFunctionCall getFunctionCall();
-
-  @Nullable
+  @NotNull
   SentinelIdent getIdent();
 
 }

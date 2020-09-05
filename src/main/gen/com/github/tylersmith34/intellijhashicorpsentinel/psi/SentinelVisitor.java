@@ -155,14 +155,6 @@ public class SentinelVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitImportedAlias(@NotNull SentinelImportedAlias o) {
-    visitPsiElement(o);
-  }
-
-  public void visitImportedName(@NotNull SentinelImportedName o) {
-    visitPsiElement(o);
-  }
-
   public void visitKeyedElement(@NotNull SentinelKeyedElement o) {
     visitPsiElement(o);
   }
