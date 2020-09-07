@@ -14,6 +14,7 @@ public interface SentinelTypes {
   IElementType BLOCK = new SentinelElementType("BLOCK");
   IElementType BOOLEAN_EXPRESSION = new SentinelElementType("BOOLEAN_EXPRESSION");
   IElementType BOOLEAN_EXPRESSIONS = new SentinelElementType("BOOLEAN_EXPRESSIONS");
+  IElementType BOOLEAN_EXPRESSION_SEGMENT = new SentinelElementType("BOOLEAN_EXPRESSION_SEGMENT");
   IElementType BOOLEAN_LITERAL = new SentinelElementType("BOOLEAN_LITERAL");
   IElementType BOOLEAN_OPERATORS = new SentinelElementType("BOOLEAN_OPERATORS");
   IElementType BREAK_STMT = new SentinelElementType("BREAK_STMT");
@@ -117,7 +118,7 @@ public interface SentinelTypes {
   IElementType NOT = new SentinelTokenType("not");
   IElementType NOT_EQUALS = new SentinelTokenType("!=");
   IElementType NULL = new SentinelTokenType("null");
-  IElementType NUMBER = new SentinelTokenType("Number");
+  IElementType NUMBER = new SentinelTokenType("NUMBER");
   IElementType OR = new SentinelTokenType("or");
   IElementType PARAM = new SentinelTokenType("param");
   IElementType PERCENT = new SentinelTokenType("%");
@@ -150,6 +151,9 @@ public interface SentinelTypes {
       }
       else if (type == BOOLEAN_EXPRESSIONS) {
         return new SentinelBooleanExpressionsImpl(node);
+      }
+      else if (type == BOOLEAN_EXPRESSION_SEGMENT) {
+        return new SentinelBooleanExpressionSegmentImpl(node);
       }
       else if (type == BOOLEAN_LITERAL) {
         return new SentinelBooleanLiteralImpl(node);

@@ -27,7 +27,7 @@ Sentinel File
             SentinelKeyedElementImpl(KEYED_ELEMENT)
               SentinelElementImpl(ELEMENT)
                 SentinelLiteralImpl(LITERAL)
-                  PsiElement(SentinelTokenType.Number)('42')
+                  PsiElement(SentinelTokenType.NUMBER)('42')
               PsiElement(SentinelTokenType.:)(':')
               PsiWhiteSpace(' ')
               SentinelElementImpl(ELEMENT)

@@ -11,11 +11,33 @@
 - [ ] [Publish a plugin manually](https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/publishing_plugin.html) for the first time.
 - [ ] Set the Plugin ID in the above README badges.
 - [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
 This plugin provides language support for [HashiCorp Sentinel](https://www.hashicorp.com/sentinel/).  Sentinel is a policy as code framework that enables policy based decisions on HashiCorp projects.  An example would be a set of policies to prevent common misconfigurations of an AWS S3 Bucket in a Terraform workspace plan/apply.
 <!-- Plugin description end -->
+
+## Known issues
+### Syntax for boolean expressions
+I've been unable to parse this statement:
+```
+if checkMyValue(x) and x < y {
+    return x
+}
+```
+However, there are two work arounds.
+ 
+Reversing the order is parsing correctly
+```
+if x < y and checkMyValue(x) {
+    return x
+}
+```
+Or add parentheses around x < y
+```
+if checkMyValue(x) and (x < y) {
+    return x
+}
+```
 
 ## Installation
 

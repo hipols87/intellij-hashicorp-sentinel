@@ -121,4 +121,8 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testVariableWithSelectorElseAndExpression() throws Exception {
         doTest();
     }
+
+    public void testBooleanExpressions() throws Exception {
+        doTest();
+    }
 }

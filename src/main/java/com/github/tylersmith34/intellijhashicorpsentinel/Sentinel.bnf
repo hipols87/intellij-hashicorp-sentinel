@@ -86,17 +86,33 @@ Block              ::= L_CURLY Statement R_CURLY
 
 
 //Boolean expressions
-BooleanExpressions     ::= BooleanExpression+ (LogicalOperator BooleanExpression)*
-BooleanExpression      ::= FunctionCall |
-    UnaryOperator ( ChainedIdentifier | Literal | QuantifierExpression)? |
-    ( ChainedIdentifier | Literal | QuantifierExpression ) ( BooleanOperators ) ( ChainedIdentifier | Literal | QuantifierExpression) |
-    ElseOperator
+BooleanExpressions    ::= BooleanExpression+ (LogicalOperator BooleanExpression)*  ElseOperator?
+BooleanExpression     ::= UnaryOperator? ( BooleanExpressionSegment BooleanOperators BooleanExpressionSegment
+                                         | L_PAREN BooleanExpressionSegment BooleanOperators BooleanExpressionSegment R_PAREN
+                                         | L_PAREN FunctionCall R_PAREN BooleanOperators BooleanExpressionSegment
+                                         | QuantifierExpression
+                                         | IDENTIFIER L_PAREN R_PAREN
+                                         | BooleanExpressionSegment
+                         )
+//BooleanExpression      ::= BooleanExpressionSegment |
+//    UnaryOperator BooleanExpressionSegment? |
+//    BooleanExpressionSegment ( BooleanOperators ) BooleanExpressionSegment |
+//    ElseOperator
+
+//BooleanExpressions     ::= BooleanExpression+ (LogicalOperator BooleanExpression)*
+//BooleanExpression      ::= FunctionCall |
+//    UnaryOperator ( ChainedIdentifier | Literal | QuantifierExpression)? |
+//    ( ChainedIdentifier | Literal | QuantifierExpression ) ( BooleanOperators ) ( ChainedIdentifier | Literal | QuantifierExpression) |
+//    ElseOperator
+
+BooleanExpressionSegment ::=  FunctionCall | ChainedIdentifier | Literal | QuantifierExpression
+    | R_PAREN ((IDENTIFIER L_PAREN R_PAREN)  FunctionCall | ChainedIdentifier | Literal | QuantifierExpression ) L_PAREN
 BooleanOperators       ::= SetOperator | ComparisonOperator | UnaryOperator | MultipleDivideOperator | AddSubtractOperator | LogicalOperator
 ElseClause             ::= else
-ElseOperator           ::= ElseClause ( Literal | L_BRACKET R_BRACKET | L_CURLY R_CURLY )
+ElseOperator           ::= ElseClause ( Literal | ListDefinition | MapDefinition )
 LogicalOperator        ::= and | or | xor
 SetOperator            ::= (not)? ( contains | in )
-ComparisonOperator     ::= DOUBLE_EQUALS | NOT_EQUALS | LESS_THAN | LESS_THAN_EQUALS | GREATER_THAN | GREATER_THAN_EQUALS | is | is not | matches | not matches
+ComparisonOperator     ::= '==' | '!=' | '<' | '<=' | '>' | '>=' | is | is not | matches | not matches
 AddSubtractOperator    ::= PLUS | MINUS
 MultipleDivideOperator ::= SPLAT | SLASH | PERCENT
 UnaryOperator          ::= PLUS | MINUS | EXCLAMATION | not
@@ -104,7 +120,7 @@ UnaryOperator          ::= PLUS | MINUS | EXCLAMATION | not
 
 // For Statements
 ForStatement ::= for ChainedIdentifier as ( IDENTIFIER COMMA )? IDENTIFIER ForBlock
-ForBlock     ::= L_CURLY ( Statement | BreakStmt | ContinueStmt ) R_CURLY
+ForBlock     ::= L_CURLY ( Statement | BreakStmt | ContinueStmt )* R_CURLY
 BreakStmt    ::= break
 ContinueStmt ::= continue
 
@@ -128,14 +144,14 @@ CaseWhenCase   ::= when CaseClause+ ( COMMA CaseClause )* | ElseClause
 CaseClause     ::= IDENTIFIER | Literal | Statement
 
 //primitive types
-ChainedIdentifier ::= IDENTIFIER+ (Selector
+ChainedIdentifier ::= IDENTIFIER (Selector
                                     | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET )
                                     | (L_PAREN (IDENTIFIER | Literal ) R_PAREN )
                                     | FunctionCall
                                     | ElseOperator
                                   )*
 Selector          ::= "." IDENTIFIER
-Literal          ::= Number | NumberLiteral | Decimal | OctalLiteral | HexLiteral | Float | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
+Literal          ::= NUMBER | NumberLiteral | Decimal | OctalLiteral | HexLiteral | Float | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
 BooleanLiteral   ::= true | false
 NullLiteral      ::= null
 UndefinedLiteral ::= undefined
