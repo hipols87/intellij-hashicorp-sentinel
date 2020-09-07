@@ -73,7 +73,7 @@ FunctionBody        ::= L_CURLY FunctionStatement* ReturnStatement  R_CURLY
 ReturnStatement     ::= return ( IDENTIFIER | Literal )
 FunctionParameters  ::= L_PAREN ( IDENTIFIER+ ( COMMA IDENTIFIER+ )* )? R_PAREN
 FunctionCall        ::= IDENTIFIER FunctionCallParameters ElseOperator?
-FunctionCallParameters ::= L_PAREN (ChainedIdentifier+ ( COMMA ChainedIdentifier+ )*)? R_PAREN
+FunctionCallParameters ::= L_PAREN ((ChainedIdentifier|Literal|ConcatenatedLiteral) ( COMMA (ChainedIdentifier|Literal|ConcatenatedLiteral)+ )*)? R_PAREN
 
 //Statements
 FunctionStatement   ::= VariableDefinition | IfStatement | ForStatement | FunctionCall | CaseStatement
@@ -81,8 +81,8 @@ Statement           ::= VariableDefinition | IfStatement | ReturnStatement | For
 
 
 // If Statements
-IfStatement        ::= if ( BooleanExpressions | L_PAREN BooleanExpressions R_PAREN ) Block ( else ( IfStatement | Block ) )?
-Block              ::= L_CURLY Statement R_CURLY
+IfStatement ::= if ( BooleanExpressions | L_PAREN BooleanExpressions R_PAREN ) Block ( else ( IfStatement | Block ) )?
+Block       ::= L_CURLY ( Statement | BreakStmt | ContinueStmt ) R_CURLY
 
 
 //Boolean expressions
@@ -92,19 +92,9 @@ BooleanExpression     ::= UnaryOperator? ( BooleanExpressionSegment BooleanOpera
                                          | L_PAREN FunctionCall R_PAREN BooleanOperators BooleanExpressionSegment
                                          | QuantifierExpression
                                          | IDENTIFIER L_PAREN R_PAREN
+                                         | L_PAREN IDENTIFIER  R_PAREN
                                          | BooleanExpressionSegment
                          )
-//BooleanExpression      ::= BooleanExpressionSegment |
-//    UnaryOperator BooleanExpressionSegment? |
-//    BooleanExpressionSegment ( BooleanOperators ) BooleanExpressionSegment |
-//    ElseOperator
-
-//BooleanExpressions     ::= BooleanExpression+ (LogicalOperator BooleanExpression)*
-//BooleanExpression      ::= FunctionCall |
-//    UnaryOperator ( ChainedIdentifier | Literal | QuantifierExpression)? |
-//    ( ChainedIdentifier | Literal | QuantifierExpression ) ( BooleanOperators ) ( ChainedIdentifier | Literal | QuantifierExpression) |
-//    ElseOperator
-
 BooleanExpressionSegment ::=  FunctionCall | ChainedIdentifier | Literal | QuantifierExpression
     | R_PAREN ((IDENTIFIER L_PAREN R_PAREN)  FunctionCall | ChainedIdentifier | Literal | QuantifierExpression ) L_PAREN
 BooleanOperators       ::= SetOperator | ComparisonOperator | UnaryOperator | MultipleDivideOperator | AddSubtractOperator | LogicalOperator
@@ -126,16 +116,21 @@ ContinueStmt ::= continue
 
 
 //Variables
-VariableDefinition ::= ChainedIdentifier ( AddSubtractOperator | MultipleDivideOperator )? EQUALS ( Literal | ListDefinition | MapDefinition | FunctionCall | QuantifierExpression | BooleanExpressions )
-ListDefinition     ::= L_BRACKET ( ElementList )? R_BRACKET
+VariableDefinition ::= ChainedIdentifier ( AddSubtractOperator | MultipleDivideOperator )? EQUALS ( Literal | ListDefinition | MapDefinition | FunctionCall | QuantifierExpression | BooleanExpressions ) VariableConcatenation*
+ListDefinition     ::= L_BRACKET ( ElementList )? COMMA? R_BRACKET
+VariableConcatenation ::= PLUS ( ChainedIdentifierFunctionCall | ChainedIdentifier | FunctionCall | Literal | IDENTIFIER )*
+ChainedIdentifierFunctionCall ::= ChainedIdentifier FunctionCallParameters
 ElementList        ::= Element+ ( COMMA Element)*
 Element            ::= Literal | ListDefinition | MapDefinition
 MapDefinition      ::= L_CURLY ( KeyedElementList )? R_CURLY
 KeyedElementList   ::= KeyedElement ( COMMA KeyedElement COMMA?)*
 KeyedElement       ::= Element COLON Element
 
+
+//Quantifiers (all/any/filter)
 QuantifierExpression ::= QuantifierOperator ChainedIdentifier as ( IDENTIFIER COMMA )? IDENTIFIER L_CURLY BooleanExpressions  R_CURLY
 QuantifierOperator   ::= all | any | filter
+
 
 //case
 CaseStatement  ::= case (IDENTIFIER | Literal) L_CURLY ( CaseWhenClause* ) R_CURLY
@@ -143,14 +138,16 @@ CaseWhenClause ::= CaseWhenCase COLON Statement
 CaseWhenCase   ::= when CaseClause+ ( COMMA CaseClause )* | ElseClause
 CaseClause     ::= IDENTIFIER | Literal | Statement
 
+
 //primitive types
 ChainedIdentifier ::= IDENTIFIER (Selector
-                                    | (L_BRACKET (StringLiteral | NumberLiteral ) R_BRACKET )
+                                    | (L_BRACKET (IDENTIFIER | StringLiteral | NumberLiteral ) R_BRACKET )
                                     | (L_PAREN (IDENTIFIER | Literal ) R_PAREN )
                                     | FunctionCall
                                     | ElseOperator
                                   )*
 Selector          ::= "." IDENTIFIER
+ConcatenatedLiteral ::= ( ChainedIdentifier | Literal | IDENTIFIER ) VariableConcatenation*
 Literal          ::= NUMBER | NumberLiteral | Decimal | OctalLiteral | HexLiteral | Float | StringLiteral | BooleanLiteral | NullLiteral | UndefinedLiteral
 BooleanLiteral   ::= true | false
 NullLiteral      ::= null
