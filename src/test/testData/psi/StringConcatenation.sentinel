@@ -1,0 +1,1 @@
+address = "module." + strings.join(path, ".module.") + "." + type + "." + name + "[" + string(index) + "]"

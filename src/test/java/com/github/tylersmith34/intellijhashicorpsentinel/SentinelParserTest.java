@@ -125,4 +125,16 @@ public class SentinelParserTest extends ParsingTestCase {
     public void testBooleanExpressions() throws Exception {
         doTest();
     }
+
+    public void testListTrailingComma() throws Exception {
+        doTest();
+    }
+
+    public void testStringConcatenation() throws Exception {
+        doTest();
+    }
+
+    public void testComplex2() throws Exception {
+        doTest();
+    }
 }

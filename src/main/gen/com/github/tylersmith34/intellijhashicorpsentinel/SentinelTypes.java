@@ -23,7 +23,9 @@ public interface SentinelTypes {
   IElementType CASE_WHEN_CASE = new SentinelElementType("CASE_WHEN_CASE");
   IElementType CASE_WHEN_CLAUSE = new SentinelElementType("CASE_WHEN_CLAUSE");
   IElementType CHAINED_IDENTIFIER = new SentinelElementType("CHAINED_IDENTIFIER");
+  IElementType CHAINED_IDENTIFIER_FUNCTION_CALL = new SentinelElementType("CHAINED_IDENTIFIER_FUNCTION_CALL");
   IElementType COMPARISON_OPERATOR = new SentinelElementType("COMPARISON_OPERATOR");
+  IElementType CONCATENATED_LITERAL = new SentinelElementType("CONCATENATED_LITERAL");
   IElementType CONTINUE_STMT = new SentinelElementType("CONTINUE_STMT");
   IElementType DECIMAL = new SentinelElementType("DECIMAL");
   IElementType DECIMALS = new SentinelElementType("DECIMALS");
@@ -76,6 +78,7 @@ public interface SentinelTypes {
   IElementType STRING_LITERAL = new SentinelElementType("STRING_LITERAL");
   IElementType UNARY_OPERATOR = new SentinelElementType("UNARY_OPERATOR");
   IElementType UNDEFINED_LITERAL = new SentinelElementType("UNDEFINED_LITERAL");
+  IElementType VARIABLE_CONCATENATION = new SentinelElementType("VARIABLE_CONCATENATION");
   IElementType VARIABLE_DEFINITION = new SentinelElementType("VARIABLE_DEFINITION");
 
   IElementType ALL = new SentinelTokenType("all");
@@ -179,8 +182,14 @@ public interface SentinelTypes {
       else if (type == CHAINED_IDENTIFIER) {
         return new SentinelChainedIdentifierImpl(node);
       }
+      else if (type == CHAINED_IDENTIFIER_FUNCTION_CALL) {
+        return new SentinelChainedIdentifierFunctionCallImpl(node);
+      }
       else if (type == COMPARISON_OPERATOR) {
         return new SentinelComparisonOperatorImpl(node);
+      }
+      else if (type == CONCATENATED_LITERAL) {
+        return new SentinelConcatenatedLiteralImpl(node);
       }
       else if (type == CONTINUE_STMT) {
         return new SentinelContinueStmtImpl(node);
@@ -337,6 +346,9 @@ public interface SentinelTypes {
       }
       else if (type == UNDEFINED_LITERAL) {
         return new SentinelUndefinedLiteralImpl(node);
+      }
+      else if (type == VARIABLE_CONCATENATION) {
+        return new SentinelVariableConcatenationImpl(node);
       }
       else if (type == VARIABLE_DEFINITION) {
         return new SentinelVariableDefinitionImpl(node);
